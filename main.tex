@@ -1,0 +1,119 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{vntex}
+\usepackage[utf8]{inputenc}
+\usepackage[vietnamese]{babel}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{MnSymbol,wasysym,pifont,siunitx}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage{tabularx,array,longtable,multirow}
+\usepackage{fancybox}
+\usepackage{xcolor,colortbl}
+\usepackage{listings}
+\usepackage{pdfpages}
+\usepackage{enumitem}
+\usepackage{float}
+
+\graphicspath{{figures/}}
+
+\input{style.sty}
+
+\newcommand{\subsubsubsection}[1]{\paragraph{#1}\mbox{}\\}
+\setcounter{secnumdepth}{4}
+
+% ===== Header / Footer =====
+\pagestyle{fancy}
+\fancyhf{} % clear all
+\fancyhead[L]{
+  \begin{tabular}{rl}
+    \begin{picture}(25,15)(0,0)
+      \put(0,-8){\includegraphics[width=8mm,height=8mm]{hcmut.png}}
+    \end{picture}&
+    \begin{tabular}{l}
+      \textbf{\ttfamily Trường Đại học Bách Khoa - Đại học Quốc gia TP.HCM}\\
+      \textbf{\ttfamily Khoa Khoa học và Kỹ thuật Máy tính}
+    \end{tabular}
+  \end{tabular}
+}
+\fancyfoot[L]{\scriptsize \ttfamily Báo cáo Đồ án chuyên ngành}
+\fancyfoot[R]{\scriptsize \ttfamily Trang \thepage/\pageref{LastPage}}
+
+% ===== Code style =====
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{gray!10},
+  frame=single,
+  keywordstyle=\bfseries\color{blue},
+  numbers=left,
+  numberstyle=\tiny,
+  breaklines=true,
+  columns=fullflexible
+}
+
+\begin{document}
+
+% ===== Title page =====
+\begin{titlepage}
+ \begin{center}
+  {\large TRƯỜNG ĐẠI HỌC BÁCH KHOA - ĐẠI HỌC QUỐC GIA TP.HCM \\ KHOA KHOA HỌC VÀ KĨ THUẬT MÁY TÍNH}
+ \end{center}
+ \vspace{0.5cm}
+ \begin{figure}[h!]
+  \centering
+  \includegraphics[width=5cm]{hcmut.png}
+ \end{figure}
+ \vspace{0.5cm}
+ \begin{center}
+  \begin{tabular}{c}
+   \multicolumn{1}{c}{\textbf{{\Large \MakeUppercase{Báo cáo Đồ án chuyên ngành}}}}\\[6pt]
+   \hline \\[-6pt]
+   \multicolumn{1}{c}{\textbf{{\Large Đề tài}}}\\[6pt]
+   \textbf{\huge Ứng dụng hỗ trợ tìm kiếm}\\
+   \textbf{\huge và quản lý trạm sạc xe máy điện}\\
+   \hline
+  \end{tabular}
+ \end{center}
+
+ \vspace{0.6cm}
+ \begin{table}[h]
+  \hspace{3.5cm}
+  \begin{tabular}{r l}
+   Giảng viên hướng dẫn: & ThS. Lê Minh Thuận \\
+   \\
+   Sinh viên thực hiện: & Nguyễn Ngọc Châu Phúc - 2212631 \\
+                        & Nguyễn Nhật Khoa - 2211629 \\
+                        & Hoàng Trung Anh - 2210055 \\
+  \end{tabular}
+ \end{table}
+
+ \vspace{0.6cm}
+ \begin{center}
+  \footnotesize Thành phố Hồ Chí Minh, \today
+ \end{center}
+\end{titlepage}
+
+\pagenumbering{arabic}
+\tableofcontents
+\newpage
+
+\listoffigures
+\addcontentsline{toc}{section}{Danh sách hình vẽ}
+\newpage
+
+% ===== Example skeleton sections (edit or replace with \input if you split chapters) =====
+\input{chapters/1_TongQuan}
+\input{chapters/2_HeThongLienQuan}
+\input{chapters/3_KienThucVaCongNghe}
+\input{chapters/4_YeuCau}
+\input{chapters/5_ThietKe}
+% ===== References =====
+\newpage
+\nocite{*}  
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}
