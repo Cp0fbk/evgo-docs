@@ -1,9 +1,48 @@
 \section{Hệ thống đề xuất}
-\subsubsection{Mô tả hệ thống}
+\subsection{Mô tả hệ thống}
 
 
 \subsection{Yêu cầu}
 \subsubsection{Yêu cầu chức năng}
+\paragraph{Chức năng chung của hệ thống}
+\begin{enumerate}[label=\textbf{\alph*)}]
+ \item \textbf{Đăng nhập, đăng xuất}
+ \begin{itemize}
+    \item Người dùng có thể đăng nhập vào hệ thống bằng email/số điện thoại.
+    \item Sau khi đăng nhập thành công, người dùng có quyền truy cập các chức năng theo vai trò.
+    \item Cho phép đăng xuất để kết thúc phiên làm việc, đảm bảo an toàn bảo mật thông tin.
+ \end{itemize}
+ \item \textbf{Quản lý tài khoản cá nhân}
+ \begin{itemize}
+    \item Người dùng có thể chỉnh sửa thông tin cá nhân.
+    \item Người dùng có thể thay đổi/khôi phục mật khẩu thông qua email/số điện thoại đã đăng ký.
+ \end{itemize}
+\end{enumerate}
+\paragraph{Chức năng của Người quản trị hệ thống}
+Với vai trò là cấp quản trị cao nhất, Người quản lý hệ thống (Super Admin) chịu trách nhiệm quản lý toàn bộ hệ thống, bảo đảm tính minh bạch, ổn định và hiệu quả trong vận hành. Các yêu cầu chức năng cụ thể bao gồm:
+\begin{enumerate}[label=\textbf{\alph*)}]
+ \item \textbf{Quản lý tài khoản}
+ \begin{itemize}
+    \item Người quản lý hệ thống có khả năng truy cập và theo dõi danh sách toàn bộ người dùng đã đăng ký trong hệ thống.
+    \item Trong trường hợp phát hiện hành vi vi phạm hoặc sử dụng sai mục đích, Người quản lý hệ thống được quyền khóa tạm thời hoặc mở khóa lại tài khoản để đảm bảo an toàn cho hệ thống.
+    \item Người quản lý hệ thống xem và quản lý danh sách các chủ trạm đã đăng ký, từ đó nắm bắt tình hình hoạt động tổng thể. Người quản lý hệ thống gửi mail kích hoạt tài khoản đến chủ trạm.
+    \item Ngoài ra, Người quản lý hệ thống có thể đánh dấu các trạm có chất lượng dịch vụ thấp (dưới 2.0 sao), qua đó cảnh báo người dùng và định hướng cải thiện dịch vụ.
+ \end{itemize}
+ \item \textbf{Quản lý trạm sạc}
+ \begin{itemize}
+    \item Người quản lý hệ thống theo dõi tình trạng hoạt động của tất cả trạm sạc trên hệ thống theo thời gian thực, bao gồm thông tin về số lượng cổng sạc, trạng thái và mức độ sẵn sàng.
+ \end{itemize}
+ \item \textbf{Báo cáo và thống kê tổng hợp}
+ \begin{itemize}
+    \item Người quản lý hệ thống được cung cấp công cụ báo cáo thống kê toàn diện, bao gồm số lượng người dùng, trạm sạc, lượt đặt chỗ và doanh thu toàn hệ thống.
+    \item Các dữ liệu này có thể được biểu diễn dưới dạng biểu đồ, phân tích theo khu vực hoặc theo loại phương tiện, giúp hỗ trợ việc đánh giá tình hình và hoạch định chiến lược phát triển trong tương lai.
+ \end{itemize}  
+ \item \textbf{Giám sát giao dịch và doanh thu}
+ \begin{itemize}
+    \item Hệ thống cung cấp cho Người quản lý hệ thống khả năng theo dõi toàn bộ luồng giao dịch giữa người dùng và chủ trạm, bảo đảm sự minh bạch và chính xác trong quá trình thanh toán.
+    \item Trong trường hợp hệ thống áp dụng mô hình thu phí, Người quản lý hệ thống có trách nhiệm giám sát và thực hiện phân chia doanh thu giữa các bên liên quan.
+ \end{itemize}
+\end{enumerate}
 \subsubsection{Yêu cầu phi chức năng}
 \subsubsection{Yêu cầu dữ liệu}
 

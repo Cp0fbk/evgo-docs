@@ -2,12 +2,18 @@
 \usepackage{vntex}
 \usepackage[utf8]{inputenc}
 \usepackage[vietnamese]{babel}
+% \usepackage{fontspec}
+% \usepackage{polyglossia}
+% \setdefaultlanguage{vietnamese}
+% \setmainfont{Times New Roman}
 \usepackage{geometry}
 \geometry{margin=2.5cm}
 \usepackage{amsmath,amssymb,mathtools}
-\usepackage{MnSymbol,wasysym,pifont,siunitx}
+\usepackage{pifont,siunitx}
 \usepackage{graphicx}
 \usepackage{fancyhdr}
+\setlength{\headheight}{28.99997pt} % Fix for fancyhdr header height (as suggested by fancyhdr)
+\addtolength{\topmargin}{-16.99997pt} % Reduce top margin as suggested by fancyhdr
 \usepackage{lastpage}
 \usepackage{indentfirst}
 \usepackage{hyperref}
@@ -31,12 +37,14 @@
 \fancyhf{} % clear all
 \fancyhead[L]{
   \begin{tabular}{rl}
-    \begin{picture}(25,15)(0,0)
-      \put(0,-8){\includegraphics[width=8mm,height=8mm]{hcmut.png}}
-    \end{picture}&
-    \begin{tabular}{l}
-      \textbf{\ttfamily Trường Đại học Bách Khoa - Đại học Quốc gia TP.HCM}\\
-      \textbf{\ttfamily Khoa Khoa học và Kỹ thuật Máy tính}
+    \begin{tabular}{rl}
+      \begin{picture}(25,15)(0,0)
+        \put(0,-8){\includegraphics[width=8mm,height=8mm]{hcmut.png}}
+      \end{picture} &
+      \begin{tabular}{l}
+        \textbf{\ttfamily Trường Đại học Bách Khoa - Đại học Quốc gia TP.HCM}\\
+        \textbf{\ttfamily Khoa Khoa học và Kỹ thuật Máy tính}
+      \end{tabular}
     \end{tabular}
   \end{tabular}
 }
