@@ -425,7 +425,7 @@
     \end{longtable}
     \end{center}
     \item \textbf{Xuất file}
-    \item \begin{center}
+    \begin{center}
     \renewcommand{\arraystretch}{1.5}
         \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
         \hline
@@ -475,3 +475,170 @@
     \caption{Use case diagram Xử lý khiếu nại của khách hàng}
     \label{fig:uc_sa_3}
 \end{figure}
+    \begin{itemize}
+        \item \textbf{Xem danh sách khiếu nại}
+        \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SA--CP--01 \\
+        \hline
+        \textbf{Use case name} & Xem danh sách khiếu nại \\
+        \hline
+        \textbf{Actor} & Người quản lý hệ thống (Super Admin), Nhân viên chăm sóc khách hàng (Customer Service Staff) \\
+        \hline
+        \textbf{Description} & Cho phép Super Admin/Customer Service Staff xem danh sách tất cả các khiếu nại do người dùng gửi lên.\\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Super Admin/Customer Service Staff đã đăng nhập hợp lệ.
+            \item Khiếu nại đã được tạo trong hệ thống (từ người dùng hoặc chủ trạm) với mã khiếu nại, mô tả, bằng chứng (nếu có)
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        Hiển thị danh sách khiếu nại với trạng thái (chưa xử lý, đang xử lý, đã xử lý)\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Super Admin/Customer Service Staff chọn “Xem danh sách khiếu nại”.
+            \item Hệ thống hiển thị bảng danh sách gồm: ID khiếu nại, người gửi, thời gian, tiêu đề, trạng thái.
+            \item Super Admin/Customer Service Staff có thể lọc theo trạng thái, thời gian, người gửi.
+            \item Super Admin/Customer Service Staff chọn một khiếu nại để xem chi tiết.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        Không có\\
+        \hline
+        \textbf{Exception} & 
+        2a. Nếu không thể truy xuất dữ liệu thì báo lỗi và thử lại\\
+        \hline
+        \caption{Use Case Xem danh sách khiếu nại}
+        \label{tab:uc_sa_cp_01}
+    \end{longtable}
+    \end{center}
+    %=====================================================================
+    \item \textbf{Xem chi tiết khiếu nại}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SA--CP--02 \\
+        \hline
+        \textbf{Use case name} & Xem chi tiết khiếu nại \\
+        \hline
+        \textbf{Actor} & Người quản lý hệ thống (Super Admin), Nhân viên chăm sóc khách hàng (Customer Service Staff) \\
+        \hline
+        \textbf{Description} & Cho phép Super Admin/Customer Service Staff xem chi tiết nội dung của một khiếu nại.\\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Super Admin/Customer Service Staff đã đăng nhập hợp lệ.
+            \item Khiếu nại đã được tạo trong hệ thống (từ người dùng hoặc chủ trạm) với mã khiếu nại, mô tả, bằng chứng (nếu có)
+            \item Super Admin/Customer Service Staff chọn một khiếu nại từ danh sách
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        Super Admin/Customer Service Staff có thể xem toàn bộ nội dung chi tiết của khiếu nại.\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Super Admin/Customer Service Staff chọn một khiếu nại từ danh sách.
+            \item Hệ thống hiển thị chi tiết: nội dung khiếu nại, người gửi, minh chứng (ảnh/tệp), lịch sử trao đổi.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        Không có\\
+        \hline
+        \textbf{Exception} & 
+        1a. Khiếu nại đã bị xóa hoặc không còn tồn tại, hiển thị thông báo lỗi\\
+        \hline
+        \caption{Use Case Xem chi tiết khiếu nại}
+        \label{tab:uc_sa_cp_02}
+    \end{longtable}
+    \end{center}
+    %=====================================================================
+    \item \textbf{Khóa/mở khóa tài khoản}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SA--CP--03 \\
+        \hline
+        \textbf{Use case name} & Khóa/mở khóa tài khoản \\
+        \hline
+        \textbf{Actor} & Người quản lý hệ thống (Super Admin), Nhân viên chăm sóc khách hàng (Customer Service Staff) \\
+        \hline
+        \textbf{Description} & Cho phép Super Admin/Customer Service Staff khóa/mở khóa tài khoản bị phản ánh trong khiếu nại\\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Super Admin/Customer Service Staff đã đăng nhập hợp lệ.
+            \item Khiếu nại đã được tạo trong hệ thống (từ người dùng hoặc chủ trạm) với mã khiếu nại, mô tả, bằng chứng (nếu có)
+            \item Super Admin/Customer Service Staff đang xem chi tiết khiếu nại có liên quan đến một tài khoản cụ thể
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        Tài khoản bị khóa hoặc được mở khóa theo hành động của Super Admin/Customer Service Staff\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Super Admin/Customer Service Staff chọn “Khóa/Mở khóa tài khoản”.
+            \item Hệ thống hiển thị hộp xác nhận hành động.
+            \item Super Admin/Customer Service Staff xác nhận.
+            \item Hệ thống thay đổi trạng thái tài khoản (ACTIVE → LOCKED hoặc ngược lại).
+            \item Lưu lại lịch sử xử lý trong log khiếu nại.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        Không có\\
+        \hline
+        \textbf{Exception} & 
+        1a. Khiếu nại đã bị xóa hoặc không còn tồn tại, hiển thị thông báo lỗi\\
+        \hline
+        \caption{Use Case Khóa/mở khóa tài khoản}
+        \label{tab:uc_sa_cp_03}
+    \end{longtable}
+    \end{center}
+    %=====================================================================
+    \item \textbf{Phản hồi khiếu nại}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SA--CP--04 \\
+        \hline
+        \textbf{Use case name} & Phản hồi khiếu nại \\
+        \hline
+        \textbf{Actor} & Người quản lý hệ thống (Super Admin), Nhân viên chăm sóc khách hàng (Customer Service Staff) \\
+        \hline
+        \textbf{Description} & Cho phép Super Admin/Customer Service Staff phản hồi khiếu nại từ người dùng\\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Super Admin/Customer Service Staff đã đăng nhập hợp lệ.
+            \item Khiếu nại đã được tạo trong hệ thống (từ người dùng hoặc chủ trạm) với mã khiếu nại, mô tả, bằng chứng (nếu có)
+            \item Super Admin/Customer Service Staff đang xem chi tiết khiếu nại có liên quan đến một tài khoản cụ thể
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        Phản hồi được gửi đến người dùng và lưu trong lịch sử khiếu nại.\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Super Admin/Customer Service Staff nhập nội dung phản hồi.
+            \item Hệ thống xác nhận và lưu phản hồi.
+            \item Hệ thống gửi thông báo đến người khiếu nại (qua app/email).
+            \item Trạng thái khiếu nại được cập nhật.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        Không có\\
+        \hline
+        \textbf{Exception} & 
+        3a. Lỗi khi gửi phản hồi, hiển thị thông báo lỗi và gửi lại\\
+        \hline
+        \caption{Use Case Phản hồi khiếu nại}
+        \label{tab:uc_sa_cp_04}
+    \end{longtable}
+    \end{center}
+    \end{itemize}
