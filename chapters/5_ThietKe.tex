@@ -1,1 +1,477 @@
 \section{Phân tích và thiết kệ hệ thống}
+\subsection{Phân tích}
+\subsubsection{Mô hình hóa tương tác}
+\subsubsubsection{Use Case Diagram -- Người quản trị hệ thống}
+\begin{enumerate}[label=\textbf{\alph*)}]
+    \item \textbf{Quản lý tài khoản} 
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/SuperAdmin/uc_sa_1.png}
+        \caption{Use case diagram Super Admin quản lý tài khoản}
+        \label{fig:uc_sa_1}
+    \end{figure}
+    \begin{itemize}
+    \item \textbf{Xem danh sách tài khoản}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SA--ADM--01 \\
+        \hline
+        \textbf{Use case name} & Xem danh sách tài khoản \\
+        \hline
+        \textbf{Actor} & Người quản trị hệ thống (Super Admin) \\
+        \hline
+        \textbf{Description} & Super Admin xem danh sách tài khoản người dùng trong hệ thống \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Super Admin đăng nhập thành công vào hệ thống.
+            \item Tài khoản người dùng có tồn tại.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        Danh sách tài khoản được hiển thị đúng và đầy đủ.\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Super Admin truy cập chức năng Xem danh sách tài khoản.
+            \item Hệ thống tải danh sách tài khoản mặc định.
+            \item Super Admin chọn bộ lọc (vai trò: User/Station Owner, trạng thái: Active/Locked/Pending…), nhập từ khóa (email, tên) và/hoặc mốc thời gian.
+            \item Super Admin chọn một tài khoản để xem chi tiết (nếu cần).
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        2a. Nếu không có bản ghi phù hợp, hệ thống hiển thị “Không tìm thấy kết quả”.\\
+        \hline
+        \textbf{Exception} & 
+        2b. Lỗi truy vấn database: Hiển thị thông báo lỗi chung; ghi log; không thay đổi dữ liệu\\
+        \hline
+        \caption{Use Case Xem danh sách tài khoản}
+        \label{tab:uc_sa_adm_01}
+    \end{longtable}
+    \end{center}
+    %===================================================================
+    \item \textbf{Khóa/mở khóa tài khoản}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SA--ADM--02 \\
+        \hline
+        \textbf{Use case name} & Khóa/ mở khóa tài khoản \\
+        \hline
+        \textbf{Actor} & Người quản trị hệ thống (Super Admin) \\
+        \hline
+        \textbf{Description} & Super Admin thay đổi trạng thái truy cập tài khoản \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Super Admin đăng nhập thành công vào hệ thống.
+            \item Tài khoản người dùng có tồn tại.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        Danh sách tài khoản được hiển thị đúng và đầy đủ.\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Super Admin chọn tài khoản mục tiêu.
+            \item Hệ thống hiển thị hộp thoại xác nhận (nêu rõ hành động và hậu quả).
+            \item Super Admin xác nhận.
+            \item Hệ thống cập nhật trạng thái:
+            \begin{itemize}
+                \item Khóa: status = LOCKED.
+                \item Mở khóa: status = ACTIVE (hoặc PENDING nếu chưa kích hoạt email).
+            \end{itemize}
+            \item Hệ thống ghi log (ai, lúc nào, IP, lý do nếu có) và phản hồi thành công.
+
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        2a. Super Admin hủy xác nhận, không thay đổi dữ liệu.\\
+        \hline
+        \textbf{Exception} & 
+        4a. Cập nhật thất bại (CSDL/mạng): Hiển thị lỗi, giữ nguyên trạng thái cũ, ghi log\\
+        \hline
+        \caption{Use Case Khóa/mở khóa tài khoản}
+        \label{tab:uc_sa_adm_02}
+    \end{longtable}
+    \end{center}
+    %===================================================================
+    \item \textbf{Gửi email kích hoạt tài khoản chủ trạm}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SA--ADM--03 \\
+        \hline
+        \textbf{Use case name} & Gửi email kích hoạt tài khoản chủ trạm \\
+        \hline
+        \textbf{Actor} & Người quản trị hệ thống (Super Admin) \\
+        \hline
+        \textbf{Description} & Super Admin gửi email chứa liên kết kích hoạt cho tài khoản chủ trạm. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Super Admin đăng nhập thành công vào hệ thống.
+            \item Hồ sơ của chủ trạm đạt yêu cầu.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        Email kích hoạt được gửi, hệ thống ghi nhận thời điểm gửi và mã kích hoạt\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Super Admin xem danh sách hồ sơ được nộp bởi chủ trạm.
+            \item SA chọn Gửi mail kích hoạt cho chủ trạm có hồ sơ đạt yêu cầu.
+            \item Hệ thống tạo mã kích hoạt/token (thời hạn, ví dụ 24--72h)
+            \item Hệ thống gửi email kích hoạt (template chuẩn, có liên kết chứa token).
+            \item Hệ thống thông báo gửi mail thành công.
+
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        Không có\\
+        \hline
+        \textbf{Exception} & 
+        4a. Lỗi gửi email (SMTP/ESP): Hiển thị lỗi “Gửi thất bại, vui lòng thử lại”; không thay đổi status; vẫn lưu log thất bại.\\
+        \hline
+        \caption{Use Case Gửi email kích hoạt tài khoản chủ trạm}
+        \label{tab:uc_sa_adm_03}
+    \end{longtable}
+    \end{center}
+    %===================================================================
+    \item \textbf{Từ chối yêu cầu kích hoạt tài khoản}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SA--ADM--04 \\
+        \hline
+        \textbf{Use case name} & Từ chối yêu cầu kích hoạt tài khoản \\
+        \hline
+        \textbf{Actor} & Người quản trị hệ thống (Super Admin) \\
+        \hline
+        \textbf{Description} & Từ chối kích hoạt tài khoản chủ trạm chưa đạt yêu cầu; thông báo lý do. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Super Admin đăng nhập thành công vào hệ thống.
+            \item Hồ sơ của chủ trạm không đạt yêu cầu.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        Mail từ chối yêu cầu kích hoạt được gửi cho chủ trạm hoặc yêu cầu bổ sung hồ sơ (nếu có)\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Super Admin chọn Từ chối yêu cầu kích hoạt.
+            \item Hệ thống yêu cầu nhập lý do.
+            \item Super Admin nhập lý do từ chối kích hoạt tài khoản.
+            \item Hệ thống cập nhật log.
+            \item Hệ thống gửi email thông báo từ chối kèm hướng dẫn bổ sung hồ sơ (nếu có).
+
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        Không có\\
+        \hline
+        \textbf{Exception} & 
+        5a. Lỗi gửi email (SMTP/ESP): Hiển thị lỗi “Gửi thất bại, vui lòng thử lại”; không thay đổi status; vẫn lưu log thất bại.\\
+        \hline
+        \caption{Use Case Từ chối yêu cầu kích hoạt tài khoản}
+        \label{tab:uc_sa_adm_04}
+    \end{longtable}
+    \end{center}
+    \end{itemize}
+%==========================================================================
+    \item \textbf{Quản lý doanh thu và trạm sạc} 
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/SuperAdmin/uc_sa_2.png}
+        \caption{Use case diagram Super Admin quản lý doanh thu và trạm sạc}
+        \label{fig:uc_sa_2}
+    \end{figure}
+    \begin{itemize}
+    \item \textbf{Xem thông tin trạm sạc}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SA--PAY--01 \\
+        \hline
+        \textbf{Use case name} & Xem thông tin trạm sạc \\
+        \hline
+        \textbf{Actor} & Người quản trị hệ thống (Super Admin) \\
+        \hline
+        \textbf{Description} & Super Admin xem thông tin trạm sạc đã được đăng ký trên hệ thống\\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Super Admin đăng nhập thành công vào hệ thống.
+            \item Hệ thống có dữ liệu trạm sạc
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        Thông tin chi tiết về trạm sạc hiển thị thành công; không thay đổi dữ liệu.\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Super Admin truy cập vào trang xem danh sách các trạm sạc
+            \item Hệ thống hiển thị danh sách trạm sạc.
+            \item Super Admin chọn một trạm sạc cụ thể.
+            \item Hệ thống hiển thị chi tiết trạm gồm: tên, địa chỉ, số lượng cổng, loại cổng, tốc độ sạc, trạng thái hoạt động, số sao đánh giá, số lượt sử dụng.
+            \item Super Admin có thể quay lại danh sách hoặc tiếp tục xem trạm khác.
+
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        2a. Nếu hệ thống chưa có trạm nào, hiển thị thông báo “Chưa có trạm sạc nào trong hệ thống\\
+        \hline
+        \textbf{Exception} & 
+        4a. Hệ thống không thể cập nhật trạng thái trạm thì hiển thị thông báo lỗi và giữ trạng thái cũ\\
+        \hline
+        \caption{Use Case Xem thông tin trạm sạc}
+        \label{tab:uc_sa_pay_01}
+    \end{longtable}
+    \end{center}
+    %===================================================================
+    \item \textbf{Phân chia doanh thu}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SA--PAY--02 \\
+        \hline
+        \textbf{Use case name} & Phân chia doanh thu \\
+        \hline
+        \textbf{Actor} & Người quản trị hệ thống (Super Admin) \\
+        \hline
+        \textbf{Description} & Tính và thực hiện phân chia doanh thu giữa hệ thống và chủ trạm theo kỳ (ngày/tuần/tháng).\\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Super Admin đăng nhập thành công vào hệ thống.
+            \item Dữ liệu giao dịch đã “hoàn tất” trong kỳ chọn, đã đối soát cơ bản.
+            \item Cấu hình tỷ lệ chia, phí nền tảng, ngưỡng chi trả tối thiểu… đã thiết lập.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        \begin{itemize}
+            \item Hệ thống lưu version cấu hình phân chia doanh thu
+            \item Lịch sử cấu hình được cập nhật
+        \end{itemize}\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Super Admin chọn chức năng Phân chia doanh thu.
+            \item Nhập tỷ lệ chia.
+            \item Xác nhận lưu cấu hình.
+            \item Hệ thống cập nhật tỷ lệ chia mới.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        \begin{itemize}
+            \item 2a. Super Admin chọn áp dụng tỷ lệ chia riêng cho từng trạm thay vì áp dụng chung.
+            \item 2b. Super Admin xem lại lịch sử cấu hình trước đó và rollback.
+        \end{itemize}\\
+        \hline
+        \textbf{Exception} & 
+        \begin{itemize}
+            \item 3a. Nhập sai định dạng hoặc tỷ lệ không hợp lệ: Hệ thống báo lỗi.
+            \item 4a. Lưu thất bại (lỗi DB/hệ thống): Thông báo lỗi, không thay đổi cấu hình cũ.
+        \end{itemize}\\
+        \hline
+        \caption{Use Case Phân chia doanh thu}
+        \label{tab:uc_sa_pay_02}
+    \end{longtable}
+    \end{center}
+    %===================================================================
+    \item \textbf{Theo dõi luồng giao dịch}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SA--PAY--03 \\
+        \hline
+        \textbf{Use case name} & Theo dõi luồng giao dịch \\
+        \hline
+        \textbf{Actor} & Người quản lý hệ thống (Super Admin), Cổng thanh toán \\
+        \hline
+        \textbf{Description} & Giúp Super Admin theo dõi mọi giao dịch thanh toán: trạng thái, hoàn/huỷ, phí, mã tham chiếu; hỗ trợ điều tra sai lệch.\\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Super Admin đăng nhập thành công vào hệ thống.
+            \item Hệ thống nhận log/webhook từ cổng thanh toán; dữ liệu giao dịch đồng bộ
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        \begin{itemize}
+            \item Danh sách giao dịch hiển thị theo bộ lọc; có thể xem chi tiết từng giao dịch.
+            \item Không làm thay đổi dữ liệu giao dịch (chỉ xem/ghi chú).
+        \end{itemize}\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Super Admin mở màn hình theo dõi giao dịch.
+            \item Hệ thống tải danh sách giao dịch mặc định.
+            \item Super Admin áp bộ lọc (khoảng thời gian, trạm, trạng thái, phương thức, mã tham chiếu) hoặc tìm kiếm.
+            \item Hệ thống hiển thị kết quả; khi Super Admin chọn một giao dịch, hệ thống mở chi tiết thông tin giao dịch.
+
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        2a. Nếu hệ thống chưa ghi nhận giao dịch nào, hiển thị “Chưa có giao dịch”.\\
+        \hline
+        \textbf{Exception} & 
+        4a. Khi mở chi tiết, truy vấn CSDL/gateway lỗi,  hiển thị thông báo “Không thể tải chi tiết”; cho phép thử lại.\\
+        \hline
+        \caption{Use Case Theo dõi luồng giao dịch}
+        \label{tab:uc_sa_pay_03}
+    \end{longtable}
+    \end{center}
+\end{itemize}
+
+%==========================================================================
+    \item \textbf{Xem báo cáo và thống kê tổng hợp} 
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/SuperAdmin/uc_sa_4.png}
+        \caption{Use case diagram Super Admin quản lý doanh thu và trạm sạc}
+        \label{fig:uc_sa_4}
+    \end{figure}
+    \begin{itemize}
+        \item \textbf{Xem báo cáo và thống kê tổng hợp}
+        \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SA--RP--01 \\
+        \hline
+        \textbf{Use case name} & Xem báo cáo và thống kê tổng hợp \\
+        \hline
+        \textbf{Actor} & Người quản lý hệ thống (Super Admin) \\
+        \hline
+        \textbf{Description} & Super Admin xem các báo cáo tổng hợp về hoạt động của hệ thống trạm sạc.\\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Super Admin đăng nhập thành công vào hệ thống.
+            \item Hệ thống có dữ liệu giao dịch, người dùng, trạm sạc.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        Báo cáo thống kê được hiển thị theo bộ lọc\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Super Admin thực hiện chức năng xem báo cáo \& thống kê tổng hợp.
+            \item Hệ thống hiển thị bộ lọc: khoảng thời gian, phạm vi (toàn hệ thống/theo trạm/theo cổng), nhóm theo (ngày/tuần/tháng).
+            \item Super Admin chọn bộ lọc mong muốn.
+            \item Hệ thống xử lý dữ liệu và hiển thị báo cáo.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        4a. Nếu Super Admin chọn rollback, hệ thống sẽ khôi phục lại trạng thái trước đó của báo cáo.\\
+        \hline
+        \textbf{Exception} & 
+        4b. Khi mở chi tiết, truy vấn CSDL/gateway lỗi,  hiển thị thông báo “Không thể tải chi tiết”; cho phép thử lại.\\
+        \hline
+        \caption{Use Case Xem báo cáo và thống kê tổng hợp}
+        \label{tab:uc_sa_rp_01}
+    \end{longtable}
+    \end{center}
+    %========================================================================
+    \item \textbf{Thống kê theo biểu đồ}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SA--RP--02 \\
+        \hline
+        \textbf{Use case name} & Xem báo cáo và thống kê theo biểu đồ \\
+        \hline
+        \textbf{Actor} & Người quản lý hệ thống (Super Admin) \\
+        \hline
+        \textbf{Description} & Super Admin xem các báo cáo tổng hợp về hoạt động của hệ thống trạm sạc trực quan hơn dưới dạng biểu đồ\\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Super Admin đăng nhập thành công vào hệ thống.
+            \item Hệ thống có dữ liệu giao dịch, người dùng, trạm sạc.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        Báo cáo thống kê được hiển thị theo cấu hình biểu đồ\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Super Admin chọn “Thống kê theo biểu đồ”.
+            \item Hệ thống lấy bộ lọc đã chọn ở use case UC--SA--RP--01.
+            \item Super Admin chọn loại biểu đồ (Line/Bar/Pie/Area/Heatmap), chỉ số (Doanh thu/Lượt sạc), nhóm theo (ngày/tuần/tháng/trạm/cổng), tùy chọn “So sánh kỳ trước”.
+            \item Hệ thống render biểu đồ, hiển thị chú giải, giá trị khi hover, tổng/ trung bình.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        4a. Chọn “Tải ảnh”, hệ thống tải về PNG/SVG của biểu đồ\\
+        \hline
+        \textbf{Exception} & 
+        4b. Lỗi render, hiển thị thông báo và fallback sang bảng\\
+        \hline
+        \caption{Use Case Thống kê theo biểu đồ}
+        \label{tab:uc_sa_rp_02}
+    \end{longtable}
+    \end{center}
+    \item \textbf{Xuất file}
+    \item \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SA--RP--03 \\
+        \hline
+        \textbf{Use case name} & Xuất file báo cáo thống kê \\
+        \hline
+        \textbf{Actor} & Người quản lý hệ thống (Super Admin) \\
+        \hline
+        \textbf{Description} & Super Admin xuất báo cáo thống kê theo bộ lọc hiện tại ra CSV/XLSX/PDF\\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Super Admin đăng nhập thành công vào hệ thống.
+            \item Hệ thống có dữ liệu giao dịch, người dùng, trạm sạc.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        Super Admin tải về được file báo cáo đã xuất ra.\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Super Admin bấm “Xuất file”.
+            \item Hệ thống hiển thị cấu hình: định dạng (CSV/XLSX/PDF), phạm vi dữ liệu (tất cả/ trang hiện tại), cột cần xuất, tên file, ngôn ngữ/định dạng số.
+            \item Super Admin xác nhận.
+            \item Hệ thống tạo file theo bộ lọc và cấu hình.
+            \item Hệ thống cung cấp file để tải xuống.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        3a. Nếu Super Admin hủy xác nhận thì hệ thống ngưng xuất file\\
+        \hline
+        \textbf{Exception} & 
+        4a. Nếu gặp lỗi tạo file, báo lỗi và thử lại\\
+        \hline
+        \caption{Use Case Xuất file báo cáo thống kê}
+        \label{tab:uc_sa_rp_03}
+    \end{longtable}
+    \end{center}
+    \end{itemize}
+\end{enumerate}
+%==============================================================================
+\subsubsubsection{Use Case Diagram -- Người quản trị hệ thống và nhân viên chăm sóc khách hàng }
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/SuperAdmin_CSS/uc_sa_3.png}
+    \caption{Use case diagram Xử lý khiếu nại của khách hàng}
+    \label{fig:uc_sa_3}
+\end{figure}
