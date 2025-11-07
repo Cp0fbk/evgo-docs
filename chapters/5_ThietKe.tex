@@ -642,3 +642,49 @@
     \end{longtable}
     \end{center}
     \end{itemize}
+
+\subsubsection{Mô hình hóa quy trình}
+\subsubsubsection{Activity Diagram - Người quản trị hệ thống phân chia doanh thu}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/SuperAdmin/activity1.png}
+    \caption{Activity Diagram - Người quản trị hệ thống phân chia doanh thu}
+    \label{fig:activity_sa_1}
+\end{figure}   
+\begin{enumerate}[font=\bfseries]
+    \item Bắt đầu: Super Admin truy cập hệ thống (đã đăng nhập).
+    \item Chọn chức năng: Người dùng chọn menu “Phân chia doanh thu”.
+    \item Tiếp theo, Super Admin chọn phạm vi áp dụng cho việc phân chia này (có thể là cho toàn hệ thống hoặc theo từng trạm).
+    \item Quyết định “Xem lịch sử?”
+    \begin{itemize}
+        \item Nếu CÓ (Yes): 
+        \begin{itemize}
+            \item Hệ thống sẽ hiển thị lịch sử cấu hình (bao gồm tỷ lệ, phí nền tảng...).
+            \item Super Admin chọn kỳ muốn xem.
+            \item Quyết định (Rollback): Super Admin tiếp tục có lựa chọn có rollback hay không.
+            \begin{itemize}
+                \item Nếu CÓ (Yes): Hệ thống thực hiện khôi phục cấu hình phân chia cũ và quy trình kết thúc.
+                \item Nếu KHÔNG (No): Quy trình đi tiếp đến bước nhập tỷ lệ phân chia.
+            \end{itemize}
+        \end{itemize}
+        \item Nếu KHÔNG (No) (không xem lịch sử): Quy trình đi thẳng đến bước nhập tỷ lệ phân chia.
+    \end{itemize} 
+    \item Nhập cấu hình mới: (Đây là điểm hợp nhất của luồng "Không xem lịch sử" và "Không rollback").
+    \begin{itemize}
+        \item Super Admin thực hiện nhập tỷ lệ phân chia mới.
+        \item Super Admin xác nhận lưu cấu hình.
+    \end{itemize}
+    \item Quyết định (Xác thực): Hệ thống sẽ kiểm tra xem định dạng, tỷ lệ có hợp lệ không?
+    \begin{itemize}
+        \item Nếu KHÔNG (No):
+        \begin{itemize}
+            \item Hệ thống yêu cầu điền lại thông tin.
+            \item Quy trình lặp lại, quay về bước nhập tỷ lệ phân chia để Super Admin sửa lại.
+        \end{itemize}
+        \item Nếu CÓ (Yes):
+        \begin{itemize}
+            \item Hệ thống thực hiện lưu cấu hình mới.
+            \item Quy trình kết thúc.
+        \end{itemize}
+    \end{itemize}
+\end{enumerate}
