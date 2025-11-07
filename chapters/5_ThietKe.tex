@@ -688,3 +688,28 @@
         \end{itemize}
     \end{itemize}
 \end{enumerate}
+
+\subsubsubsection{Sequence Diagram - Người dùng/Khách tìm trạm sạc}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/SuperAdmin/sq_sa_fstation.png}
+    \caption{Sequence Diagram - Người dùng/Khách tìm trạm sạc}
+    \label{fig:sq_sa_fstation}
+\end{figure}   
+\noindent \textbf{Luồng chính của biểu đồ trình tự:}
+\begin{enumerate}[font=\bfseries]
+    \item Người dùng mở màn hình tìm kiếm.
+    \item Ứng dụng xin quyền và lấy vị trí hiện tại từ GPS hoặc vị trí được nhập thủ công.
+    \item Ứng dụng gửi vị trí (và bộ lọc nếu có) lên máy chủ.
+    \item Máy chủ xử lý, lọc và trả về một danh sách các trạm sạc.
+    \item Ứng dụng yêu cầu MapSDK vẽ các điểm đánh dấu (marker) của trạm lên bản đồ.
+    \item Ứng dụng hiển thị danh sách trạm trên bản đồ cho người dùng.
+    \item Khi người dùng chọn một trạm, ứng dụng gọi máy chủ để lấy thông tin chi tiết của trạm đó và hiển thị ra màn hình.
+\end{enumerate}
+\textbf{Các luồng phụ:}
+\begin{enumerate}[font=\bfseries]
+    \item Từ chối quyền / GPS tắt: Nếu GPS không cấp quyền hoặc bị lỗi, ứng dụng sẽ yêu cầu người dùng nhập vị trí thủ công.
+    \item Không tìm thấy trạm: Nếu máy chủ trả về danh sách rỗng, ứng dụng sẽ hiển thị thông báo "Không tìm thấy trạm".
+    \item Điều hướng (Tùy chọn): Nếu người dùng nhấn nút chỉ đường, ứng dụng sẽ yêu cầu MapSDK mở một ứng dụng bản đồ bên ngoài.
+    \item Lỗi mạng (Tùy chọn): Nếu quá trình gọi máy chủ bị lỗi, ứng dụng sẽ hiển thị thông báo lỗi.
+\end{enumerate}
