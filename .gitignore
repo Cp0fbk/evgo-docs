@@ -1,0 +1,35 @@
+# LaTeX build files
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.brf
+*.dvi
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.maf
+*.mtc
+*.mtc*
+*.nav
+*.out
+*.pdf
+*.ps
+*.snm
+*.synctex.gz
+*.toc
+*.xml
+
+# Minted
+_minted-*
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+*.swp
+*~
