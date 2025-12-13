@@ -61,6 +61,86 @@ Customer Service Staff hay còn gọi là nhân viên chăm sóc khách hàng ti
 \subsubsubsection{Chức năng của Người dùng}
  
 \subsubsection{Yêu cầu phi chức năng}
+\subsubsubsection{Hiệu năng (Performance)}
+Yêu cầu về tốc độ và khả năng phản hồi của hệ thống.
+\begin{itemize}
+    \item \textbf{Thời gian phản hồi (Response Time):}
+    \begin{itemize}
+        \item Các thao tác cơ bản (đăng nhập, xem danh sách, xem chi tiết trạm) phải phản hồi dưới 2 giây.
+        \item Kết quả tìm kiếm và lọc trạm sạc phải hiển thị dưới 3 giây
+        \item Quy trình thanh toán phải xử lý trong khoảng 5 giây tùy thuộc vào cổng thanh toán bên thứ 3.
+    \end{itemize}
+    \item \textbf{Xử lý thời gian thực (Real-time Processing):}
+    \begin{itemize}
+        \item Trạng thái cổng sạc (Trống/Đang sạc) và quá trình sạc (mô phỏng phần trăm pin) phải được cập nhật trên ứng dụng người dùng và dashboard chủ trạm với độ trễ thấp.
+    \end{itemize}
+    \item \textbf{Khả năng chịu tải (Concurrency):}
+    \begin{itemize}
+        \item Hệ thống phải hỗ trợ tối thiểu 100 -- 500 người dùng truy cập đồng thời mà không bị sập.
+        \item Hỗ trợ xử lý đồng thời 20 -- 50 giao dịch đặt chỗ/thanh toán cùng một lúc.
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Độ tin cậy \& Sẵn sàng (Reliability \& Availability)}
+Đảm bảo hệ thống luôn hoạt động ổn định.
+\begin{itemize}
+    \item \textbf{Thời gian hoạt động (Uptime):} Hệ thống phải đảm bảo hoạt động 99.9\% thời gian vì liên quan đến việc di chuyển và sạc điện của người dùng.
+    \item \textbf{Sao lưu dữ liệu (Data Backup):} Dữ liệu về giao dịch, lịch sử sạc và tài khoản người dùng phải được tự động sao lưu hàng ngày và có cơ chế khôi phục nhanh chóng khi có sự cố.
+    \item \textbf{Xử lý lỗi (Fault Tolerance):} Nếu module thanh toán gặp lỗi, hệ thống vẫn phải cho phép người dùng xem bản đồ hoặc tra cứu thông tin trạm, không crash toàn bộ ứng dụng.
+\end{itemize}
+
+\subsubsubsection{Bảo mật (Security)}
+Đảm bảo an toàn dữ liệu người dùng, chủ trạm và hệ thống.
+\begin{itemize}
+    \item \textbf{Mã hóa dữ liệu:}
+    \begin{itemize}
+        \item Mật khẩu người dùng phải được mã hóa trong cơ sở dữ liệu.
+        \item Mọi truyền tải dữ liệu qua mạng phải sử dụng giao thức an toàn (HTTPS/SSL).
+    \end{itemize}
+    \item \textbf{Xác thực \& Phân quyền (Authentication \& Authorization):}
+    \begin{itemize}
+        \item Cơ chế xác thực an toàn cho việc đăng nhập đa nền tảng.
+        \item Phân quyền chặt chẽ (RBAC - Role Based Access Control): Người dùng thường không được truy cập API của Admin; Chủ trạm A không được xem doanh thu của Chủ trạm B.
+    \end{itemize}
+    \item \textbf{Bảo mật thanh toán:} Không lưu trực tiếp thông tin thẻ ngân hàng/CVV của người dùng trên hệ thống. Phải tích hợp qua các cổng thanh toán uy tín (Momo, VNPay,...) và tuân thủ chuẩn PCI DSS.
+\end{itemize}
+
+\subsubsubsection{Khả năng sử dụng (Usability)}
+Đảm bảo trải nghiệm người dùng (UX/UI).
+\begin{itemize}
+    \item \textbf{Giao diện người dùng (User Interface):}
+    \begin{itemize}
+        \item \textit{Với User:} Thiết kế Mobile-first, thao tác đặt lịch và tìm đường phải tối giản. Giao diện trực quan, icon rõ ràng.
+        \item \textit{Với Super Admin/Station Owner:} Dashboard quản lý phải hiển thị tốt trên trình duyệt web (Desktop), biểu đồ thống kê dễ đọc.
+    \end{itemize}
+    \item \textbf{Ngôn ngữ:} Hỗ trợ Tiếng Anh để có thể tiếp cận người dùng từ bất kỳ quốc gia nào.
+    \item \textbf{Thông báo:} Thông báo lỗi phải rõ ràng, dễ hiểu.
+\end{itemize}
+
+\subsubsubsection{Khả năng mở rộng (Scalability)}
+Chuẩn bị cho việc phát triển trong tương lai.
+\begin{itemize}
+    \item \textbf{Mở rộng cơ sở dữ liệu:} Hệ thống phải thiết kế để có thể lưu trữ lượng lớn dữ liệu lịch sử giao dịch trong tương lai.
+    \item \textbf{Kiến trúc:} Thiết kế theo hướng Modular Monolith để dễ dàng thêm các module mới mà không ảnh hưởng đến toàn bộ hệ thống.
+\end{itemize}
+
+\subsubsubsection{Khả năng tương thích \& Tích hợp (Interoperability \& Integration)}
+Khả năng giao tiếp với bên thứ 3 và phần cứng.
+\begin{itemize}
+    \item \textbf{Bản đồ:} Tích hợp tốt với Google Maps API hoặc Mapbox để định vị, hiển thị trạm và điều hướng chính xác.
+    \item \textbf{IoT \& Chuẩn sạc:}
+    \begin{itemize}
+        \item Dù hiện tại là mô phỏng, nhưng kiến trúc hệ thống nên hướng tới việc hỗ trợ giao thức \textbf{OCPP (Open Charge Point Protocol)}. Đây là chuẩn quốc tế để phần mềm quản lý giao tiếp với các trụ sạc thực tế.
+    \end{itemize}
+    \item \textbf{Cổng thanh toán:} API phải thiết kế mở để dễ dàng tích hợp thêm các ví điện tử mới trong tương lai.
+\end{itemize}
+
+\subsubsubsection{Yêu cầu về môi trường \& Triển khai}
+Ứng dụng cần hoạt động ổn định trên các nền tảng và thiết bị phổ biến.
+    \begin{itemize}
+        \item User: Ứng dụng chạy mượt trên Android (từ version 10 trở lên) và iOS (từ version 14 trở lên).
+        \item Super Admin/Station Owner/Customer Service Staff: Chạy tốt trên các trình duyệt phổ biến (Chrome, Firefox, Safari, Edge).
+    \end{itemize}
 %\subsubsection{Yêu cầu dữ liệu}
 
 %\subsection{Kết chương}
