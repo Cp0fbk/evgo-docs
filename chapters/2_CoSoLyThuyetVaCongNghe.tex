@@ -1,13 +1,75 @@
 \section{Cơ sở lý thuyết và công nghệ nền tảng}
+
 \subsection{Kiến thức nền tảng}
-\subsubsection{Hệ thống trạm sạc EV}
-\subsubsection{Công nghệ định vị GPS}
-\subsubsection{Mô phỏng tiến trình sạc}
+
+\subsubsection{Công nghệ định vị và Dịch vụ dựa trên vị trí (LBS)}
+Dịch vụ dựa trên vị trí (Location-Based Services - LBS) là nền tảng cho việc tìm kiếm và điều hướng trong ứng dụng. Về mặt kỹ thuật, hệ thống sử dụng dữ liệu không gian (Geospatial Data) bao gồm vĩ độ (Latitude) và kinh độ (Longitude) để xác định vị trí thực thể.
+Các thuật toán cốt lõi bao gồm:
+\begin{itemize}
+    \item \textbf{Geocoding/Reverse Geocoding:} Chuyển đổi giữa tọa độ địa lý và 
+    địa chỉ hành chính.
+    \item \textbf{Routing Algorithm:} Tính toán lộ trình tối ưu dựa trên đồ 
+    thị giao thông, sử dụng các thuật toán như Dijkstra 
+    hoặc A* để tối ưu hóa quãng đường hoặc thời gian di chuyển.
+    \item \textbf{Haversine Formula:} Công thức toán học dùng để tính khoảng cách 
+    đường chim bay giữa hai điểm trên mặt cầu, phục vụ cho tính năng tìm kiếm 
+    trạm sạc gần nhất.
+\end{itemize}
+
+\subsubsection{Mô phỏng tiến trình sạc (Charging Process Simulation)}
+Do không có sự hiện diện của pin vật lý và dòng điện thực, hệ thống sử dụng các mô hình toán học để giả lập tiến trình sạc.
+Mô hình mô phỏng tập trung vào việc tính toán sự thay đổi của \textbf{State of Charge (SoC)} theo thời gian, dựa trên các tham số đầu vào:
+\begin{itemize}
+    \item \textbf{Charging Profile:} Biểu đồ công suất sạc theo thời gian.
+    \item \textbf{Battery Capacity:} Dung lượng tổng của pin giả lập (kWh).
+\end{itemize}
+Hệ thống giả lập các trạng thái chuyển đổi của quy trình sạc đảm bảo tuân thủ đúng trình tự của một phiên sạc thực tế.
 
 \subsection{Các công nghệ sử dụng}
-\subsubsection{Spring Boot}
-\subsubsection{ReactJS / React Native}
-\subsubsection{PostgreSQL}
-\subsubsection{WebSocket}
+
+\subsubsection{Spring Boot Framework}
+Spring Boot được lựa chọn làm nền tảng phát triển \textbf{Backend Service} nhờ kiến trúc mạnh mẽ và khả năng mở rộng cao.
+\begin{itemize}
+    \item \textbf{Dependency Injection (DI) \& Inversion of Control (IoC):} Giúp quản lý sự phụ thuộc giữa các thành phần, tăng tính module hóa và khả năng kiểm thử (Testability).
+    \item \textbf{Spring Data JPA:} Cung cấp lớp trừu tượng hóa để tương tác với cơ sở dữ liệu, hỗ trợ mapping đối tượng - quan hệ (ORM) hiệu quả.
+    \item \textbf{Spring Security:} Framework bảo mật toàn diện hỗ trợ xác thực (Authentication) và phân quyền (Authorization) thông qua JWT và OAuth2.
+\end{itemize}
+
+\subsubsection{ReactJS \& React Native}
+Hệ thống sử dụng hệ sinh thái React để phát triển giao diện người dùng đa nền tảng.
+\begin{itemize}
+    \item \textbf{ReactJS (Admin Dashboard):} Sử dụng kiến trúc \textbf{Component-based} và \textbf{Virtual DOM} để xây dựng Single Page Application (SPA), tối ưu hóa hiệu năng render cho các tác vụ quản lý phức tạp.
+    \item \textbf{React Native (User Mobile App):} Cho phép xây dựng ứng dụng di động (Mobile Application) 
+    cho Android với trải nghiệm 
+    người dùng gần như Native (Native-like performance), sử dụng chung logic nghiệp vụ với phiên bản web.
+\end{itemize}
+
+\subsubsection{PostgreSQL Database}
+PostgreSQL là hệ quản trị cơ sở dữ liệu quan hệ mã nguồn mở, được sử dụng để lưu trữ dữ liệu bền vững.
+\begin{itemize}
+    \item \textbf{ACID Compliance:} Đảm bảo tính toàn vẹn dữ liệu trong các giao dịch tài chính và đặt chỗ.
+    \item \textbf{Extensibility:} Hỗ trợ mạnh mẽ các kiểu dữ liệu phức tạp và khả năng mở rộng cho dữ liệu không gian.
+\end{itemize}
+
+\subsubsection{WebSocket Protocol}
+WebSocket là giao thức truyền thông hai chiều qua một kết nối TCP duy nhất.
+\begin{itemize}
+    \item \textbf{Vai trò:} Đây là công nghệ cốt lõi để triển khai giao thức \textbf{OCPP-J}. Khác với HTTP (Request-Response model), WebSocket cho phép Server chủ động gửi dữ liệu xuống Client.
+    \item \textbf{Ứng dụng:} Duy trì kết nối thời gian thực giữa hệ thống và Simulator, 
+    đảm bảo các bản tin trạng thái và dữ liệu đo đếm được truyền tải với độ trễ thấp nhất.
+\end{itemize}
+
 \subsubsection{Google Maps API}
-\subsubsection{Docker}
+Bộ công cụ phát triển phần mềm (SDK) của Google Maps cung cấp các dịch vụ bản đồ nền tảng.
+\begin{itemize}
+    \item \textbf{Maps JavaScript API / SDK for Mobile:} Hiển thị bản đồ trực quan, hỗ trợ Marker Clustering để quản lý hiển thị mật độ trạm sạc.
+    \item \textbf{Directions API:} Cung cấp thuật toán điều hướng, tính toán thời gian di chuyển và khoảng cách chính xác.
+    \item \textbf{Places API:} Hỗ trợ tính năng Autocomplete khi người dùng tìm kiếm địa điểm.
+\end{itemize}
+
+\subsubsection{Docker \& Containerization}
+Docker được sử dụng để đóng gói ứng dụng vào các \textbf{Containers} độc lập.
+\begin{itemize}
+    \item \textbf{Environment Consistency:} Đảm bảo tính nhất quán của môi trường chạy ứng dụng giữa các giai đoạn Development, Testing và Production.
+    \item \textbf{Microservices Readiness:} Tạo tiền đề cho việc chuyển đổi sang kiến trúc Microservices trong tương lai, cho phép triển khai và mở rộng từng module dịch vụ một cách riêng biệt.
+\end{itemize}
