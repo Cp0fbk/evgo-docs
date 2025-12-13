@@ -124,15 +124,21 @@ Chuẩn bị cho việc phát triển trong tương lai.
     \item \textbf{Kiến trúc:} Thiết kế theo hướng Modular Monolith để dễ dàng thêm các module mới mà không ảnh hưởng đến toàn bộ hệ thống.
 \end{itemize}
 
-\subsubsubsection{Khả năng tương thích \& Tích hợp (Interoperability \& Integration)}
-Khả năng giao tiếp với bên thứ 3 và phần cứng.
+\subsubsection{Khả năng tương thích \& Tích hợp (Interoperability \& Integration)}
+Hệ thống được thiết kế để đảm bảo khả năng giao tiếp liền mạch với các dịch vụ bên thứ ba và môi trường giả lập phần cứng, tuân thủ nghiêm ngặt các tiêu chuẩn công nghiệp.
+
 \begin{itemize}
-    \item \textbf{Bản đồ:} Tích hợp tốt với Google Maps API hoặc Mapbox để định vị, hiển thị trạm và điều hướng chính xác.
-    \item \textbf{IoT \& Chuẩn sạc:}
+    \item \textbf{Dịch vụ Bản đồ (Map Services Integration):} 
+    Tích hợp sâu với \textbf{Google Maps API} hoặc \textbf{Mapbox API} để cung cấp các dịch vụ định vị (Geolocation), hiển thị trực quan mạng lưới trạm sạc và hỗ trợ tính năng điều hướng với độ chính xác cao.
+
+    \item \textbf{IoT \& Giao thức Trạm sạc (IoT \& Charging Protocols):}
     \begin{itemize}
-        \item Dù hiện tại là mô phỏng, nhưng kiến trúc hệ thống nên hướng tới việc hỗ trợ giao thức \textbf{OCPP (Open Charge Point Protocol)}. Đây là chuẩn quốc tế để phần mềm quản lý giao tiếp với các trụ sạc thực tế.
+        \item Hệ thống triển khai kiến trúc tuân thủ tiêu chuẩn \textbf{OCPP (Open Charge Point Protocol)} để thiết lập kênh giao tiếp hai chiều (Two-way Communication) với \textbf{Solid Studio VCP} - một giải pháp giả lập trạm sạc mã nguồn mở (Open-source Virtual Charge Point).
+        \item Việc tích hợp \textbf{Solid Studio VCP} cho phép mô phỏng độ chính xác cao các quy trình vận hành như xác thực, bắt đầu/kết thúc sạc và giám sát dữ liệu đo đếm. Điều này đảm bảo tính sẵn sàng của hệ thống để tích hợp với phần cứng thực tế trong tương lai mà không cần thay đổi kiến trúc lõi.
     \end{itemize}
-    \item \textbf{Cổng thanh toán:} API phải thiết kế mở để dễ dàng tích hợp thêm các ví điện tử mới trong tương lai.
+
+    \item \textbf{Khả năng mở rộng thanh toán (Payment Extensibility):} 
+    Xây dựng kiến trúc \textbf{Open API} cho module thanh toán, cho phép dễ dàng tích hợp (Scalable Integration) với đa dạng các nhà cung cấp dịch vụ thanh toán (Payment Service Providers) hoặc các ví điện tử (E-wallets) mới phát sinh.
 \end{itemize}
 
 \subsubsubsection{Yêu cầu về môi trường \& Triển khai}

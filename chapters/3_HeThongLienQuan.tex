@@ -1,1 +1,56 @@
 \section{Các hệ thống liên quan}
+Hệ thống quản lý trạm sạc (EVGo - Charging Station Management System) hoạt động như một thực thể trung tâm trong một kiến trúc tích hợp phức tạp. Để đảm bảo vận hành toàn diện, hệ thống tương tác với các thành phần ngoại vi và dịch vụ bên thứ ba thông qua các giao thức chuẩn hóa. Sơ đồ ngữ cảnh và mô tả chi tiết các tương tác được trình bày dưới đây.
+
+\subsection{OCPP Simulation Environment (Môi trường Giả lập OCPP)}
+Thay vì kết nối với phần cứng vật lý, hệ thống tích hợp với \textbf{Solid Studio VCP (Virtual Charge Point)}, một khung phần mềm mã nguồn mở chuyên dụng để mô phỏng hành vi của các trạm sạc thực tế tuân thủ chuẩn \textbf{Open Charge Point Protocol (OCPP)}.
+
+\begin{itemize}
+    \item \textbf{Vai trò kiến trúc:} 
+    Hệ thống đóng vai trò là \textbf{Central System (CSMS)}, trong khi Solid Studio VCP đóng vai trò là các \textbf{Charge Point Clients}. Giao tiếp được thực hiện thông qua giao thức \textbf{WebSocket} (phiên bản OCPP-J), đảm bảo kết nối hai chiều và khả năng phản hồi thời gian thực.
+    
+    \item \textbf{Cơ chế hoạt động (Operational Mechanism):} 
+    Solid Studio VCP chịu trách nhiệm khởi tạo và gửi các bản tin OCPP chuẩn (Standard OCPP Messages) về Server để mô phỏng trọn vẹn vòng đời của một phiên sạc:
+    \begin{itemize}
+        \item \textbf{Boot Notification:} Giả lập quá trình khởi động và thực hiện handshake giữa trạm sạc ảo và hệ thống quản lý.
+        \item \textbf{Heartbeat:} Gửi tín hiệu định kỳ để xác nhận tính sẵn sàng của trạm sạc.
+        \item \textbf{Status Notification:} Cập nhật các thay đổi trạng thái của cổng sạc theo thời gian thực, bao gồm: \texttt{Available}, \texttt{Preparing}, \texttt{Charging}, \texttt{SuspendedEV}, hoặc \texttt{Faulted}.
+        \item \textbf{Meter Values:} Gửi dữ liệu đo đếm giả lập về dòng điện, điện áp và điện năng tiêu thụ trong suốt quá trình sạc.
+    \end{itemize}
+    
+    \item \textbf{Xử lý giao dịch (Transaction Handling):} 
+    CSMS gửi các lệnh điều khiển từ xa như \texttt{RemoteStartTransaction}, \texttt{RemoteStopTransaction}, và \texttt{UnlockConnector} tới Solid Studio VCP để kiểm soát phiên sạc và đồng bộ trạng thái.
+\end{itemize}
+
+\subsection{External Payment Gateway (Cổng thanh toán điện tử)}
+Hệ thống tích hợp với các nhà cung cấp dịch vụ tài chính để xử lý các giao dịch nạp tiền và thanh toán phí dịch vụ.
+
+\begin{itemize}
+    \item \textbf{Chức năng:} Xử lý xác thực thanh toán, thực thi giao dịch trừ tiền và xử lý hoàn tiền khi có sự cố.
+    \item \textbf{Cơ chế bảo mật:} Tuân thủ tiêu chuẩn bảo mật \textbf{PCI DSS}. Giao tiếp dữ liệu được bảo vệ bằng mã hóa \textbf{SSL/TLS} và xác thực toàn vẹn dữ liệu thông qua cơ chế \textbf{Digital Signature} hoặc \textbf{HMAC}.
+    \item \textbf{Tương tác:} Sử dụng mô hình \textbf{Asynchronous Callback/Webhook} để nhận thông báo trạng thái giao dịch từ cổng thanh toán, đảm bảo cập nhật số dư ví hoặc trạng thái đơn hàng cho User và Station Owner một cách chính xác.
+\end{itemize}
+
+\subsection{Map \& Navigation Services (Dịch vụ bản đồ \& Điều hướng)}
+CSMS sử dụng API từ nền tảng bản đồ số (Google Maps Platform) để cung cấp các tính năng liên quan đến địa lý.
+
+\begin{itemize}
+    \item \textbf{Geolocation \& Reverse Geocoding:} Xác định tọa độ người dùng và chuyển đổi tọa độ GPS của trạm sạc thành địa chỉ hành chính.
+    \item \textbf{Routing API:} Tính toán lộ trình di chuyển tối ưu và ước tính thời gian đến từ vị trí User đến trạm sạc.
+    \item \textbf{Distance Matrix:} Hỗ trợ thuật toán tìm kiếm trạm sạc gần nhất dựa trên bán kính và điều kiện giao thông thực tế.
+\end{itemize}
+
+\subsection{Notification Services (Dịch vụ thông báo)}
+Hệ thống sử dụng hạ tầng thông báo đa kênh để duy trì tương tác thời gian thực với các bên liên quan.
+
+\begin{itemize}
+    \item \textbf{Push Notification Service (FCM/APNS):} Gửi thông báo đẩy đến thiết bị di động của User về trạng thái phiên sạc hoặc các cảnh báo khẩn cấp tới website của Customer Service Staff.
+    \item \textbf{Email Service (SMTP):} Gửi email xác thực tài khoản, hóa đơn điện tử, và báo cáo thống kê định kỳ cho Station Owner.
+\end{itemize}
+
+\subsection{Cloud Storage Service (Dịch vụ lưu trữ đám mây)}
+Hệ thống sử dụng giải pháp lưu trữ đối tượng (Object Storage) như AWS S3 hoặc Google Cloud Storage để quản lý dữ liệu phi cấu trúc.
+
+\begin{itemize}
+    \item \textbf{Đối tượng lưu trữ:} Bao gồm ảnh đại diện, hình ảnh hiện trường của trạm sạc, tài liệu minh chứng khiếu nại, và các tệp nhật ký hệ thống đã được lưu trữ.
+    \item \textbf{Yêu cầu:} Đảm bảo tính sẵn sàng cao, độ bền dữ liệu và khả năng truy xuất qua CDN (Content Delivery Network) để tối ưu tốc độ tải nội dung.
+\end{itemize}
