@@ -35,7 +35,7 @@ Mô hình toán học tập trung vào sự biến thiên của \textbf{State of
 
 % --- SPRING BOOT ---
 \subsubsection{Spring Boot Framework (Backend Service)}
-Spring Boot được lựa chọn làm nền tảng cốt lõi phát triển hệ thống Charging Station Management System (CSMS). 
+Spring Boot được lựa chọn làm nền tảng cốt lõi phát triển hệ thống EVGo. 
 \begin{itemize}
     \item \textbf{Lý do lựa chọn:}
     Đặc thù của hệ thống trạm sạc là phải xử lý đồng thời (Concurrency) hàng trăm kết nối WebSocket từ các trạm sạc gửi dữ liệu đo đếm liên tục. Java cung cấp mô hình đa luồng (Multi-threading) mạnh mẽ và ổn định hơn cho các tác vụ tính toán tài chính (Billing) so với các nền tảng đơn luồng. Spring Boot giúp giảm thiểu mã nguồn cấu hình (Boilerplate code), cho phép tập trung vào logic nghiệp vụ phức tạp của chuẩn OCPP.

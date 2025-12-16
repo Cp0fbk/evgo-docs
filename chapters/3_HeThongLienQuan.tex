@@ -1,1 +1,135 @@
 \section{Các hệ thống liên quan}
+\subsection{Trạm EV}
+\subsection{Mô tả}
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{figures/other-system/tramev/1-landing.png}
+        \caption{Landing page của ứng dụng Trạm EV}
+        \label{fig:1-landing}
+    \end{figure}
+
+\hspace{1em}Trạm EV là một ứng dụng bản đồ và cộng đồng dành cho người dùng xe điện tại Việt Nam. Ứng dụng hoạt động theo mô hình \textbf{Crowdsourcing (nguồn lực cộng đồng)}, cho phép người dùng tìm kiếm, chia sẻ vị trí và cập nhật thông tin về các trạm sạc công cộng của nhiều hãng xe khác nhau (VinFast, BYD, Tesla, MG...). Nó đóng vai trò là một \textbf{cổng thông tin tổng hợp} (Directory/Aggregator) hơn là một ứng dụng quản lý vận hành trạm sạc chuyên sâu.
+
+% Bộ ảnh giao diện (2x2)
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{figures/other-system/tramev/1-home.png}
+        \caption{Màn hình chào mừng}
+        \label{fig:tramev-home}
+    \end{subfigure}
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{figures/other-system/tramev/1-map.png}
+        \caption{Bản đồ trạm sạc}
+        \label{fig:tramev-map}
+    \end{subfigure}
+
+    \vspace{0.2em}
+
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{figures/other-system/tramev/1-setting.png}
+        \caption{Màn hình cài đặt}
+        \label{fig:tramev-setting}
+    \end{subfigure}
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{figures/other-system/tramev/1-setting2.png}
+        \caption{Góc tư vấn - hỗ trợ}
+        \label{fig:tramev-setting2}
+    \end{subfigure}
+
+    \caption{Giao diện chính của ứng dụng Trạm EV}
+    \label{fig:tramev-grid}
+\end{figure}
+Không giống với hệ thống EVGo, ứng dụng Trạm EV không 
+hỗ trợ tài khoản chủ trạm sạc mà cho phép người dùng đóng góp vị trí 
+trạm sạc, thông tin trạm (công suất, loại cổng, giá tiền...). Bên cạnh
+đó, khi dùng tính năng chỉ đường, ứng dụng sẽ mở một app bản đồ bên thứ ba
+(Google Maps, Apple Maps, Waze) để điều hướng đến trạm thay vì tích hợp chỉ đường
+ngay trong app như EVGo.
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{figures/other-system/tramev/1-so.png}
+        \caption{Màn hình 1 đóng góp thông tin trạm sạc mới}
+        \label{fig:tramev-so}
+    \end{subfigure}
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{figures/other-system/tramev/1-so2.png}
+        \caption{Màn hình 2 đóng góp thông tin trạm sạc mới}
+        \label{fig:tramev-so2}
+    \end{subfigure}
+
+    \vspace{0.2em}
+
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{figures/other-system/tramev/1-find1.png}
+        \caption{Màn hình thông tin trạm sạc}
+        \label{fig:tramev-find}
+    \end{subfigure}
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{figures/other-system/tramev/1-find.png}
+        \caption{Màn hình khi bấm chỉ đường}
+        \label{fig:tramev-find2}
+    \end{subfigure}
+
+    \caption{Giao diện chính của ứng dụng Trạm EV}
+    \label{fig:tramev-grid}
+\end{figure}
+
+\subsubsection{Ưu điểm}
+\hspace{1em}Về mặt tiếp cận thị trường, 'Trạm EV' đã giải quyết tốt bài toán phân mảnh thông tin trạm sạc nhờ vào các ưu điểm sau:
+\begin{itemize}
+    \item \textbf{Hệ sinh thái mở (Open Ecosystem):} Không giới hạn ở một hãng xe cụ thể, hỗ trợ tìm kiếm trạm cho nhiều dòng xe (Volvo, Ford, Geely...).
+    \item \textbf{Tận dụng sức mạnh cộng đồng:} Tính năng "Đóng góp trạm sạc" cho phép người dùng tự thêm trạm mới, cập nhật giá tiền, loại cổng sạc (Type 2, CCS...), giúp dữ liệu trạm sạc luôn phong phú mà nhà phát triển không cần đi khảo sát thủ công quá nhiều.
+    \item \textbf{Tích hợp dịch vụ gia tăng (Value-added Services):} Ngoài tìm trạm, app còn có các mục "Góc tư vấn - hỗ trợ" như: Tư vấn mua xe, Tư vấn lắp đặt bộ sạc, So sánh mẫu xe. Đây là cách rất hay để giữ chân người dùng và tạo ra doanh thu phụ trợ.
+    \item \textbf{Cung cấp thông tin thị trường:} Có mục "Tin tức" giúp người dùng cập nhật tình hình xe điện (ví dụ tin về BYD), tạo thành một mạng xã hội thu nhỏ cho giới chủ xe.
+    \item \textbf{Giao diện trực quan:} Thiết kế Dark Mode hiện đại, các trường thông tin đóng góp khá chi tiết (công suất kW, số lượng cổng).
+\end{itemize}
+
+\subsubsection{Nhược điểm}
+\hspace{1em}Bên cạnh những lợi thế về mặt thông tin, mô hình vận hành của ứng dụng vẫn tồn tại một số hạn chế về mặt kỹ thuật và trải nghiệm người dùng liền mạch (Seamless Experience) cần được khắc phục:
+\begin{itemize}
+    \item \textbf{Phụ thuộc vào bên thứ 3 để điều hướng:} Như thể hiện, khi người dùng muốn đi đến trạm, app yêu cầu mở một ứng dụng khác (Google Maps, Apple Maps, Waze). Điều này làm đứt gãy trải nghiệm người dùng (User Flow), khiến người dùng phải chuyển qua lại giữa 2 app.
+    \item \textbf{Thiếu tính năng kiểm soát trạm sạc (No IoT Control):} Ứng dụng chỉ dừng lại ở mức "chỉ điểm". Người dùng không thể thao tác "Bắt đầu sạc" (Start Charging), "Dừng sạc" hay thanh toán trực tiếp cho phiên sạc thông qua app này (trừ khi trạm đó có QR code riêng).
+    \item \textbf{Độ chính xác dữ liệu không đảm bảo:} Do dựa vào cộng đồng đóng góp, thông tin có thể bị sai lệch (ví dụ: trạm đã hỏng nhưng trên app vẫn báo hoạt động, hoặc giá điện đã tăng nhưng chưa ai cập nhật).
+\end{itemize}
+
+\subsubsection{So sánh với hệ thống EVGo}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|p{5cm}|p{5cm}|}
+        \hline
+        \textbf{Tiêu chí} & \textbf{Trạm EV (Đối thủ)} & \textbf{EVGo (Hệ thống của bạn)} \\
+        \hline
+        \textbf{Bản chất hệ thống} & \textbf{Information Aggregator} (Tổng hợp thông tin). Chỉ là bản đồ tĩnh. & \textbf{Information \& Operation Management} (Quản lý vận hành). Là hệ thống điều khiển thực thụ cho cả chủ trạm sạc và người sạc. \\
+        \hline
+        \textbf{Điều hướng (Navigation)} & \textbf{Bị động:} Phải thoát ra ngoài dùng Google Maps. & \textbf{Chủ động:} Tích hợp chỉ đường ngay trong app (In-app Navigation). Giữ chân người dùng ở lại ứng dụng 100\% thời gian. \\
+        \hline
+        \textbf{Quy trình sạc} & \textbf{Không có:} Người dùng đến nơi phải tự tìm cách sạc (dùng thẻ, dùng app khác của hãng trạm). & \textbf{Khép kín (All-in-one):} Quét QR, chọn sạc, theo dõi phần trăm pin và cuối cùng là thanh toán ngay trên một app. \\
+        \hline
+        \textbf{Giám sát (Monitoring)} & Không thể xem được trạm đang sạc bao nhiêu phần trăm, bao lâu thì đầy. & \textbf{Real-time (OCPP):} Theo dõi SoC (State of Charge), dòng điện, điện áp và thời gian còn lại theo thời gian thực. \\
+        \hline
+        \textbf{Tính năng đặt chỗ} & Không có (vì không kết nối trực tiếp với chủ trạm). & \textbf{Booking/Reservation:} Có thể đặt lịch sạc trước để đảm bảo khi đến nơi có chỗ sạc (nhờ kết nối WebSocket với trạm). \\
+        \hline
+    \end{tabular}
+    \caption{So sánh giữa Trạm EV và EVGo}
+    \label{tab:compare_ev_apps}
+\end{table}
+
+\subsubsection{Kết luận}
+\hspace{1em}Trong khi "Trạm EV" giải quyết tốt bài toán tìm kiếm địa điểm 
+và cộng đồng, thì \textbf{EVGo} định vị mình là một giải pháp
+ cốt lõi giải quyết trọn vẹn nỗi đau của 
+ người dùng từ lúc tìm đường, sạc điện cho đến khi thanh toán mà 
+ không cần rời khỏi ứng dụng. EVGo vượt trội hơn về 
+ mặt công nghệ (OCPP) và trải nghiệm người dùng liền mạch.
+
+\subsection{EBoost}
