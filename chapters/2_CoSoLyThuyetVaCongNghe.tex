@@ -2,74 +2,157 @@
 
 \subsection{Kiến thức nền tảng}
 
-\subsubsection{Công nghệ định vị và Dịch vụ dựa trên vị trí (LBS)}
-Dịch vụ dựa trên vị trí (Location-Based Services - LBS) là nền tảng cho việc tìm kiếm và điều hướng trong ứng dụng. Về mặt kỹ thuật, hệ thống sử dụng dữ liệu không gian (Geospatial Data) bao gồm vĩ độ (Latitude) và kinh độ (Longitude) để xác định vị trí thực thể.
-Các thuật toán cốt lõi bao gồm:
+\section{Cơ sở lý thuyết và công nghệ nền tảng}
+
+\subsection{Kiến thức nền tảng}
+
+\subsubsection{Giao thức OCPP (Open Charge Point Protocol)}
+Open Charge Point Protocol (OCPP) là giao thức truyền thông tiêu chuẩn mở, được công nhận toàn cầu, cho phép giao tiếp hai chiều giữa Trạm sạc xe điện (EVSE - Electric Vehicle Supply Equipment) và Hệ thống quản lý trung tâm (CSMS - Charging Station Management System).
+
+Trong phạm vi đề tài, hệ thống áp dụng phiên bản OCPP 1.6J (JSON over WebSocket) với các đặc điểm lý thuyết sau:
 \begin{itemize}
-    \item \textbf{Geocoding/Reverse Geocoding:} Chuyển đổi giữa tọa độ địa lý và 
-    địa chỉ hành chính.
-    \item \textbf{Routing Algorithm:} Tính toán lộ trình tối ưu dựa trên đồ 
-    thị giao thông, sử dụng các thuật toán như Dijkstra 
-    hoặc A* để tối ưu hóa quãng đường hoặc thời gian di chuyển.
-    \item \textbf{Haversine Formula:} Công thức toán học dùng để tính khoảng cách 
-    đường chim bay giữa hai điểm trên mặt cầu, phục vụ cho tính năng tìm kiếm 
-    trạm sạc gần nhất.
+    \item \textbf{Mô hình hướng sự kiện (Event-Driven):} Khác với mô hình Polling truyền thống, OCPP hoạt động dựa trên sự kiện. Trạm sạc sẽ chủ động gửi bản tin (Message) khi có thay đổi trạng thái (ví dụ: \textit{StatusNotification} khi súng sạc được cắm, \textit{MeterValues} định kỳ để báo chỉ số điện năng).
+    \item \textbf{Cơ chế quản lý phiên (Transaction Management):} Một phiên sạc được định nghĩa chặt chẽ bởi cặp bản tin \textit{StartTransaction} và \textit{StopTransaction}. Hệ thống phải đảm bảo tính nguyên tử (Atomicity) và toàn vẹn của cặp bản tin này để tính toán chi phí chính xác.
+    \item \textbf{Operations Profiles:} Các nhóm chức năng cốt lõi bao gồm:
+    \begin{itemize}
+        \item \textit{Core Profile:} Khởi động, dừng sạc, xác thực thẻ RFID, và gửi trạng thái.
+        \item \textit{Firmware Management:} Cập nhật phần mềm trạm sạc từ xa.
+        \item \textit{Remote Trigger:} Cho phép Server chủ động yêu cầu trạm sạc gửi dữ liệu mà không cần đợi chu kỳ định sẵn.
+    \end{itemize}
 \end{itemize}
 
 \subsubsection{Mô phỏng tiến trình sạc (Charging Process Simulation)}
-Do không có sự hiện diện của pin vật lý và dòng điện thực, hệ thống sử dụng các mô hình toán học để giả lập tiến trình sạc.
-Mô hình mô phỏng tập trung vào việc tính toán sự thay đổi của \textbf{State of Charge (SoC)} theo thời gian, dựa trên các tham số đầu vào:
+Do hạn chế về phần cứng vật lý trong quá trình phát triển, việc xây dựng mô hình mô phỏng dựa trên hành vi vật lý của pin là cần thiết.
+Mô hình toán học tập trung vào sự biến thiên của \textbf{State of Charge (SoC)}:
 \begin{itemize}
-    \item \textbf{Charging Profile:} Biểu đồ công suất sạc theo thời gian.
-    \item \textbf{Battery Capacity:} Dung lượng tổng của pin giả lập (kWh).
+    \item \textbf{Hàm sạc phi tuyến tính:} Công suất sạc $P(t)$ không hằng số mà phụ thuộc vào trạng thái hiện tại của pin, tuân theo mô hình CC-CV (Constant Current - Constant Voltage).
+    \item \textbf{Công thức ước lượng:} Thời gian còn lại ($T_{remain}$) được tính toán dựa trên dung lượng pin $C_{total}$, mức năng lượng hiện tại $E_{current}$ và công suất sạc tức thời $P_{inst}$:
+    $$ T_{remain} = \frac{C_{total} - E_{current}}{P_{inst} \times \eta} $$
+    Trong đó $\eta$ là hiệu suất chuyển đổi năng lượng (Charging Efficiency).
 \end{itemize}
-Hệ thống giả lập các trạng thái chuyển đổi của quy trình sạc đảm bảo tuân thủ đúng trình tự của một phiên sạc thực tế.
 
 \subsection{Các công nghệ sử dụng}
 
-\subsubsection{Spring Boot Framework}
-Spring Boot được lựa chọn làm nền tảng phát triển \textbf{Backend Service} nhờ kiến trúc mạnh mẽ và khả năng mở rộng cao.
+% --- SPRING BOOT ---
+\subsubsection{Spring Boot Framework (Backend Service)}
+Spring Boot được lựa chọn làm nền tảng cốt lõi phát triển hệ thống Charging Station Management System (CSMS). 
 \begin{itemize}
-    \item \textbf{Dependency Injection (DI) \& Inversion of Control (IoC):} Giúp quản lý sự phụ thuộc giữa các thành phần, tăng tính module hóa và khả năng kiểm thử (Testability).
-    \item \textbf{Spring Data JPA:} Cung cấp lớp trừu tượng hóa để tương tác với cơ sở dữ liệu, hỗ trợ mapping đối tượng - quan hệ (ORM) hiệu quả.
-    \item \textbf{Spring Security:} Framework bảo mật toàn diện hỗ trợ xác thực (Authentication) và phân quyền (Authorization) thông qua JWT và OAuth2.
+    \item \textbf{Lý do lựa chọn:}
+    Đặc thù của hệ thống trạm sạc là phải xử lý đồng thời (Concurrency) hàng trăm kết nối WebSocket từ các trạm sạc gửi dữ liệu đo đếm liên tục. Java cung cấp mô hình đa luồng (Multi-threading) mạnh mẽ và ổn định hơn cho các tác vụ tính toán tài chính (Billing) so với các nền tảng đơn luồng. Spring Boot giúp giảm thiểu mã nguồn cấu hình (Boilerplate code), cho phép tập trung vào logic nghiệp vụ phức tạp của chuẩn OCPP.
+    
+    \item \textbf{Ưu điểm:}
+    \begin{itemize}
+        \item \textbf{Dependency Injection (DI) \& IoC:} Tăng tính module hóa, giúp code dễ đọc, dễ bảo trì và dễ dàng viết Unit Test thông qua cơ chế Mocking.
+        \item \textbf{Type Safety:} Là ngôn ngữ định kiểu tĩnh, Java giúp phát hiện lỗi ngay trong quá trình biên dịch (Compile-time), đảm bảo sự an toàn cho các module thanh toán tiền tệ.
+        \item \textbf{Hệ sinh thái trưởng thành:} Tích hợp sẵn Spring Security (bảo mật), Spring Data JPA (ORM) và Spring Cloud, đáp ứng tốt các tiêu chuẩn Enterprise.
+    \end{itemize}
+    
+    \item \textbf{Nhược điểm:}
+    \begin{itemize}
+        \item \textbf{Mức tiêu thụ tài nguyên:} Java Virtual Machine (JVM) yêu cầu lượng RAM khởi động lớn hơn đáng kể so với NodeJS hay Go.
+        \item \textbf{Thời gian khởi động (Cold Start):} Khá chậm, có thể ảnh hưởng nếu triển khai theo kiến trúc Serverless (tuy nhiên với kiến trúc Microservices chạy nền hiện tại thì không phải vấn đề lớn).
+    \end{itemize}
 \end{itemize}
 
-\subsubsection{ReactJS \& React Native}
-Hệ thống sử dụng hệ sinh thái React để phát triển giao diện người dùng đa nền tảng.
+% --- REACT ---
+\subsubsection{React Ecosystem (ReactJS \& React Native)}
+Hệ thống sử dụng hệ sinh thái React của Meta cho cả Web Admin và Mobile App.
 \begin{itemize}
-    \item \textbf{ReactJS (Admin Dashboard):} Sử dụng kiến trúc \textbf{Component-based} và \textbf{Virtual DOM} để xây dựng Single Page Application (SPA), tối ưu hóa hiệu năng render cho các tác vụ quản lý phức tạp.
-    \item \textbf{React Native (User Mobile App):} Cho phép xây dựng ứng dụng di động (Mobile Application) 
-    cho Android với trải nghiệm 
-    người dùng gần như Native (Native-like performance), sử dụng chung logic nghiệp vụ với phiên bản web.
+    \item \textbf{Lý do lựa chọn:}
+    Yêu cầu tiên quyết của dự án là tính thời gian thực (Real-time UI): hiển thị phần trăm pin (SoC) và công suất sạc biến thiên theo giây. React với cơ chế Virtual DOM giúp cập nhật giao diện mượt mà mà không cần tải lại trang. Chiến lược "Learn Once, Write Anywhere" giúp đồng nhất logic nghiệp vụ giữa phiên bản Web và Mobile.
+    
+    \item \textbf{Ưu điểm:}
+    \begin{itemize}
+        \item \textbf{Component-based Architecture:} Cho phép chia nhỏ giao diện thành các thành phần tái sử dụng (Button, Chart, MapView), giúp tăng tốc độ phát triển và nhất quán về thiết kế (Design System).
+        \item \textbf{Native Performance (React Native):} Khác với Hybrid App (Webview), React Native render ra các thành phần UI gốc của hệ điều hành, mang lại trải nghiệm mượt mà (60fps) cho người dùng di động.
+        \item \textbf{Cộng đồng lớn:} Dễ dàng tìm kiếm các thư viện hỗ trợ hiển thị biểu đồ và bản đồ phức tạp.
+    \end{itemize}
+    
+    \item \textbf{Nhược điểm:}
+    \begin{itemize}
+        \item \textbf{Quản lý trạng thái (State Management):} Với các ứng dụng lớn, việc quản lý luồng dữ liệu (Data Flow) trở nên phức tạp, đòi hỏi phải sử dụng thêm Redux hoặc Context API một cách khéo léo để tránh render dư thừa.
+        \item \textbf{Tốc độ cập nhật thư viện:} Hệ sinh thái thay đổi quá nhanh (Breaking Changes), đòi hỏi chi phí bảo trì cao để cập nhật dependencies.
+    \end{itemize}
 \end{itemize}
 
+% --- POSTGRESQL ---
 \subsubsection{PostgreSQL Database}
-PostgreSQL là hệ quản trị cơ sở dữ liệu quan hệ mã nguồn mở, được sử dụng để lưu trữ dữ liệu bền vững.
+Hệ quản trị cơ sở dữ liệu quan hệ (RDBMS) mã nguồn mở tiên tiến nhất hiện nay.
 \begin{itemize}
-    \item \textbf{ACID Compliance:} Đảm bảo tính toàn vẹn dữ liệu trong các giao dịch tài chính và đặt chỗ.
-    \item \textbf{Extensibility:} Hỗ trợ mạnh mẽ các kiểu dữ liệu phức tạp và khả năng mở rộng cho dữ liệu không gian.
+    \item \textbf{Lý do lựa chọn:}
+    Dự án yêu cầu xử lý dữ liệu không gian địa lý (Geospatial Data) để tìm kiếm trạm sạc. MySQL có hỗ trợ spatial nhưng hạn chế về khả năng phân tích và tối ưu truy vấn so với PostgreSQL sở hữu \textbf{PostGIS} - engine không gian mạnh mẽ nhất thế giới mã nguồn mở. Ngoài ra, khả năng hỗ trợ kiểu dữ liệu JSONB cho phép lưu trữ cấu hình linh động của các trạm sạc mà không phá vỡ cấu trúc bảng (Schema).
+    
+    \item \textbf{Ưu điểm:}
+    \begin{itemize}
+        \item \textbf{ACID Compliance:} Đảm bảo tính toàn vẹn tuyệt đối cho các giao dịch nạp tiền, trừ tiền và lịch sử sạc.
+        \item \textbf{Advanced Indexing:} Hỗ trợ các chỉ mục phức tạp như GiST, GIN giúp truy vấn bản đồ và tìm kiếm Full-text cực nhanh.
+        \item \textbf{Extensibility:} Dễ dàng mở rộng tính năng thông qua các Extension mà không cần biên dịch lại nhân database.
+    \end{itemize}
+    
+    \item \textbf{Nhược điểm:}
+    \begin{itemize}
+        \item \textbf{Tốc độ ghi (Write Performance):} Chậm hơn so với các NoSQL Database (như MongoDB) khi xử lý lượng lớn Log dữ liệu thô (Raw Logs).
+        \item \textbf{Khả năng mở rộng ngang (Horizontal Scaling):} Việc phân mảnh dữ liệu (Sharding) trên Postgres phức tạp hơn nhiều so với các hệ quản trị NoSQL.
+    \end{itemize}
 \end{itemize}
 
-\subsubsection{WebSocket Protocol}
-WebSocket là giao thức truyền thông hai chiều qua một kết nối TCP duy nhất.
+% --- WEBSOCKET ---
+\subsubsection{WebSocket Protocol (OCPP Implementation)}
+Giao thức truyền thông song công toàn phần (Full-duplex) qua kết nối TCP.
 \begin{itemize}
-    \item \textbf{Vai trò:} Đây là công nghệ cốt lõi để triển khai giao thức \textbf{OCPP-J}. Khác với HTTP (Request-Response model), WebSocket cho phép Server chủ động gửi dữ liệu xuống Client.
-    \item \textbf{Ứng dụng:} Duy trì kết nối thời gian thực giữa hệ thống và Simulator, 
-    đảm bảo các bản tin trạng thái và dữ liệu đo đếm được truyền tải với độ trễ thấp nhất.
+    \item \textbf{Lý do lựa chọn:}
+    Chuẩn giao tiếp OCPP yêu cầu Server phải có khả năng \textbf{chủ động} gửi lệnh xuống trạm sạc (ví dụ: lệnh dừng sạc khẩn cấp hoặc cập nhật phần mềm). Giao thức HTTP truyền thống (Request-Response) hoàn toàn bị động ở phía Server. WebSocket giải quyết bài toán này bằng cách duy trì một "đường ống" kết nối liên tục.
+    
+    \item \textbf{Ưu điểm:}
+    \begin{itemize}
+        \item \textbf{Low Latency:} Loại bỏ độ trễ của quá trình bắt tay (TCP Handshake) lặp lại, cho phép truyền dữ liệu thời gian thực gần như tức thì.
+        \item \textbf{Reduced Overhead:} Header của gói tin WebSocket nhỏ hơn nhiều so với HTTP, giúp tiết kiệm băng thông mạng 3G/4G cho trạm sạc.
+    \end{itemize}
+    
+    \item \textbf{Nhược điểm:}
+    \begin{itemize}
+        \item \textbf{Stateful Protocol:} Server phải lưu trữ trạng thái kết nối. Điều này gây khó khăn khi cần cân bằng tải (Load Balancing) vì Client bị gắn chặt với một Server cụ thể (cần giải pháp Sticky Session hoặc Redis Pub/Sub để mở rộng).
+        \item \textbf{Firewall Issues:} Một số tường lửa doanh nghiệp chặn kết nối WebSocket nếu không được cấu hình đúng.
+    \end{itemize}
 \end{itemize}
 
-\subsubsection{Google Maps API}
-Bộ công cụ phát triển phần mềm (SDK) của Google Maps cung cấp các dịch vụ bản đồ nền tảng.
+% --- GOOGLE MAPS ---
+\subsubsection{Google Maps Platform}
+Bộ công cụ bản đồ và định vị số một thế giới.
 \begin{itemize}
-    \item \textbf{Maps JavaScript API / SDK for Mobile:} Hiển thị bản đồ trực quan, hỗ trợ Marker Clustering để quản lý hiển thị mật độ trạm sạc.
-    \item \textbf{Directions API:} Cung cấp thuật toán điều hướng, tính toán thời gian di chuyển và khoảng cách chính xác.
-    \item \textbf{Places API:} Hỗ trợ tính năng Autocomplete khi người dùng tìm kiếm địa điểm.
+    \item \textbf{Lý do lựa chọn:}
+    Bài toán lớn nhất của xe điện là "Range Anxiety" (nỗi lo hết pin). Dữ liệu bản đồ miễn phí (như OpenStreetMap) thường thiếu thông tin giao thông thời gian thực (Traffic) và địa điểm (POI) tại Việt Nam. Google Maps cung cấp thuật toán Routing chính xác nhất, giúp ước lượng thời gian di chuyển thực tế để người dùng không bị hết pin giữa đường.
+    
+    \item \textbf{Ưu điểm:}
+    \begin{itemize}
+        \item \textbf{Data Accuracy:} Độ chính xác dữ liệu địa lý và giao thông vượt trội.
+        \item \textbf{Feature-rich SDK:} Hỗ trợ sẵn các tính năng cao cấp như Clustering (gom nhóm marker), Autocomplete, và Heatmap.
+    \end{itemize}
+    
+    \item \textbf{Nhược điểm:}
+    \begin{itemize}
+        \item \textbf{Cost:} Chi phí sử dụng cao khi quy mô người dùng tăng lên (Pay-as-you-go).
+        \item \textbf{Vendor Lock-in:} Phụ thuộc hoàn toàn vào chính sách của Google, khó chuyển đổi sang nền tảng khác nếu đã tích hợp sâu.
+    \end{itemize}
 \end{itemize}
 
-\subsubsection{Docker \& Containerization}
-Docker được sử dụng để đóng gói ứng dụng vào các \textbf{Containers} độc lập.
+% --- DOCKER ---
+\subsubsection{Docker (Containerization)}
+Nền tảng ảo hóa ở cấp độ hệ điều hành (OS-level virtualization).
 \begin{itemize}
-    \item \textbf{Environment Consistency:} Đảm bảo tính nhất quán của môi trường chạy ứng dụng giữa các giai đoạn Development, Testing và Production.
-    \item \textbf{Microservices Readiness:} Tạo tiền đề cho việc chuyển đổi sang kiến trúc Microservices trong tương lai, cho phép triển khai và mở rộng từng module dịch vụ một cách riêng biệt.
+    \item \textbf{Lý do lựa chọn:}
+    Hệ thống bao gồm nhiều thành phần không đồng nhất: Backend (Java 17), Simulator (NodeJS 18), Database (Postgres 14). Docker giúp tiêu chuẩn hóa môi trường, đảm bảo tính nhất quán tuyệt đối giữa môi trường phát triển (Dev) và môi trường triển khai (Production).
+    
+    \item \textbf{Ưu điểm:}
+    \begin{itemize}
+        \item \textbf{Isolation:} Các ứng dụng chạy trong container độc lập, không xung đột thư viện với nhau.
+        \item \textbf{Deployment Speed:} Triển khai và khởi động container nhanh hơn nhiều so với máy ảo (VM) truyền thống.
+        \item \textbf{Microservices Ready:} Là nền tảng tiêu chuẩn để chuyển đổi sang kiến trúc Microservices và quản lý bằng Kubernetes sau này.
+    \end{itemize}
+    
+    \item \textbf{Nhược điểm:}
+    \begin{itemize}
+        \item \textbf{Complexity:} Tăng độ phức tạp trong việc quản lý mạng (Networking) giữa các container và lưu trữ dữ liệu bền vững (Data Persistence).
+        \item \textbf{Learning Curve:} Đòi hỏi kiến thức về DevOps để cấu hình tối ưu Dockerfile và Docker Compose.
+    \end{itemize}
 \end{itemize}
