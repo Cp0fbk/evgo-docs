@@ -13,30 +13,36 @@
 % Bộ ảnh giao diện (2x2)
 \begin{figure}[H]
     \centering
-    \begin{subfigure}{0.24\textwidth}
+    % --- HÀNG 1 ---
+    \begin{subfigure}[b]{0.36\textwidth}
         \centering
-        \includegraphics[width=0.9\linewidth]{figures/other-system/tramev/1-home.png}
+        % width=1\linewidth nghĩa là ảnh sẽ rộng bằng cái khung 0.45 ở trên
+        \includegraphics[width=0.8\linewidth]{figures/other-system/tramev/1-home.png}
         \caption{Màn hình chào mừng}
         \label{fig:tramev-home}
     \end{subfigure}
-    \begin{subfigure}{0.24\textwidth}
+    \hfill % Lệnh này đẩy 2 hình dãn đều sang 2 bên lề
+    \begin{subfigure}[b]{0.36\textwidth}
         \centering
-        \includegraphics[width=0.9\linewidth]{figures/other-system/tramev/1-map.png}
+        \includegraphics[width=0.8\linewidth]{figures/other-system/tramev/1-map.png}
         \caption{Bản đồ trạm sạc}
         \label{fig:tramev-map}
     \end{subfigure}
 
-    \vspace{0.2em}
-
-    \begin{subfigure}{0.24\textwidth}
+    % --- KHOẢNG CÁCH GIỮA 2 HÀNG ---
+    \vspace{1em} % Tạo khoảng cách dọc, đồng thời ngắt dòng
+    
+    % --- HÀNG 2 ---
+    \begin{subfigure}[b]{0.36\textwidth}
         \centering
-        \includegraphics[width=0.9\linewidth]{figures/other-system/tramev/1-setting.png}
+        \includegraphics[width=0.8\linewidth]{figures/other-system/tramev/1-setting.png}
         \caption{Màn hình cài đặt}
         \label{fig:tramev-setting}
     \end{subfigure}
-    \begin{subfigure}{0.24\textwidth}
+    \hfill % Đẩy đều
+    \begin{subfigure}[b]{0.36\textwidth}
         \centering
-        \includegraphics[width=0.9\linewidth]{figures/other-system/tramev/1-setting2.png}
+        \includegraphics[width=0.8\linewidth]{figures/other-system/tramev/1-setting2.png}
         \caption{Góc tư vấn - hỗ trợ}
         \label{fig:tramev-setting2}
     \end{subfigure}
@@ -52,30 +58,32 @@ trạm sạc, thông tin trạm (công suất, loại cổng, giá tiền...). B
 ngay trong app như EVGo.
 \begin{figure}[H]
     \centering
-    \begin{subfigure}{0.24\textwidth}
+    \begin{subfigure}{0.36\textwidth}
         \centering
-        \includegraphics[width=0.9\linewidth]{figures/other-system/tramev/1-so.png}
+        \includegraphics[width=0.8\linewidth]{figures/other-system/tramev/1-so.png}
         \caption{Màn hình 1 đóng góp thông tin trạm sạc mới}
         \label{fig:tramev-so}
     \end{subfigure}
-    \begin{subfigure}{0.24\textwidth}
+    \hfill
+    \begin{subfigure}{0.36\textwidth}
         \centering
-        \includegraphics[width=0.9\linewidth]{figures/other-system/tramev/1-so2.png}
+        \includegraphics[width=0.8\linewidth]{figures/other-system/tramev/1-so2.png}
         \caption{Màn hình 2 đóng góp thông tin trạm sạc mới}
         \label{fig:tramev-so2}
     \end{subfigure}
 
-    \vspace{0.2em}
+    \vspace{1em}
 
-    \begin{subfigure}{0.24\textwidth}
+    \begin{subfigure}{0.36\textwidth}
         \centering
-        \includegraphics[width=0.9\linewidth]{figures/other-system/tramev/1-find1.png}
+        \includegraphics[width=0.8\linewidth]{figures/other-system/tramev/1-find1.png}
         \caption{Màn hình thông tin trạm sạc}
         \label{fig:tramev-find}
     \end{subfigure}
-    \begin{subfigure}{0.24\textwidth}
+    \hfill
+    \begin{subfigure}{0.36\textwidth}
         \centering
-        \includegraphics[width=0.9\linewidth]{figures/other-system/tramev/1-find.png}
+        \includegraphics[width=0.8\linewidth]{figures/other-system/tramev/1-find.png}
         \caption{Màn hình khi bấm chỉ đường}
         \label{fig:tramev-find2}
     \end{subfigure}
@@ -125,13 +133,7 @@ ngay trong app như EVGo.
 \end{table}
 
 \subsubsection{Kết luận}
-\hspace{1em}Trong khi "Trạm EV" giải quyết tốt bài toán tìm kiếm địa điểm 
-và cộng đồng, thì \textbf{EVGo} định vị mình là một giải pháp
- cốt lõi giải quyết trọn vẹn nỗi đau của 
- người dùng từ lúc tìm đường, sạc điện cho đến khi thanh toán mà 
- không cần rời khỏi ứng dụng. EVGo vượt trội hơn về 
- mặt công nghệ (OCPP) và trải nghiệm người dùng liền mạch.
-
+\hspace{1em}Trong khi "Trạm EV" giải quyết tốt bài toán tìm kiếm địa điểm và cộng đồng, thì \textbf{EVGo} định vị mình là một giải pháp cốt lõi giải quyết trọn vẹn nỗi đau của người dùng từ lúc tìm đường, sạc điện cho đến khi thanh toán mà không cần rời khỏi ứng dụng. EVGo vượt trội hơn về mặt công nghệ (OCPP) và trải nghiệm người dùng liền mạch.
 \subsection{EBoost}
 \subsubsection{Mô tả}
 \begin{figure}[H]
