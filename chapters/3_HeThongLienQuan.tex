@@ -107,7 +107,7 @@ ngay trong app như EVGo.
     \centering
     \begin{tabular}{|l|p{5cm}|p{5cm}|}
         \hline
-        \textbf{Tiêu chí} & \textbf{Trạm EV (Đối thủ)} & \textbf{EVGo (Hệ thống của bạn)} \\
+        \textbf{Tiêu chí} & \textbf{Trạm EV} & \textbf{EVGo} \\
         \hline
         \textbf{Bản chất hệ thống} & \textbf{Information Aggregator} (Tổng hợp thông tin). Chỉ là bản đồ tĩnh. & \textbf{Information \& Operation Management} (Quản lý vận hành). Là hệ thống điều khiển thực thụ cho cả chủ trạm sạc và người sạc. \\
         \hline
@@ -133,3 +133,93 @@ và cộng đồng, thì \textbf{EVGo} định vị mình là một giải pháp
  mặt công nghệ (OCPP) và trải nghiệm người dùng liền mạch.
 
 \subsection{EBoost}
+\subsubsection{Mô tả}
+\begin{figure}[H]
+    \centering
+    % Row 1
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{figures/other-system/eboost/home.jpg}
+        \caption{Màn hình trang chủ}
+        \label{fig:eboost-home}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{figures/other-system/eboost/map1.jpg}
+        \caption{Màn hình bản đồ trạm sạc}
+        \label{fig:eboost-map1}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{figures/other-system/eboost/charging.jpg}
+        \caption{Màn hình sạc}
+        \label{fig:eboost-charging}
+    \end{subfigure}
+
+    \vspace{0.4em}
+
+    % Row 2
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{figures/other-system/eboost/qr.jpg}
+        \caption{Quét mã QR để bắt đầu sạc}
+        \label{fig:eboost-qr}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{figures/other-system/eboost/setting.jpg}
+        \caption{Cài đặt, nạp ví}
+        \label{fig:eboost-setting}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{figures/other-system/eboost/stat.jpg}
+        \caption{Thống kê}
+        \label{fig:eboost-stat}
+    \end{subfigure}
+
+    \caption{Giao diện chính của ứng dụng EBoost (lưới 3 cột)}
+    \label{fig:eboost-grid}
+\end{figure}
+\hspace{1em}\textbf{EBoost} là một ứng dụng cung cấp dịch vụ sạc xe điện (eMSP) theo mô hình thương mại hóa. Ứng dụng tập trung vào việc kết nối người dùng với trạm sạc thông qua tính năng định vị, hiển thị trạng thái trạm và thanh toán qua ví điện tử tích hợp. EBoost đóng vai trò là một ``cổng thanh toán và tìm kiếm'', nhưng dựa vào ứng dụng thứ ba để dẫn đường.
+
+\subsubsection{Ưu điểm}
+\hspace{1em}EBoost làm tốt các tính năng liên quan đến giao dịch và thông tin tĩnh:
+\begin{itemize}
+    \item \textbf{Thông tin trạm minh bạch:} Hiển thị rõ các thông số kỹ thuật quan trọng ngay từ bên ngoài như: Công suất (22kW), Loại cổng (AC/DC) và Trạng thái (Trống 1/1). Điều này giúp tài xế ra quyết định nhanh chóng.
+    \item \textbf{Mô hình tài chính thông minh:} Tích hợp ``Ví của tôi'' và các ``Gói đăng ký''. Việc người dùng nạp tiền trước giúp EBoost giữ chân khách hàng (Lock-in effect) và đảm bảo dòng tiền.
+    \item \textbf{Giao diện ``Scan-first'':} Nút quét QR được đặt nổi bật ở trung tâm thanh điều hướng (Bottom Bar), tối ưu cho thao tác khi người dùng đã có mặt tại trạm.
+    \item \textbf{Thống kê chi tiết:} Biểu đồ theo dõi năng lượng tiêu thụ theo thời gian giúp người dùng quản lý chi tiêu hiệu quả.
+\end{itemize}
+
+\subsubsection{Nhược điểm}
+\hspace{1em}Trải nghiệm người dùng trên EBoost còn bị ngắt quãng và chưa tối ưu không gian hiển thị:
+\begin{itemize}
+    \item \textbf{Trải nghiệm đứt gãy (Broken User Flow):} Khi người dùng bấm chỉ đường, ứng dụng đẩy sang Google Maps/Apple Maps. Người dùng phải thoát ra, lái xe, sau đó mở lại EBoost để quét mã; hành trình không liền mạch.
+    \item \textbf{Lạm dụng quảng cáo:} Banner quảng cáo chiếm tới 40\% màn hình trang chủ, làm loãng các tính năng chính và khiến giao diện trở nên chật chội.
+\end{itemize}
+
+\subsubsection{So sánh với hệ thống EVGo}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
+        \hline
+        	\textbf{Tiêu chí} & \textbf{EBoost} & \textbf{EVGo} \\
+        \hline
+        	\textbf{Hệ thống điều hướng (Navigation)} & \textbf{Bị động:} Phải thoát ra ngoài để dùng Google Maps. Gây gián đoạn trải nghiệm người dùng. & \textbf{Chủ động (In-app Navigation):} Bản đồ chỉ đường chạy trực tiếp trong ứng dụng. Người dùng tìm trạm, lái xe, đến nơi mà không cần rời app. \\
+        \hline
+        	\textbf{Tính liền mạch (Seamless UX)} & \textbf{Thấp:} Phải chuyển đổi qua lại giữa 2 app (EBoost $\leftrightarrow$ Google Maps). & \textbf{Cao (All-in-one):} Một ứng dụng duy nhất cho toàn bộ hành trình. Giữ chân người dùng 100\% thời gian (High Time-in-app). \\
+        \hline
+        	\textbf{Mô hình thanh toán} & \textbf{Ưu tiên nạp ví:} Tập trung thu tiền trước (Pre-paid). & \textbf{Linh hoạt:} Hỗ trợ thanh toán đa dạng, tập trung vào sự tiện lợi trước khi yêu cầu cam kết tài chính. \\
+        \hline
+    \end{tabular}
+    \caption{So sánh giữa EBoost và EVGo}
+    \label{tab:compare_eboost_evgo}
+\end{table}
+
+\subsubsection{Kết luận}
+\hspace{1em}Trong khi \textbf{EBoost} mạnh về mặt 
+thương mại và ví điện tử, thì \textbf{EVGo} 
+vượt trội về công nghệ và trải nghiệm người dùng (UX). Việc EVGo sở hữu hệ thống dẫn đường ngay trong ứng dụng (In-app Navigation) là ``vũ khí'' quan trọng, biến EVGo thành một giải pháp trọn gói (End-to-End Solution), loại bỏ sự phiền toái khi phải chuyển 
+đổi ứng dụng khi đang lái xe. EVGo không chỉ là app sạc điện, mà còn 
+là một trợ lý hành trình thông minh cho chủ xe điện.
