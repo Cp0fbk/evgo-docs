@@ -17,16 +17,37 @@ Trong phạm vi đề tài, hệ thống áp dụng phiên bản OCPP 1.6J (JSON
     \end{itemize}
 \end{itemize}
 
-\subsubsection{Mô phỏng tiến trình sạc (Charging Process Simulation)}
-Do hạn chế về phần cứng vật lý trong quá trình phát triển, việc xây dựng mô hình mô phỏng dựa trên hành vi vật lý của pin là cần thiết.
-Mô hình toán học tập trung vào sự biến thiên của \textbf{State of Charge (SoC)}:
-\begin{itemize}
-    \item \textbf{Hàm sạc phi tuyến tính:} Công suất sạc $P(t)$ không hằng số mà phụ thuộc vào trạng thái hiện tại của pin, tuân theo mô hình CC-CV (Constant Current - Constant Voltage).
-    \item \textbf{Công thức ước lượng:} Thời gian còn lại ($T_{remain}$) được tính toán dựa trên dung lượng pin $C_{total}$, mức năng lượng hiện tại $E_{current}$ và công suất sạc tức thời $P_{inst}$:
-    $$ T_{remain} = \frac{C_{total} - E_{current}}{P_{inst} \times \eta} $$
-    Trong đó $\eta$ là hiệu suất chuyển đổi năng lượng (Charging Efficiency).
-\end{itemize}
+% \subsubsection{Mô phỏng tiến trình sạc}
+% Do hạn chế về phần cứng vật lý trong quá trình phát triển, việc xây dựng mô hình mô phỏng dựa trên hành vi vật lý của pin là cần thiết.
+% Mô hình toán học tập trung vào sự biến thiên của SoC (State of Charge):
+% \begin{itemize}
+%     \item \textbf{Hàm sạc phi tuyến tính:} Công suất sạc $P(t)$ không hằng số mà phụ thuộc vào trạng thái hiện tại của pin, tuân theo mô hình CC-CV (Constant Current - Constant Voltage).
+%     \item \textbf{Công thức ước lượng:} Thời gian còn lại ($T_{remain}$) được tính toán dựa trên dung lượng pin $C_{total}$, mức năng lượng hiện tại $E_{current}$ và công suất sạc tức thời $P_{inst}$:
+%     $$ T_{remain} = \frac{C_{total} - E_{current}}{P_{inst} \times \eta} $$
+%     Trong đó $\eta$ là hiệu suất chuyển đổi năng lượng (Charging Efficiency).
+% \end{itemize}
+\subsubsection{Mô phỏng tiến trình sạc}
+Do hạn chế về phần cứng vật lý trong quá trình phát triển, việc xây dựng mô hình mô phỏng dựa trên hành vi vật lý của pin là cần thiết để kiểm thử logic tính toán.
+Mô hình toán học tập trung vào sự biến thiên của trạng thái sạc SoC (State of Charge):
 
+\begin{itemize}
+    \item \textbf{Chu trình sạc CC-CV:} Quá trình sạc pin Li-ion được chia thành hai giai đoạn chính:
+    \begin{itemize}
+        \item \textit{Constant Current (CC):} Dòng điện sạc được giữ cố định, điện áp pin tăng dần đến ngưỡng cắt ($V_{cut-off}$). Đây là giai đoạn sạc nhanh, công suất $P(t)$ tăng tuyến tính.
+        \item \textit{Constant Voltage (CV):} Điện áp được giữ cố định tại $V_{cut-off}$, dòng điện giảm dần theo hàm mũ cho đến khi pin đầy. Công suất $P(t)$ giảm dần.
+    \end{itemize}
+    
+    \item \textbf{Công thức ước lượng thời gian:} Thời gian sạc còn lại dự kiến ($T_{\text{remain}}$) tại thời điểm $t$ được ước lượng dựa trên tổng năng lượng pin ($E_{\text{max}}$), mức năng lượng hiện tại ($E_{\text{current}}$) và công suất sạc tức thời ($P_{\text{inst}}$):
+    
+    $$ T_{\text{remain}} \approx \frac{E_{\text{max}} - E_{\text{current}}}{P_{\text{inst}}(t) \times \eta} $$
+    
+    Trong đó:
+    \begin{itemize}
+        \item $E_{\text{max}}$: Tổng năng lượng thiết kế của pin (Wh).
+        \item $\eta$: Hiệu suất chuyển đổi của bộ sạc (Charging Efficiency), thường lấy $\eta \approx 0.85 - 0.95$.
+        \item $P_{\text{inst}}(t)$: Công suất sạc đo được tại thời điểm $t$.
+    \end{itemize}
+\end{itemize}
 \subsection{Các công nghệ sử dụng}
 
 % --- SPRING BOOT ---
