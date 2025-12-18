@@ -1,6 +1,33 @@
 \section{Phân tích yêu cầu hệ thống}
 \subsection{Mô tả hệ thống}
+Hệ thống quản lý trạm sạc xe máy điện EVGo được thiết kế và xây dựng dưới dạng một nền tảng công nghệ toàn diện, tích hợp đa chiều, nhằm giải quyết bài toán cốt lõi về hạ tầng năng lượng cho phương tiện giao thông xanh. Hệ thống hoạt động dựa trên mô hình phi tập trung, kết nối trực tiếp giữa chủ sở hữu trạm sạc và người dùng cuối thông qua các ứng dụng kỹ thuật số.
 
+Hệ thống phân chia quyền hạn và chức năng dựa trên 5 nhóm đối tượng người dùng cụ thể, đảm bảo tính chuyên biệt hóa trong vận hành:
+
+\begin{itemize}
+    \item \textbf{Super Admin (Quản trị viên hệ thống):}
+    Là cấp bậc quản trị cao nhất, đóng vai trò là điều phối viên của toàn bộ nền tảng. Super Admin nắm giữ quyền kiểm soát tối cao đối với dữ liệu hệ thống, có khả năng giám sát thời gian thực tình trạng hoạt động của mạng lưới trạm sạc, quản lý định danh người dùng và đối tác, cũng như giải quyết các tranh chấp pháp lý hoặc kỹ thuật phát sinh.
+
+    \item \textbf{Station Owner (Đối tác chủ trạm):}
+    Là các cá nhân hoặc tổ chức sở hữu cơ sở vật chất trạm sạc. Thông qua cổng Web Admin, chủ trạm được cung cấp các công cụ để: thiết lập cấu hình trạm (số lượng cổng, công suất), định giá dịch vụ, theo dõi doanh thu và phản hồi đánh giá từ khách hàng. Hệ thống hỗ trợ cơ chế đa quản trị, cho phép một chủ trạm vận hành chuỗi nhiều điểm sạc khác nhau trên cùng một tài khoản.
+
+    \item \textbf{Customer Service Staff (Nhân viên hỗ trợ):}
+    Đóng vai trò cầu nối giữa đơn vị vận hành nền tảng và người dùng. Nhóm đối tượng này có quyền truy cập hạn chế vào các công cụ quản lý để tiếp nhận yêu cầu hỗ trợ, xử lý khiếu nại (Complaints) và giải đáp thắc mắc kỹ thuật, đảm bảo chất lượng dịch vụ luôn ở mức cao nhất.
+
+    \item \textbf{User (Người dùng định danh):}
+    Là khách hàng sử dụng dịch vụ đã hoàn tất quy trình xác thực danh tính (tạo tài khoản). Người dùng có quyền truy cập đầy đủ các tính năng của ứng dụng di động: tìm kiếm trạm sạc thông minh theo vị trí và bộ lọc tiện ích, đặt lịch sạc (Booking) để đảm bảo chỗ trống, thực hiện thanh toán trực tuyến, theo dõi tiến trình sạc và thực hiện đánh giá dịch vụ.
+
+    \item \textbf{Guest (Người dùng vãng lai):}
+    Lớp đối tượng cơ bản nhất, cho phép tiếp cận hệ thống mà không cần đăng nhập. Guest có thể tra cứu bản đồ trạm sạc và xem thông tin công khai của trạm sạc (giá, đánh giá) để ra quyết định trước khi tham gia nền tảng.
+\end{itemize}
+
+Hệ thống được triển khai đồng bộ trên hai nền tảng kỹ thuật số:
+\begin{itemize}
+    \item \textbf{Ứng dụng di động:} Giao diện tối ưu hóa trải nghiệm người dùng cuối (User/Guest), hỗ trợ các thao tác thời gian thực như quét QR, điều hướng bản đồ và thanh toán.
+    \item \textbf{Trang web quản lý:} Giao diện Dashboard chuyên nghiệp dành cho khối vận hành (Admin/Staff/Station Owner), tập trung vào khả năng hiển thị báo cáo, biểu đồ thống kê và công cụ quản lý.
+\end{itemize}
+
+Tổng thể, hệ thống hướng đến việc hình thành một nền tảng quản lý thông minh, một ứng dụng hỗ trợ linh hoạt và thân thiện với người dùng, đóng vai trò hạ tầng số quan trọng trong quá trình phổ cập xe điện tại Việt Nam.
 \subsection{Yêu cầu}
 \subsubsection{Yêu cầu chức năng}
 \subsubsubsection{Chức năng chung của hệ thống}
