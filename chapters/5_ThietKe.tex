@@ -654,7 +654,7 @@
 \subsubsection{Use Case Diagram -- Người dùng}
 
 \subsection{Mô hình hóa quy trình}
-\subsubsection{Activity Diagram - Người quản trị hệ thống phân chia doanh thu}
+\subsubsection{Activity Diagram -- Người quản trị hệ thống phân chia doanh thu}
 \begin{figure}[H]
     \centering-
     \includegraphics[width=0.9\textwidth]{figures/activity/activity_revenue_division_setting.png}
@@ -698,17 +698,101 @@
         \end{itemize}
     \end{itemize}
 \end{enumerate}
-\subsubsection{Activity Diagram - Chủ trạm nộp hồ sơ đăng kí}
+\subsubsection{Activity Diagram -- Chủ trạm nộp hồ sơ đăng kí}
+\begin{figure}[H]
+    \centering-
+    \includegraphics[width=0.9\textwidth]{figures/activity/activity_so_registration.png}
+    \caption{Activity Diagram -- Chủ trạm nộp hồ sơ đăng kí}
+    \label{fig:activity_sa_2}
+\end{figure}
+\begin{enumerate}[font=\bfseries]
+    \item Bắt đầu: Chủ trạm (Station Owner) truy cập website dành cho chủ trạm.
+    \item Chọn chức năng: Chủ trạm chọn chức năng đăng ký. Hệ thống hiển thị giao diện đăng ký tương ứng.
+    \item Quyết định "Đã chuẩn bị hồ sơ?":
+    \begin{itemize}
+        \item Nếu KHÔNG (No): Chủ trạm tải xuống hồ sơ mẫu. Sau khi hoàn thiện, chủ trạm tải lên hồ sơ.
+        \item Nếu CÓ (Yes): Chủ trạm thực hiện tải lên hồ sơ đã hoàn thiện.
+    \end{itemize}
+    \item Tiếp nhận: Hệ thống tiếp nhận và lưu trữ hồ sơ đăng ký, sau đó gửi thông báo đến Super Admin.
+    \item Xét duyệt: Super Admin thực hiện xét duyệt hồ sơ vừa nhận được.
+    \item Quyết định "Hồ sơ hợp lệ?":
+    \begin{itemize}
+        \item Nếu KHÔNG (No): Hệ thống gửi thông báo từ chối. Chủ trạm nhận thông báo từ chối và quy trình kết thúc.
+        \item Nếu CÓ (Yes): Hệ thống gửi thông tin kích hoạt tài khoản qua email cho chủ trạm. Quy trình kết thúc.
+    \end{itemize}
+\end{enumerate}
+\subsubsection{Activity Diagram -- Xử lí khiếu nại}
+\begin{figure}[H]
+    \centering-
+    \includegraphics[width=0.9\textwidth]{figures/activity/activity_handle_complaint.png}
+    \caption{Activity Diagram -- Xử lí khiếu nại}
+    \label{fig:activity_sa_3}
+\end{figure} 
+\begin{enumerate}[font=\bfseries]
+    \item Bắt đầu: Người dùng chọn trạm sạc muốn khiếu nại.
+    \item Gửi khiếu nại: Người dùng gửi khiếu nại. Hệ thống tiếp nhận và gửi thông báo có khiếu nại mới cho Super Admin/CS Staff.
+    \item Xét duyệt: Super Admin/CS Staff xem và xét duyệt khiếu nại.
+    \item Quyết định "Khiếu nại có hợp lệ không?":
+    \begin{itemize}
+        \item Nếu KHÔNG (No):
+        \begin{itemize}
+            \item Admin/CS Staff ghi chú lý do từ chối (tùy chọn).
+            \item Hệ thống cập nhật trạng thái khiếu nại thành "Đã từ chối".
+        \end{itemize}
+        \item Nếu CÓ (Yes):
+        \begin{itemize}
+            \item Admin/CS Staff nhập nội dung phản hồi và gửi phản hồi.
+            \item Hệ thống lưu phản hồi.
+            \item Quyết định "Cần xử lí trạm sạc?":
+            \begin{itemize}
+                \item Nếu CÓ (Yes): Admin/CS Staff khóa tài khoản hoặc trừ uy tín trạm, sau đó đánh dấu "Hoàn tất xử lý".
+                \item Nếu KHÔNG (No): Admin/CS Staff đánh dấu "Hoàn tất xử lý".
+            \end{itemize}
+            \item Hệ thống cập nhật trạng thái khiếu nại thành "Đã xử lý".
+        \end{itemize}
+    \end{itemize}
+    \item Kết thúc: Hệ thống gửi thông báo phản hồi đến người dùng. Người dùng nhận phản hồi từ Admin/CS Staff.
+\end{enumerate}
 
-\subsubsection{Activity Diagram - Xử lí khiếu nại}
-
-\subsubsection{Activity Diagram - Người dùng thanh toán}
-
-\subsubsection{Sequence Diagram - Người dùng/Khách tìm trạm sạc}
+\subsubsection{Activity Diagram -- Người dùng thanh toán}
+\begin{figure}[H]
+    \centering-
+    \includegraphics[width=0.9\textwidth]{figures/activity/activity_payment.png}
+    \caption{Activity Diagram -- Người dùng thanh toán}
+    \label{fig:activity_sa_4}
+\end{figure}
+\begin{enumerate}[font=\bfseries]
+    \item Bắt đầu: Người dùng thực hiện đặt chỗ hoặc hoàn tất quá trình sạc.
+    \item Tạo phiên: Hệ thống tạo phiên giao dịch.
+    \item Chọn phương thức: Người dùng chọn phương thức thanh toán.
+    \item Chuyển hướng: Hệ thống gửi yêu cầu và chuyển hướng người dùng đến Cổng thanh toán.
+    \item Quyết định "Xác nhận giao dịch?" (Người dùng):
+    \begin{itemize}
+        \item Nếu KHÔNG (No): Người dùng hủy giao dịch.
+        \item Nếu CÓ (Yes): 
+        \begin{itemize}
+            \item Cổng thanh toán xử lý yêu cầu thanh toán. 
+            \item Quyết định "Giao dịch thành công?" (Cổng thanh toán):
+                \begin{itemize}
+                \item Nếu KHÔNG (No): Cổng thanh toán thông báo giao dịch thất bại.
+                \item Nếu CÓ (Yes):
+                \begin{itemize}
+                    \item Cổng thanh toán thông báo giao dịch thành công.
+                    \item Hệ thống nhận webhook, xác thực và cập nhật trạng thái phiên giao dịch.
+                    \item Hệ thống lưu hóa đơn vào CSDL và gửi thông báo thành công cho người dùng.
+                    \item Người dùng nhận thông báo giao dịch thành công.
+                \end{itemize}
+            \end{itemize}
+        \end{itemize}
+        
+    \end{itemize}
+    \item Kết thúc (Thất bại): Nếu người dùng hủy hoặc giao dịch thất bại, người dùng nhận thông báo thất bại và kết thúc quá trình thanh toán.
+\end{enumerate}
+\subsubsection{Sequence Diagram -- Người dùng/Khách tìm trạm sạc}
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{figures/sq_user_fstation.png}
-    \caption{Sequence Diagram - Người dùng/Khách tìm trạm sạc}
+    \caption{Sequence Diagram -- Người dùng/Khách tìm trạm sạc}
     \label{fig:sq_sa_fstation}
 \end{figure}   
 \noindent \textbf{Luồng chính của biểu đồ trình tự:}
