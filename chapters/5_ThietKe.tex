@@ -1,8 +1,84 @@
 \section{Phân tích và thiết kế hệ thống}
 
 \subsection{Kiến trúc hệ thống}
-
+Dựa trên yêu cầu về tính linh hoạt, khả năng bảo trì và mở rộng trong tương lai, hệ thống EV-Go được thiết kế và triển khai theo kiến trúc Modular Monolith. Đây là sự kết hợp giữa tính đơn giản trong vận hành của kiến trúc Monolithic truyền thống và tính tách biệt, lỏng lẻo của kiến trúc Microservices. Để hiện thực hóa kiến trúc này một cách chặt chẽ, dự án sử dụng Spring Modulith làm nền tảng công nghệ chính.
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{figures/evgo-Architecture.png}
+        \caption{Kiến trúc hệ thống EVGo}
+        \label{fig:evgo_architecture}
+    \end{figure}
+\subsubsection{Tổng quan kiến trúc Modular Monolith}
+Khác với kiến trúc Layered Monolith truyền thống (phân chia theo tầng kỹ thuật: Controller, Service, Repository), kiến trúc của EV-Go phân chia hệ thống theo các nghiệp vụ chức năng. Mỗi nghiệp vụ được đóng gói thành một Module độc lập về mặt logic nhưng vẫn cùng tồn tại trong một đơn vị triển khai duy nhất.
+Mô hình này mang lại các ưu điểm vượt trội cho hệ thống:
+\begin{itemize}
+    \item \textbf{Tính đóng gói cao:} Mỗi module ẩn giấu implementation chi tiết và chỉ giao tiếp với bên ngoài thông qua các API công khai (Public API) được định nghĩa rõ ràng.
+    \item \textbf{Giảm thiểu sự phụ thuộc:} Sự phụ thuộc vòng (circular dependency) giữa các module bị ngăn chặn nghiêm ngặt ngay từ giai đoạn biên dịch nhờ cơ chế kiểm soát của Spring Modulith.
+    \item \textbf{Khả năng tiến hóa:} Khi quy mô hệ thống tăng trưởng, các module độc lập có thể dễ dàng được tách ra thành các Microservices riêng biệt mà không cần thay đổi lớn về cấu trúc mã nguồn.
+\end{itemize}
+\subsubsection{Cấu trúc chi tiết của một Module}
+Một đặc trưng quan trọng trong kiến trúc của hệ thống là sự chuẩn hóa cấu trúc nội bộ của từng module. Mỗi module nghiệp vụ (như User, Station, Payment,...) đều tuân thủ nghiêm ngặt mô hình phân lớp 3 thành phần nhằm đảm bảo tính bảo mật và nhất quán:
+\begin{enumerate}
+    \item \textbf{Public API (Giao diện công khai):}
+    Đây là thành phần duy nhất của module được phép truy cập từ các module khác. Nó bao gồm các \textit{Service Interfaces} và các đối tượng chuyển đổi dữ liệu (\textit{DTOs}). Việc chỉ hiển thị Interface giúp che giấu hoàn toàn logic xử lý nghiệp vụ bên trong, đảm bảo nguyên lý "Information Hiding".
+    \item \textbf{Internal Implementation (Lớp hiện thực nội bộ):}
+    Chứa toàn bộ logic nghiệp vụ cốt lõi, các thực thể dữ liệu và lớp truy xuất dữ liệu. Đặc biệt, lớp này được thiết kế để "vô hình" đối với các module khác. Chỉ có module sở hữu mới có quyền khởi tạo và thao tác trực tiếp trên các đối tượng này. Lớp này cũng chịu trách nhiệm giao tiếp trực tiếp với Cơ sở dữ liệu và các dịch vụ hạ tầng khác.
+    \item \textbf{Web Layer (Lớp giao tiếp người dùng):}
+    Nằm trong gói \textit{internal}, lớp này chứa các \textit{REST Controllers} chịu trách nhiệm tiếp nhận các yêu cầu HTTP từ phía Client Applications (Mobile App và Web Dashboard). Lớp này đóng vai trò là cổng vào cho các tác vụ từ phía người dùng cuối, chuyển tiếp yêu cầu xuống lớp Implementation để xử lý.
+\end{enumerate}
+\subsubsection{Cơ chế giao tiếp liên Module (Inter-module Communication)}
+Hệ thống thiết lập quy tắc giao tiếp một chiều nghiêm ngặt để duy trì tính toàn vẹn của kiến trúc:
+\begin{itemize}
+    \item Các module giao tiếp với nhau \textbf{thông qua Public API}. Ví dụ, khi \textit{Station Module} cần thông tin chủ trạm, nó sẽ gọi \textit{UserService Interface} công khai thay vì truy cập trực tiếp vào bảng \textit{User} trong cơ sở dữ liệu.
+    \item \textbf{Shared Kernel (Module dùng chung):} Nhằm hạn chế sự lặp lại mã nguồn, hệ thống xây dựng một module đặc biệt là \textit{Shared Kernel}. Module này đóng vai trò là thư viện nội bộ (Open Module), chứa các thành phần dùng chung cho toàn hệ thống như: mã lỗi, các lớp xử lý ngoại lệ toàn cục, và các cấu trúc dữ liệu chuẩn áp dụng cho toàn hệ thống. Tất cả các module nghiệp vụ đều có thể truy cập và sử dụng tài nguyên từ Shared Kernel.
+\end{itemize}
+\subsubsection{Hạ tầng dữ liệu}
+Dù được chia thành nhiều module logic, hệ thống sử dụng chung một cơ sở dữ liệu PostgreSQL để đảm bảo tính nhất quán của dữ liệu giao dịch (ACID) và đơn giản hóa việc quản lý. Tuy nhiên, việc truy xuất dữ liệu vẫn được phân quyền logic: mã nguồn của module nào chỉ được phép truy vấn các bảng dữ liệu thuộc phạm vi nghiệp vụ của module đó. Bên cạnh đó, Redis được tích hợp để giải quyết bài toán hiệu năng cao cho việc caching dữ liệu trạm sạc và quản lý phiên làm việc.
+Tóm lại, kiến trúc Modular Monolith của hệ thống EV-Go không chỉ đáp ứng tốt các yêu cầu nghiệp vụ hiện tại mà còn tạo dựng một nền tảng vững chắc, sẵn sàng cho việc mở rộng quy mô và nâng cấp công nghệ trong tương lai.
 \subsection{Mô hình dữ liệu}
+Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối quan hệ (Entity Relationship Diagram - ERD) của hệ thống EV-Go. Mô hình này được thiết kế nhằm đảm bảo tính toàn vẹn dữ liệu, khả năng mở rộng và hiệu năng truy vấn cho các nghiệp vụ cốt lõi như quản lý trạm sạc, đặt lịch, phiên sạc và thanh toán.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textheight, angle=90, keepaspectratio]{figures/evgo-ERD.png}
+    \caption{Sơ đồ thực thể mối quan hệ (ERD) của hệ thống EV-Go}
+    \label{fig:evgo_erd}
+\end{figure}Dựa trên sơ đồ, dữ liệu của hệ thống được tổ chức thành các nhóm thực thể chính như sau:
+
+\textbf{1. Nhóm thực thể Người dùng và Quản trị}
+\begin{itemize}
+    \item \textbf{User}: Lưu trữ thông tin định danh và cá nhân của người dùng tham gia hệ thống. Các thuộc tính quan trọng bao gồm \textit{user\_id} (khóa chính), \textit{email}, \textit{password} (mật khẩu đã mã hóa), \textit{full\_name}, \textit{phone\_number}, và \textit{status} (trạng thái hoạt động). Ngoài ra, hệ thống hỗ trợ xác thực qua bên thứ ba thông qua các trường \textit{auth\_provider} và \textit{provider\_id}.
+    \item \textbf{Role}: Định nghĩa các vai trò trong hệ thống (ví dụ: Admin, Station Owner, Customer). Mối quan hệ giữa \textit{User} và \textit{Role} là quan hệ nhiều-nhiều (N-M), cho phép một người dùng có thể đảm nhận nhiều vai trò khác nhau.
+    \item \textbf{StationOwnerProfile}: Thực thể mở rộng dành cho người dùng có vai trò chủ trạm, lưu trữ thông tin pháp lý và kinh doanh như \textit{business\_name}, \textit{tax\_code} (mã số thuế) và thông tin liên hệ doanh nghiệp. Mối quan hệ giữa \textit{User} và \textit{StationOwnerProfile} là một-một (1-1).
+    \item \textbf{Vehicle}: Quản lý danh sách phương tiện của người dùng. Mỗi phương tiện được gắn với một người dùng (\textit{user\_id}) và chứa thông tin về \textit{model\_name}, \textit{brand}, và \textit{connector\_type} (loại cổng sạc tương thích).
+\end{itemize}
+
+\textbf{2. Nhóm thực thể Quản lý Trạm sạc}
+\begin{itemize}
+    \item \textbf{Station}: Đại diện cho một trạm sạc vật lý. Thực thể này chứa thông tin địa lý (\textit{latitude}, \textit{longitude}, \textit{address}) nhằm phục vụ tính năng tìm kiếm trên bản đồ. Các thuộc tính trạng thái như \textit{status}, \textit{rate} (đánh giá trung bình) và cờ cảnh báo \textit{is\_flagged\_low\_quality} giúp quản lý chất lượng dịch vụ. Một chủ trạm có thể sở hữu nhiều trạm sạc.
+    \item \textbf{Charger}: Đại diện cho trụ sạc tại trạm. Mỗi trạm có thể có nhiều trụ sạc. Thông tin bao gồm \textit{max\_power} (công suất tối đa), \textit{connector\_type} (loại cổng sạc) và \textit{status} (trạng thái hoạt động).
+    \item \textbf{Port}: Đại diện cho súng sạc/cổng sạc cụ thể trên một trụ. Đây là tài nguyên cơ sở để người dùng thực hiện đặt chỗ hoặc sạc xe.
+    \item \textbf{PriceSetting}: Lưu trữ cấu hình giá dịch vụ mà chủ trạm cài đặt cho trạm sạc, bao gồm \textit{charging\_price\_per\_kwh} (giá cho mỗi kWh sạc), \textit{booking\_price} (phí đặt chỗ) và \textit{penalty\_price} (phí phạt quá giờ). Thiết kế này cho phép chủ trạm linh hoạt điều chỉnh chính sách giá theo thời điểm.
+\end{itemize}
+
+\textbf{3. Nhóm thực thể Vận hành (Booking \& Charging)}
+\begin{itemize}
+    \item \textbf{Booking}: Ghi nhận yêu cầu đặt chỗ trước của người dùng tại một cổng sạc trong một khoảng thời gian cụ thể. Mỗi lượt đặt chỗ sẽ sinh ra một hóa đơn tương ứng.
+    \item \textbf{ChargingSession}: Lưu trữ dữ liệu chi tiết của một phiên sạc thực tế. Các thông tin quan trọng bao gồm năng lượng tiêu thụ (\textit{energy\_consumed}), phần trăm pin bắt đầu/kết thúc (\textit{percentage\_start/end}) và thời gian sạc. Tương tự như đặt chỗ, mỗi phiên sạc cũng được liên kết với một hóa đơn thanh toán.
+\end{itemize}
+
+\textbf{4. Nhóm thực thể Tài chính và Thanh toán}
+\begin{itemize}
+    \item \textbf{Invoice}: Hóa đơn tổng hợp chi phí cho các dịch vụ sử dụng (đặt chỗ hoặc sạc). Hóa đơn lưu trữ tổng tiền, phương thức thanh toán và trạng thái thanh toán.
+    \item \textbf{Transaction}: Ghi lại lịch sử giao dịch thanh toán chi tiết qua cổng thanh toán. Thực thể này lưu trữ các mã tham chiếu từ cổng thanh toán (\textit{gateway\_transaction\_id}, \textit{gateway\_request\_id}) và kết quả giao dịch (\textit{result\_code}), phục vụ cho việc đối soát doanh thu. Mối quan hệ giữa \textit{Invoice} và \textit{Transaction} là một-nhiều (1-N), cho phép một hóa đơn có thể có nhiều lần thử thanh toán (bao gồm cả các giao dịch thất bại).
+\end{itemize}
+
+\textbf{5. Nhóm thực thể Phản hồi và Hỗ trợ}
+\begin{itemize}
+    \item \textbf{Review}: Cho phép người dùng đánh giá và bình luận về chất lượng của một trạm sạc sau khi sử dụng dịch vụ. Dữ liệu này là cơ sở để tính toán thuộc tính \textit{rate} của trạm.
+    \item \textbf{Complaint}: Hệ thống quản lý khiếu nại của người dùng về các vấn đề phát sinh. Mỗi khiếu nại bao gồm tiêu đề, mô tả và trạng thái xử lý.
+    \item \textbf{ComplaintResponse}: Lưu trữ lịch sử phản hồi và trao đổi giữa quản trị viên và người dùng liên quan đến một khiếu nại cụ thể.
+\end{itemize}
 
 \subsection{Mô hình hóa tương tác}
 \subsubsection{Use Case Diagram -- Người quản trị hệ thống}
