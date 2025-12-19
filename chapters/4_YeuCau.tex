@@ -1,6 +1,6 @@
 \section{Phân tích yêu cầu hệ thống}
 \subsection{Mô tả hệ thống}
-Hệ thống quản lý trạm sạc xe máy điện EVGo được thiết kế và xây dựng dưới dạng một nền tảng công nghệ toàn diện, tích hợp đa chiều, nhằm giải quyết bài toán cốt lõi về hạ tầng năng lượng cho phương tiện giao thông xanh. Hệ thống hoạt động dựa trên mô hình phi tập trung, kết nối trực tiếp giữa chủ sở hữu trạm sạc và người dùng cuối thông qua các ứng dụng kỹ thuật số.
+\hspace{1em}Hệ thống quản lý trạm sạc xe máy điện EVGo được thiết kế và xây dựng dưới dạng một nền tảng công nghệ toàn diện, tích hợp đa chiều, nhằm giải quyết bài toán cốt lõi về hạ tầng năng lượng cho phương tiện giao thông xanh. Hệ thống hoạt động dựa trên mô hình phi tập trung, kết nối trực tiếp giữa chủ sở hữu trạm sạc và người dùng cuối thông qua các ứng dụng kỹ thuật số.
 
 Hệ thống phân chia quyền hạn và chức năng dựa trên 5 nhóm đối tượng người dùng cụ thể, đảm bảo tính chuyên biệt hóa trong vận hành:
 
@@ -12,10 +12,10 @@ Hệ thống phân chia quyền hạn và chức năng dựa trên 5 nhóm đố
     Là các cá nhân hoặc tổ chức sở hữu cơ sở vật chất trạm sạc. Thông qua cổng Web Admin, chủ trạm được cung cấp các công cụ để: thiết lập cấu hình trạm (số lượng cổng, công suất), định giá dịch vụ, theo dõi doanh thu và phản hồi đánh giá từ khách hàng. Hệ thống hỗ trợ cơ chế đa quản trị, cho phép một chủ trạm vận hành chuỗi nhiều điểm sạc khác nhau trên cùng một tài khoản.
 
     \item \textbf{Customer Service Staff (Nhân viên hỗ trợ):}
-    Đóng vai trò cầu nối giữa đơn vị vận hành nền tảng và người dùng. Nhóm đối tượng này có quyền truy cập hạn chế vào các công cụ quản lý để tiếp nhận yêu cầu hỗ trợ, xử lý khiếu nại (Complaints) và giải đáp thắc mắc kỹ thuật, đảm bảo chất lượng dịch vụ luôn ở mức cao nhất.
+    Đóng vai trò cầu nối giữa đơn vị vận hành nền tảng và người dùng. Nhóm đối tượng này có quyền truy cập hạn chế vào các công cụ quản lý để tiếp nhận yêu cầu hỗ trợ, xử lý khiếu nại và giải đáp thắc mắc kỹ thuật, đảm bảo chất lượng dịch vụ luôn ở mức cao nhất.
 
     \item \textbf{User (Người dùng định danh):}
-    Là khách hàng sử dụng dịch vụ đã hoàn tất quy trình xác thực danh tính (tạo tài khoản). Người dùng có quyền truy cập đầy đủ các tính năng của ứng dụng di động: tìm kiếm trạm sạc thông minh theo vị trí và bộ lọc tiện ích, đặt lịch sạc (Booking) để đảm bảo chỗ trống, thực hiện thanh toán trực tuyến, theo dõi tiến trình sạc và thực hiện đánh giá dịch vụ.
+    Là khách hàng sử dụng dịch vụ đã hoàn tất quy trình xác thực danh tính (tạo tài khoản). Người dùng có quyền truy cập đầy đủ các tính năng của ứng dụng di động: tìm kiếm trạm sạc thông minh theo vị trí và bộ lọc tiện ích, đặt lịch sạc để đảm bảo chỗ trống, thực hiện thanh toán trực tuyến, theo dõi tiến trình sạc và thực hiện đánh giá dịch vụ.
 
     \item \textbf{Guest (Người dùng vãng lai):}
     Lớp đối tượng cơ bản nhất, cho phép tiếp cận hệ thống mà không cần đăng nhập. Guest có thể tra cứu bản đồ trạm sạc và xem thông tin công khai của trạm sạc (giá, đánh giá) để ra quyết định trước khi tham gia nền tảng.
@@ -31,61 +31,148 @@ Tổng thể, hệ thống hướng đến việc hình thành một nền tản
 \subsection{Yêu cầu}
 \subsubsection{Yêu cầu chức năng}
 \subsubsubsection{Chức năng chung của hệ thống}
+\hspace{1em}Để đảm bảo tính bảo mật và trải nghiệm đồng nhất, mọi đối tượng người dùng khi tham gia vào hệ thống đều được cung cấp các nhóm chức năng nền tảng sau:
 \begin{enumerate}[label=\textbf{\alph*)}]
- \item \textbf{Đăng nhập, đăng xuất}
+ \item \textbf{Đăng nhập và Kiểm soát truy cập}
  \begin{itemize}
-    \item Người dùng có thể đăng nhập vào hệ thống bằng email/số điện thoại.
-    \item Sau khi đăng nhập thành công, người dùng có quyền truy cập các chức năng theo vai trò.
-    \item Cho phép đăng xuất để kết thúc phiên làm việc, đảm bảo an toàn bảo mật thông tin.
+    \item \textbf{Xác thực người dùng:} Hỗ trợ đăng nhập vào hệ thống thông qua địa chỉ Email đã đăng ký, đảm bảo tính định danh duy nhất.
+    \item \textbf{Phân quyền tự động:} Hệ thống tự động điều hướng và cấp quyền truy cập vào các phân hệ chức năng tương ứng dựa trên vai trò (Role) của tài khoản ngay sau khi xác thực thành công.
+    \item \textbf{Quản lý phiên làm việc:} Cung cấp chức năng đăng xuất an toàn, giúp người dùng chủ động kết thúc phiên làm việc để bảo vệ thông tin cá nhân và dữ liệu tài khoản.
  \end{itemize}
  \item \textbf{Quản lý tài khoản cá nhân}
  \begin{itemize}
-    \item Người dùng có thể chỉnh sửa thông tin cá nhân.
-    \item Người dùng có thể thay đổi/khôi phục mật khẩu thông qua email/số điện thoại đã đăng ký.
+    \item \textbf{Cập nhật hồ sơ:} Cho phép người dùng xem và chỉnh sửa các thông tin cá nhân cơ bản để đảm bảo tính chính xác của dữ liệu định danh.
+    \item \textbf{Bảo mật tài khoản:} Cung cấp công cụ để người dùng chủ động thay đổi mật khẩu định kỳ hoặc khôi phục quyền truy cập thông qua Email xác thực trong trường hợp quên mật khẩu.
  \end{itemize}
 \end{enumerate}
 \subsubsubsection{Chức năng của Người quản trị hệ thống}
-Với vai trò là cấp quản trị cao nhất, Người quản lý hệ thống (Super Admin) chịu trách nhiệm quản lý toàn bộ hệ thống, bảo đảm tính minh bạch, ổn định và hiệu quả trong vận hành. Các yêu cầu chức năng cụ thể bao gồm:
+\hspace{1em}Với vai trò là cấp quản trị cao nhất, Người quản lý hệ thống (Super Admin) chịu trách nhiệm quản lý toàn bộ hệ thống, bảo đảm tính minh bạch, ổn định và hiệu quả trong vận hành. Các yêu cầu chức năng cụ thể bao gồm:
 \begin{enumerate}[label=\textbf{\alph*)}]
  \item \textbf{Quản lý tài khoản}
  \begin{itemize}
-    \item Người quản lý hệ thống có khả năng truy cập và theo dõi danh sách toàn bộ người dùng đã đăng ký trong hệ thống.
-    \item Trong trường hợp phát hiện hành vi vi phạm hoặc sử dụng sai mục đích, Người quản lý hệ thống được quyền khóa tạm thời hoặc mở khóa lại tài khoản để đảm bảo an toàn cho hệ thống.
-    \item Người quản lý hệ thống xem và quản lý danh sách các chủ trạm đã đăng ký, từ đó nắm bắt tình hình hoạt động tổng thể. Người quản lý hệ thống gửi mail kích hoạt tài khoản đến chủ trạm.
+    \item \textbf{Theo dõi danh sách người dùng:} Người quản lý hệ thống có khả năng truy cập và theo dõi danh sách toàn bộ người dùng đã đăng ký trong hệ thống.
+    \item \textbf{Khóa/Mở khóa tài khoản:} Trong trường hợp phát hiện hành vi vi phạm hoặc sử dụng sai mục đích, Người quản lý hệ thống được quyền khóa tạm thời hoặc mở khóa lại tài khoản để đảm bảo an toàn cho hệ thống.
+    \item \textbf{Quản lý chủ trạm:} Người quản lý hệ thống xem và quản lý danh sách các chủ trạm đã đăng ký, từ đó nắm bắt tình hình hoạt động tổng thể. Người quản lý hệ thống gửi mail kích hoạt tài khoản đến chủ trạm.
  \end{itemize}
  \item \textbf{Quản lý trạm sạc}
  \begin{itemize}
-    \item Người quản lý hệ thống theo dõi tình trạng hoạt động của tất cả trạm sạc trên hệ thống theo thời gian thực, bao gồm thông tin về số lượng cổng sạc, trạng thái và mức độ sẵn sàng.
+    \item \textbf{Giám sát thời gian thực:} Người quản lý hệ thống theo dõi tình trạng hoạt động của tất cả trạm sạc trên hệ thống theo thời gian thực, bao gồm thông tin về số lượng cổng sạc, trạng thái và mức độ sẵn sàng.
  \end{itemize}
  \item \textbf{Báo cáo và thống kê tổng hợp}
  \begin{itemize}
-    \item Người quản lý hệ thống được cung cấp công cụ báo cáo thống kê toàn diện, bao gồm số lượng người dùng, trạm sạc, lượt đặt chỗ và doanh thu toàn hệ thống.
-    \item Các dữ liệu này có thể được biểu diễn dưới dạng biểu đồ, phân tích theo khu vực hoặc theo loại phương tiện, giúp hỗ trợ việc đánh giá tình hình và hoạch định chiến lược phát triển trong tương lai.
+    \item \textbf{Thống kê toàn diện:} Người quản lý hệ thống được cung cấp công cụ báo cáo thống kê toàn diện, bao gồm số lượng người dùng, trạm sạc, lượt đặt chỗ và doanh thu toàn hệ thống.
+    \item \textbf{Phân tích dữ liệu:} Các dữ liệu này có thể được biểu diễn dưới dạng biểu đồ, phân tích theo khu vực hoặc theo loại phương tiện, giúp hỗ trợ việc đánh giá tình hình và hoạch định chiến lược phát triển trong tương lai.
  \end{itemize}  
  \item \textbf{Giám sát giao dịch và doanh thu}
  \begin{itemize}
-    \item Hệ thống cung cấp cho Người quản lý hệ thống khả năng theo dõi toàn bộ luồng giao dịch giữa người dùng và chủ trạm, bảo đảm sự minh bạch và chính xác trong quá trình thanh toán.
-    \item Trong trường hợp hệ thống áp dụng mô hình thu phí, Người quản lý hệ thống có trách nhiệm giám sát và thực hiện phân chia doanh thu giữa các bên liên quan.
+    \item \textbf{Theo dõi giao dịch:} Hệ thống cung cấp cho Người quản lý hệ thống khả năng theo dõi toàn bộ luồng giao dịch giữa người dùng và chủ trạm, bảo đảm sự minh bạch và chính xác trong quá trình thanh toán.
+    \item \textbf{Phân chia doanh thu:} Trong trường hợp hệ thống áp dụng mô hình thu phí, Người quản lý hệ thống có trách nhiệm giám sát và thực hiện phân chia doanh thu giữa các bên liên quan.
  \end{itemize}
 \end{enumerate}
 
 \subsubsubsection{Chức năng của Nhân viên hỗ trợ khách hàng}
-Customer Service Staff hay còn gọi là nhân viên chăm sóc khách hàng tiếp nhận và giải quyết khiếu nại, hỗ trợ người dùng và chủ trạm.
+\hspace{1em}Customer Service Staff hay còn gọi là nhân viên chăm sóc khách hàng tiếp nhận và giải quyết khiếu nại, hỗ trợ người dùng và chủ trạm.
 \begin{enumerate}[label=\textbf{\alph*)}]
  \item \textbf{Quản lý trạm sạc toàn hệ thống}
  \begin{itemize}
-    \item CSS theo dõi tình trạng hoạt động của tất cả trạm sạc trên hệ thống theo thời gian thực, bao gồm thông tin về số lượng cổng sạc, trạng thái và mức độ sẵn sàng.
+    \item \textbf{Theo dõi trạng thái trạm:} CSS theo dõi tình trạng hoạt động của tất cả trạm sạc trên hệ thống theo thời gian thực, bao gồm thông tin về số lượng cổng sạc, trạng thái và mức độ sẵn sàng.
  \end{itemize}
  \item \textbf{Giao tiếp với người dùng và chủ trạm}
  \begin{itemize}
-    \item CSS tiếp nhận và quản lý khiếu nại phát sinh từ người dùng hoặc chủ trạm.
-   \item Trong trường hợp phát hiện hành vi vi phạm hoặc sử dụng sai mục đích, CSS được quyền khóa tạm thời hoặc mở khóa lại tài khoản để đảm an toàn cho hệ thống.
+    \item \textbf{Xử lý khiếu nại:} CSS tiếp nhận và quản lý khiếu nại phát sinh từ người dùng hoặc chủ trạm.
+   \item \textbf{Xử lý vi phạm:} Trong trường hợp phát hiện hành vi vi phạm hoặc sử dụng sai mục đích, CSS được quyền khóa tạm thời hoặc mở khóa lại tài khoản để đảm an toàn cho hệ thống.
  \end{itemize}
  \end{enumerate}
 
 \subsubsubsection{Chức năng của Chủ trạm}
+\hspace{1em}Station Owner (Chủ trạm sạc) là cá nhân hoặc tổ chức sở hữu và trực tiếp vận hành các trạm sạc trong hệ thống. Họ đóng vai trò then chốt trong việc duy trì hạ tầng sạc, đảm bảo chất lượng dịch vụ và tối ưu hóa hiệu quả kinh doanh. Các chức năng dành cho Chủ trạm được thiết kế nhằm cung cấp công cụ quản lý toàn diện, từ vận hành thiết bị đến chăm sóc khách hàng:
+\begin{enumerate}[label=\textbf{\alph*)}]
+ \item \textbf{Đăng ký và xác thực tài khoản}
+ \begin{itemize}
+    \item \textbf{Nộp hồ sơ đăng ký:} Cho phép Chủ trạm gửi hồ sơ đăng ký tham gia hệ thống, bao gồm thông tin pháp lý và thông tin trạm sạc, để Super Admin xét duyệt.
+    \item \textbf{Đăng nhập hệ thống:} Hỗ trợ đăng nhập an toàn bằng tài khoản được cấp sau khi hồ sơ được phê duyệt và kích hoạt qua email.
+    \item \textbf{Quản lý đa tài khoản:} Hỗ trợ cơ chế phân quyền linh hoạt, cho phép một trạm sạc được quản lý bởi nhiều tài khoản phụ, giúp tối ưu hóa quy trình vận hành và giám sát.
+ \end{itemize}
+ \item \textbf{Quản lý thông tin trạm sạc}
+ \begin{itemize}
+    \item \textbf{Cập nhật thông tin trạm:} Cung cấp công cụ để thêm mới, chỉnh sửa hoặc xóa các thông tin cơ bản của trạm như tên, địa chỉ, tọa độ, số lượng cổng sạc và các tiện ích đi kèm.
+    \item \textbf{Thiết lập trạng thái hoạt động:} Cho phép chủ động cập nhật trạng thái của trạm (Đang hoạt động, Bảo trì, Tạm ngưng) để thông báo kịp thời đến người dùng.
+    \item \textbf{Cấu hình chính sách giá:} Hỗ trợ thiết lập linh hoạt các biểu phí dịch vụ bao gồm đơn giá sạc điện, phí đặt chỗ trước và các khoản phụ phí hoặc phí phạt quá giờ (nếu có).
+ \end{itemize}
+ \item \textbf{Giám sát và quản lý cổng sạc}
+ \begin{itemize}
+    \item \textbf{Cập nhật trạng thái cổng sạc:} Cho phép thay đổi trạng thái vận hành của từng trụ sạc (Sẵn sàng, Đang sạc, Lỗi, Bảo trì) để phản ánh chính xác tình hình thực tế.
+    \item \textbf{Quản lý thông số kỹ thuật:} Lưu trữ và hiển thị chi tiết thông số của từng cổng sạc như mã định danh, chuẩn kết nối, công suất tối đa và điện áp hỗ trợ.
+    \item \textbf{Dashboard giám sát thời gian thực:} Cung cấp giao diện trực quan hiển thị trạng thái hoạt động của toàn bộ hệ thống cổng sạc, giúp phát hiện sớm các sự cố kỹ thuật.
+ \end{itemize}
+ \item \textbf{Quản lý đặt chỗ}
+ \begin{itemize}
+    \item \textbf{Theo dõi yêu cầu đặt chỗ:} Hiển thị danh sách các lịch đặt chỗ từ người dùng với đầy đủ thông tin về thời gian, loại cổng và thông tin khách hàng.
+    \item \textbf{Xử lý đặt chỗ:} Cho phép Chủ trạm xác nhận hoặc từ chối các yêu cầu đặt chỗ dựa trên tình hình thực tế của trạm.
+ \end{itemize}
+ \item \textbf{Báo cáo thống kê và doanh thu}
+ \begin{itemize}
+    \item \textbf{Thống kê hiệu suất:} Cung cấp các báo cáo chi tiết về tần suất sử dụng, tổng lượng điện năng tiêu thụ theo các khung thời gian (ngày, tuần, tháng).
+    \item \textbf{Quản lý doanh thu:} Tự động tổng hợp doanh thu từ các giao dịch sạc và đặt chỗ, hỗ trợ xuất báo cáo tài chính dưới dạng tệp tin (Excel, PDF) để phục vụ công tác kế toán và đối soát.
+ \end{itemize}
+ \item \textbf{Tương tác và chăm sóc khách hàng}
+ \begin{itemize}
+    \item \textbf{Quản lý phản hồi:} Tổng hợp các đánh giá, bình luận và chấm điểm từ người dùng sau khi sử dụng dịch vụ.
+    \item \textbf{Giải quyết khiếu nại:} Cung cấp kênh phản hồi trực tiếp để Chủ trạm giải đáp thắc mắc và xử lý các vấn đề của khách hàng, góp phần nâng cao chất lượng dịch vụ và uy tín thương hiệu.
+ \end{itemize}
+\end{enumerate}
+
 \subsubsubsection{Chức năng của Khách}
+\hspace{1em}Khách (Guest) là nhóm đối tượng người dùng chưa đăng nhập hoặc chưa sở hữu tài khoản trên hệ thống. Mặc dù quyền hạn bị giới hạn, Guest vẫn được trải nghiệm các tính năng cốt lõi liên quan đến tra cứu thông tin để đưa ra quyết định sử dụng dịch vụ. Các chức năng dành cho Khách bao gồm:
+\begin{enumerate}[label=\textbf{\alph*)}]
+    \item \textbf{Đăng ký tài khoản}
+    \begin{itemize}
+        \item Hỗ trợ quy trình đăng ký tài khoản mới nhanh chóng và thuận tiện thông qua phương thức liên kết với Email.
+    \end{itemize}
+    \item \textbf{Tìm kiếm và tra cứu trạm sạc}
+    \begin{itemize}
+        \item \textbf{Định vị thông minh:} Cho phép tìm kiếm các trạm sạc trong khu vực lân cận dựa trên vị trí GPS hiện tại của thiết bị.
+        \item \textbf{Bộ lọc nâng cao:} Cung cấp công cụ lọc đa tiêu chí giúp người dùng thu hẹp kết quả tìm kiếm theo nhu cầu: loại cổng sạc, công suất sạc (tốc độ), mức phí dịch vụ, tình trạng sẵn sàng (số cổng trống) và các tiện ích đi kèm (Wifi, cửa hàng tiện lợi, nhà vệ sinh...).
+        \item \textbf{Hiển thị trực quan:} Kết quả tìm kiếm được trình bày trực quan trên bản đồ số với các thông tin tóm tắt quan trọng: Tên trạm, địa chỉ, trạng thái hoạt động, giờ mở cửa và điểm đánh giá trung bình.
+        \item \textbf{Thông tin chi tiết:} Cho phép xem hồ sơ chi tiết của từng trạm sạc, bao gồm: sơ đồ vị trí chính xác, danh sách cổng sạc chi tiết (loại, công suất), bảng giá dịch vụ niêm yết và trạng thái hoạt động thời gian thực.
+    \end{itemize}
+\end{enumerate}
+
 \subsubsubsection{Chức năng của Người dùng}
+\hspace{1em}Người dùng (User) là những khách hàng đã hoàn tất quy trình xác thực và sở hữu tài khoản định danh trên hệ thống. Ngoài các chức năng cơ bản của Khách, User được cấp quyền truy cập đầy đủ vào hệ sinh thái dịch vụ của EVGo, bao gồm các tính năng tương tác, giao dịch và quản lý cá nhân hóa:
+\begin{enumerate}[label=\textbf{\alph*)}]
+    \item \textbf{Đăng nhập và bảo mật}
+    \begin{itemize}
+        \item \textbf{Đăng nhập đa phương thức:} Hỗ trợ đăng nhập linh hoạt qua Email.
+        \item \textbf{Khôi phục tài khoản:} Cung cấp quy trình lấy lại mật khẩu an toàn và tự động khi người dùng quên thông tin đăng nhập.
+    \end{itemize}
+    \item \textbf{Quản lý hồ sơ cá nhân}
+    \begin{itemize}
+        \item \textbf{Thông tin định danh:} Cho phép xem và cập nhật các thông tin cá nhân như Họ tên, Ảnh đại diện để cá nhân hóa trải nghiệm.
+        \item \textbf{Quản lý phương tiện:} Hỗ trợ lưu trữ và quản lý hồ sơ xe điện (loại xe, dung lượng pin, chuẩn cổng sạc tương thích), giúp hệ thống đề xuất trạm sạc phù hợp nhất.
+    \end{itemize}
+    \item \textbf{Dịch vụ đặt chỗ}
+    \begin{itemize}
+        \item \textbf{Đặt chỗ trước:} Cho phép người dùng giữ chỗ sạc trước tại các trạm hỗ trợ để đảm bảo tính sẵn sàng khi đến nơi, cũng như khả năng hủy đặt chỗ linh hoạt khi thay đổi kế hoạch.
+        \item \textbf{Lịch sử đặt chỗ:} Lưu trữ và hiển thị danh sách các lượt đặt chỗ trong quá khứ để người dùng dễ dàng theo dõi và quản lý lộ trình.
+    \end{itemize}
+    \item \textbf{Thanh toán và lịch sử giao dịch}
+    \begin{itemize}
+        \item \textbf{Thanh toán điện tử:} Tích hợp cổng thanh toán đa dạng, hỗ trợ thanh toán không tiền mặt qua Ví điện tử hoặc Thẻ ngân hàng/Thẻ tín dụng.
+        \item \textbf{Minh bạch tài chính:} Ghi nhận chi tiết lịch sử giao dịch, bao gồm phí đặt chỗ, chi phí điện năng tiêu thụ và thời gian sạc, giúp người dùng quản lý chi tiêu hiệu quả.
+    \end{itemize}
+    \item \textbf{Giám sát quá trình sạc}
+    \begin{itemize}
+        \item \textbf{Theo dõi thời gian thực:} Mô phỏng trực quan tiến trình sạc pin trên ứng dụng, hiển thị các thông số quan trọng như phần trăm pin, công suất sạc hiện tại và thời gian dự kiến đầy.
+        \item \textbf{Điều khiển từ xa:} Cho phép người dùng chủ động ngắt/dừng quá trình sạc từ xa thông qua ứng dụng.
+        \item \textbf{Thông báo tự động:} Gửi thông báo đẩy (Push Notification) ngay khi quá trình sạc hoàn tất hoặc khi có sự cố phát sinh.
+    \end{itemize}
+    \item \textbf{Tương tác và phản hồi}
+    \begin{itemize}
+        \item \textbf{Đánh giá dịch vụ:} Cho phép chấm điểm và viết nhận xét về chất lượng trạm sạc sau mỗi lần sử dụng, góp phần xây dựng cộng đồng người dùng văn minh.
+        \item \textbf{Khiếu nại và Hỗ trợ:} Cung cấp kênh gửi phản ánh, khiếu nại trực tiếp đến Ban quản trị (Super Admin) để được giải quyết kịp thời các vấn đề phát sinh.
+    \end{itemize}
+\end{enumerate}
  
 \subsubsection{Yêu cầu phi chức năng}
 \subsubsubsection{Hiệu năng (Performance)}
