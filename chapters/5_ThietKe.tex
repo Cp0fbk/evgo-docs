@@ -121,8 +121,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
             \item Super Admin chọn một tài khoản để xem chi tiết (nếu cần).
         \end{enumerate}\\
         \hline
-        \textbf{Alternative flows} & 
-        2a. Nếu không có bản ghi phù hợp, hệ thống hiển thị “Không tìm thấy kết quả”.\\
+        \textbf{Alternative flows} & 2a. Nếu không có bản ghi phù hợp, hệ thống hiển thị “Không tìm thấy kết quả”.\\
         \hline
         \textbf{Exception} & 
         2b. Lỗi truy vấn database: Hiển thị thông báo lỗi chung; ghi log; không thay đổi dữ liệu\\
@@ -723,7 +722,529 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
     \end{center}
     \end{itemize}
     
+    
 \subsubsection{Use Case Diagram -- Chủ trạm sạc}
+\begin{enumerate}[label=\textbf{\alph*)}]
+    \item \textbf{Nộp hồ sơ đăng ký} 
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/usecase/StationOwner/uc_so_4.png}
+        \caption{Use case diagram Station nộp hồ sơ đăng ký}
+        \label{fig:uc_sa_1}
+    \end{figure}
+    \begin{itemize}
+    \item \textbf{Nộp hồ sơ }
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SO--REG--02 \\      
+        \hline
+        \textbf{Use case name} & Nộp hồ sơ đã điền thông tin \\
+        \hline
+        \textbf{Actor} & Chủ trạm sạc (Station Owner) \\
+        \hline
+        \textbf{Description} & Station owner nộp hồ sơ đã điền đầy đủ thông tin để đăng ký trạm sạc \\
+        \hline
+        \textbf{Preconditions} & 
+           Station owner đã có file hồ sơ mẫu đã điền thông tin.\\
+        \hline
+        \textbf{Postconditions} & 
+        \begin{itemize}
+            \item Hồ sơ được hệ thống lưu lại.   
+            \item Trạng thái hồ sơ là “Chờ xét duyệt”.
+        \end{itemize}\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Station owner truy cập chức năng Nộp hồ sơ đăng ký.
+            \item Chọn nộp hồ sơ đã điền thông tin
+            \item Chọn file từ thiết bị.
+            \item Xác nhận nộp hồ sơ.
+            \item Hệ thống lưu hồ sơ và thông báo thành công
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        3a. Station owner chọn nhầm file → chọn lại file khác\\
+        \hline
+        \textbf{Exception} & 
+         \begin{itemize}
+            \item File không đúng định dạng.   
+            \item File vượt quá dung lượng cho phép.
+            \item Lỗi mạng khi upload
+        \end{itemize}\\
+        \hline
+        \caption{Use Case Nộp hồ sơ}
+        \label{tab:uc_so_reg_02}
+    \end{longtable}
+    \end{center}
+    \end{itemize}
+
+    \item \textbf{Quản lý trạm sạc}
+     \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/usecase/StationOwner/uc_so_1.png}
+        \caption{Use case diagram Station Quản lý trạm sạc}
+        \label{fig:uc_sa_1}
+    \end{figure}
+    \begin{itemize}
+    \item \textbf{Chỉnh sửa thông tin trạm }
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SO--ST--01 \\
+        \hline
+        \textbf{Use case name} & Chỉnh sửa thông tin trạm \\
+        \hline
+        \textbf{Actor} & Chủ trạm sạc (Station Owner) \\
+        \hline
+        \textbf{Description} & Station owner chỉnh sửa thông tin của trạm sạc như tên trạm, địa chỉ, mô tả, giờ hoạt động, hình ảnh. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Station owner đã đăng nhập hệ thống.
+            \item Trạm sạc tồn tại và thuộc quyền quản lý của station owner.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        Thông tin trạm sạc được cập nhật và lưu thành công.\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Station owner truy cập chức năng Quản lý trạm sạc.
+            \item Chọn trạm cần chỉnh sửa.
+            \item Chọn chức năng chỉnh sửa thông tin trạm.
+            \item Hệ thống hiển thị thông tin hiện tại của trạm.
+            \item Station owner cập nhật thông tin.
+            \item Xác nhận lưu.
+            \item Hệ thống lưu thông tin và thông báo thành công.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        4a. Station owner chỉ chỉnh sửa một số thông tin của trạm.\\
+        \hline
+        \textbf{Exception} & 
+        \begin{itemize}
+            \item Thiếu thông tin bắt buộc.
+            \item Sai định dạng dữ liệu.
+            \item Lỗi hệ thống khi lưu thông tin.
+        \end{itemize}\\
+        \hline
+        \caption{Use Case Chỉnh sửa thông tin trạm}
+        \label{tab:uc_so_st_01}
+        \end{longtable}
+    \end{center}
+
+    \item \textbf{Cập nhật trạng thái hoạt động}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SO--ST--02 \\
+        \hline
+        \textbf{Use case name} & Cập nhật trạng thái hoạt động \\
+        \hline
+        \textbf{Actor} & Chủ trạm sạc (Station Owner) \\
+        \hline
+        \textbf{Description} & Station owner cập nhật trạng thái hoạt động của trạm sạc. \\
+        \hline
+        \textbf{Preconditions} & 
+        Station owner đã đăng nhập và trạm sạc thuộc quyền quản lý.\\
+        \hline
+        \textbf{Postconditions} & 
+        Trạng thái hoạt động của trạm được cập nhật.\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Station owner truy cập Quản lý trạm sạc.
+            \item Chọn trạm cần cập nhật.
+            \item Chọn cập nhật trạng thái hoạt động.
+            \item Chọn trạng thái mới.
+            \item Xác nhận cập nhật.
+            \item Hệ thống lưu và thông báo thành công.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        5a. Station owner hủy thao tác cập nhật.\\
+        \hline
+        \textbf{Exception} & 
+        \begin{itemize}
+            \item Trạng thái không hợp lệ.
+            \item Lỗi mạng hoặc lỗi hệ thống.
+        \end{itemize}\\
+        \hline
+        \caption{Use Case Cập nhật trạng thái hoạt động trạm}
+        \label{tab:uc_so_st_02}
+        \end{longtable}
+    \end{center}
+
+    \item \textbf{Thiết lập giá}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SO--ST--03 \\
+        \hline
+        \textbf{Use case name} & Thiết lập giá \\
+        \hline
+        \textbf{Actor} & Chủ trạm sạc (Station Owner) \\
+        \hline
+        \textbf{Description} & Station owner thiết lập bảng giá sạc cho trạm hoặc các trụ sạc. \\
+        \hline
+        \textbf{Preconditions} & 
+        Station owner đã đăng nhập và có quyền quản lý trạm.\\
+        \hline
+        \textbf{Postconditions} & 
+        Bảng giá được lưu và áp dụng cho trạm sạc.\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Station owner truy cập Quản lý trạm sạc.
+            \item Chọn trạm cần thiết lập giá.
+            \item Chọn chức năng thiết lập giá.
+            \item Nhập thông tin giá sạc.
+            \item Xác nhận lưu.
+            \item Hệ thống lưu bảng giá và thông báo thành công.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        4a. Station owner thiết lập nhiều mức giá theo khung giờ.\\
+        \hline
+        \textbf{Exception} & 
+        \begin{itemize}
+            \item Giá không hợp lệ.
+            \item Dữ liệu bị trùng hoặc sai định dạng.
+        \end{itemize}\\
+        \hline
+        \caption{Use Case Thiết lập giá}
+        \label{tab:uc_so_st_03}
+        \end{longtable}
+    \end{center}
+
+      \item \textbf{Theo dõi thông tin trụ sạc}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SO--ST--04 \\
+        \hline
+        \textbf{Use case name} & Theo dõi thông tin trụ sạc \\
+        \hline
+        \textbf{Actor} & Chủ trạm sạc (Station Owner) \\
+        \hline
+        \textbf{Description} & Station owner theo dõi danh sách trụ sạc và trạng thái hoạt động của từng trụ. \\
+        \hline
+        \textbf{Preconditions} & 
+        Station owner đã đăng nhập và trạm thuộc quyền quản lý.\\
+        \hline
+        \textbf{Postconditions} & 
+        Thông tin trụ sạc được hiển thị.\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Station owner truy cập Quản lý trạm sạc.
+            \item Chọn trạm.
+            \item Chọn theo dõi thông tin trụ sạc.
+            \item Hệ thống hiển thị danh sách trụ và trạng thái.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        4a. Trạm chưa có trụ sạc → hiển thị danh sách rỗng.\\
+        \hline
+        \textbf{Exception} & 
+        Lỗi hệ thống khi tải dữ liệu trụ sạc.\\
+        \hline
+        \caption{Use Case Theo dõi thông tin trụ sạc}
+        \label{tab:uc_so_st_04}
+        \end{longtable}
+    \end{center}
+    
+    \item \textbf{Xem danh sách đặt chỗ}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SO--ST--05 \\
+        \hline
+        \textbf{Use case name} & Xem danh sách đặt chỗ \\
+        \hline
+        \textbf{Actor} & Chủ trạm sạc (Station Owner) \\
+        \hline
+        \textbf{Description} & Station owner xem danh sách các lượt đặt chỗ tại trạm sạc. \\
+        \hline
+        \textbf{Preconditions} & 
+        Station owner đã đăng nhập hệ thống.\\
+        \hline
+        \textbf{Postconditions} & 
+        Danh sách đặt chỗ được hiển thị.\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Station owner truy cập Quản lý trạm sạc.
+            \item Chọn xem danh sách đặt chỗ.
+            \item Hệ thống hiển thị danh sách các lượt đặt chỗ.
+            \item Station owner xem chi tiết từng lượt đặt chỗ.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        3a. Không có lượt đặt chỗ nào.\\
+        \hline
+        \textbf{Exception} & 
+        Lỗi hệ thống hoặc lỗi kết nối mạng.\\
+        \hline
+        \caption{Use Case Xem danh sách đặt chỗ}
+        \label{tab:uc_so_st_05}
+        \end{longtable}
+    \end{center}    
+    \end{itemize}
+
+     \item \textbf{Báo cáo và thống kê }
+     \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/usecase/StationOwner/uc_so_2.png}
+        \caption{Use case diagram Báo cáo \& thống kê }
+        \label{fig:uc_sa_1}
+    \end{figure}
+    \begin{itemize}
+    \item \textbf{Thống kê số lượt sạc}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SO--RP--01 \\
+        \hline
+        \textbf{Use case name} & Thống kê số lượt sạc \\
+        \hline
+        \textbf{Actor} & Chủ trạm sạc (Station Owner) \\
+        \hline
+        \textbf{Description} & 
+        Station owner xem thống kê số lượt sạc tại trạm theo thời gian (ngày, tháng, năm). \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Station owner đã đăng nhập hệ thống.
+            \item Trạm sạc thuộc quyền quản lý của station owner.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        Dữ liệu thống kê số lượt sạc được hiển thị trên hệ thống.\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Station owner truy cập chức năng Báo cáo \& thống kê.
+            \item Chọn thống kê số lượt sạc.
+            \item Chọn khoảng thời gian thống kê.
+            \item Hệ thống hiển thị số lượt sạc tương ứng.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        3a. Station owner thay đổi khoảng thời gian → hệ thống cập nhật lại dữ liệu.\\
+        \hline
+        \textbf{Exception} & 
+        \begin{itemize}
+            \item Không có dữ liệu trong khoảng thời gian đã chọn.
+            \item Lỗi hệ thống khi xử lý thống kê.
+        \end{itemize}\\
+        \hline
+        \caption{Use Case Thống kê số lượt sạc}
+        \label{tab:uc_so_rp_01}
+        \end{longtable}
+    \end{center}
+
+    \item \textbf{Thống kê doanh thu}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SO--RP--02 \\
+        \hline
+        \textbf{Use case name} & Thống kê doanh thu \\
+        \hline
+        \textbf{Actor} & Chủ trạm sạc (Station Owner) \\
+        \hline
+        \textbf{Description} & 
+        Station owner xem báo cáo doanh thu của trạm sạc theo khoảng thời gian. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Station owner đã đăng nhập.
+            \item Trạm sạc thuộc quyền quản lý.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        Thông tin doanh thu được hiển thị cho station owner.\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Station owner truy cập chức năng Báo cáo \& thống kê.
+            \item Chọn thống kê doanh thu.
+            \item Chọn khoảng thời gian thống kê.
+            \item Hệ thống hiển thị kết quả doanh thu.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        3a. Station owner chọn thống kê theo tháng hoặc theo năm.\\
+        \hline
+        \textbf{Exception} & 
+        \begin{itemize}
+            \item Không phát sinh doanh thu trong khoảng thời gian đã chọn.
+            \item Lỗi hệ thống khi tính toán doanh thu.
+        \end{itemize}\\
+        \hline
+        \caption{Use Case Thống kê doanh thu}
+        \label{tab:uc_so_rp_02}
+        \end{longtable}
+    \end{center}
+
+    \item \textbf{Xuất file báo cáo}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SO--RP--03 \\
+        \hline
+        \textbf{Use case name} & Xuất file báo cáo \\
+        \hline
+        \textbf{Actor} & Chủ trạm sạc (Station Owner) \\
+        \hline
+        \textbf{Description} & 
+        Station owner xuất file báo cáo thống kê (số lượt sạc hoặc doanh thu) ra file để lưu trữ hoặc sử dụng bên ngoài. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Station owner đang xem dữ liệu thống kê.
+            \item Dữ liệu thống kê đã được hệ thống xử lý.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        File báo cáo được xuất thành công và tải về thiết bị.\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Station owner chọn chức năng xuất file báo cáo.
+            \item Chọn loại file (PDF/Excel).
+            \item Hệ thống tạo file báo cáo.
+            \item Station owner tải file về thiết bị.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        2a. Station owner chỉ xuất một phần dữ liệu theo bộ lọc đã chọn.\\
+        \hline
+        \textbf{Exception} & 
+        \begin{itemize}
+            \item Lỗi tạo file báo cáo.
+            \item Lỗi mạng khi tải file.
+        \end{itemize}\\
+        \hline
+        \caption{Use Case Xuất file báo cáo}
+        \label{tab:uc_so_rp_03}
+        \end{longtable}
+    \end{center}
+    \end{itemize}
+
+    \item \textbf{Xử lý đánh giá}
+     \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/usecase/StationOwner/uc_so_2.png}
+        \caption{Use case diagram Báo cáo \& thống kê}
+        \label{fig:uc_sa_1}
+    \end{figure}
+    \begin{itemize}
+    \item \textbf{Xem đánh giá}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SO--RV--01 \\
+        \hline
+        \textbf{Use case name} & Xem đánh giá \\
+        \hline
+        \textbf{Actor} & Chủ trạm sạc (Station Owner) \\
+        \hline
+        \textbf{Description} & 
+        Station owner xem các đánh giá và nhận xét của người dùng về trạm sạc và trụ sạc. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Station owner đã đăng nhập hệ thống.
+            \item Trạm sạc thuộc quyền quản lý của station owner.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        Danh sách đánh giá được hiển thị cho station owner.\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Station owner truy cập chức năng Xử lý đánh giá.
+            \item Chọn xem đánh giá.
+            \item Hệ thống hiển thị danh sách đánh giá (số sao, nội dung, thời gian).
+            \item Station owner chọn một đánh giá để xem chi tiết.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        3a. Station owner sử dụng bộ lọc (theo số sao, thời gian).\\
+        \hline
+        \textbf{Exception} & 
+        \begin{itemize}
+            \item Không có đánh giá nào.
+            \item Lỗi hệ thống khi tải dữ liệu đánh giá.
+        \end{itemize}\\
+        \hline
+        \caption{Use Case Xem đánh giá}
+        \label{tab:uc_so_rv_01}
+        \end{longtable}
+    \end{center}
+
+    \item \textbf{Phản hồi đánh giá}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SO--RV--02 \\
+        \hline
+        \textbf{Use case name} & Phản hồi đánh giá \\
+        \hline
+        \textbf{Actor} & Chủ trạm sạc (Station Owner) \\
+        \hline
+        \textbf{Description} & 
+        Station owner phản hồi lại đánh giá của người dùng nhằm giải thích, cảm ơn hoặc xử lý phản ánh. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Station owner đã đăng nhập.
+            \item Station owner đang xem chi tiết một đánh giá.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        Nội dung phản hồi được lưu và hiển thị dưới đánh giá tương ứng.\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Station owner chọn một đánh giá.
+            \item Chọn chức năng phản hồi đánh giá.
+            \item Nhập nội dung phản hồi.
+            \item Xác nhận gửi phản hồi.
+            \item Hệ thống lưu phản hồi và hiển thị thành công.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        3a. Station owner chỉnh sửa nội dung phản hồi trước khi gửi.\\
+        \hline
+        \textbf{Exception} & 
+        \begin{itemize}
+            \item Nội dung phản hồi rỗng hoặc vượt quá độ dài cho phép.
+            \item Lỗi hệ thống khi lưu phản hồi.
+        \end{itemize}\\
+        \hline
+        \caption{Use Case Phản hồi đánh giá}
+        \label{tab:uc_so_rv_02}
+        \end{longtable}
+    \end{center}    
+    \end{itemize}
+    
+\end{enumerate}
+
 
 \subsubsection{Use Case Diagram -- Người dùng và khách}
 
