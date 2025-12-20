@@ -1,1 +1,36 @@
 \section{Kết luận}
+
+\subsection{Kết quả đạt được}
+Sau quá trình nghiên cứu và thực hiện đồ án, nhóm đã xây dựng thành công hệ thống quản lý trạm sạc xe máy điện EVGo với các kết quả cụ thể như sau:
+
+\begin{itemize}
+    \item \textbf{Về mặt chức năng:}
+    \begin{itemize}
+        \item Hoàn thiện các luồng nghiệp vụ cơ bản cho ba đối tượng người dùng: Người dùng (User), Quản trị viên (Super Admin) và Chủ trạm (Station Owner).
+        \item Tích hợp thành công tính năng đăng nhập nhanh (SSO) thông qua Google cho các tài khoản thuộc tổ chức \texttt{hcmut.edu.vn}.
+        \item Xây dựng quy trình đăng ký và xét duyệt chủ trạm trực tuyến, bao gồm cơ chế gửi email xác thực tự động.
+    \end{itemize}
+    
+    \item \textbf{Về mặt kỹ thuật và giao diện:}
+    \begin{itemize}
+        \item Áp dụng thành công kiến trúc Modular Monolith, giúp hệ thống dễ dàng bảo trì và mở rộng.
+        \item Giao diện người dùng được thiết kế hiện đại với chế độ Dark Mode mặc định, đảm bảo tính thẩm mỹ và trải nghiệm người dùng tốt.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Hạn chế}
+Bên cạnh những kết quả đạt được, hệ thống vẫn còn tồn tại một số hạn chế nhất định:
+
+\begin{itemize}
+    \item \textbf{Phạm vi người dùng:} Tính năng đăng nhập nhanh (SSO) hiện tại chỉ giới hạn cho các email thuộc tổ chức \texttt{hcmut.edu.vn} do các rào cản về chi phí khi mở rộng phạm vi xác thực cho người dùng phổ thông.
+    \item \textbf{Kết nối phần cứng:} Hệ thống chưa được kết nối với các trạm sạc vật lý thực tế. Việc giao tiếp hiện tại hoàn toàn dựa trên cơ chế giả lập thông qua giao thức OCPP, do đó chưa thể đánh giá được toàn diện các vấn đề phát sinh trong môi trường vận hành thực tế với phần cứng.
+\end{itemize}
+
+\subsection{Hướng phát triển}
+Dựa trên những kết quả và hạn chế đã phân tích, nhóm đề xuất các hướng phát triển trong tương lai để hoàn thiện hệ thống:
+
+\begin{itemize}
+    \item \textbf{Tích hợp Trí tuệ nhân tạo (AI):} Nghiên cứu và áp dụng các thuật toán AI để cung cấp tính năng gợi ý trạm sạc tối ưu dựa trên vị trí và thói quen của người dùng, cũng như dự đoán nhu cầu sạc tại các khu vực khác nhau để hỗ trợ chủ trạm trong việc vận hành.
+    \item \textbf{Mở rộng phạm vi xác thực:} Tìm kiếm các giải pháp tối ưu chi phí để mở rộng tính năng SSO cho các tài khoản Google cá nhân và các nền tảng mạng xã hội khác, giúp hệ thống tiếp cận được nhiều người dùng hơn.
+    \item \textbf{Tối ưu hóa công cụ quản trị:} Tiếp tục phát triển và hoàn thiện nền tảng Website dành cho các đối tượng quản lý (Super Admin, Station Owner, Staff), tập trung vào các công cụ báo cáo, thống kê chuyên sâu thay vì phát triển ứng dụng di động riêng cho nhóm đối tượng này.
+\end{itemize}
