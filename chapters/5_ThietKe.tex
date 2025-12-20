@@ -1280,9 +1280,1038 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
 
 
 \subsubsection{Use Case Diagram -- Người dùng và khách}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/usecase/User/uc_u_6.png}
+    \caption{Use case diagram Tìm kiếm trạm sạc (Người dùng và Khách)}
+    \label{fig:uc_u_6}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Tìm kiếm và tra cứu trạm sạc}
+    
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UG--01 \\
+        \hline
+        \textbf{Use case name} & Người dùng/khách tìm kiếm trạm sạc \\
+        \hline
+        \textbf{Actor} & Người dùng (user), Khách (guest) \\
+        \hline
+        \textbf{Description} & Người dùng yêu cầu tìm kiếm, hệ thống xác định vị trí qua GPS, tìm các trạm sạc phù hợp và hiển thị danh sách trạm trên bản đồ kèm thông tin cơ bản. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Thiết bị của người dùng bật GPS hoặc nhập thủ công vị trí.
+            \item Hệ thống có dữ liệu về các trạm sạc.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        \begin{itemize}
+            \item Danh sách trạm sạc phù hợp hiển thị trên bản đồ.
+            \item Người dùng có thể chọn một trạm để xem thông tin chi tiết.
+        \end{itemize}\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Người dùng chọn chức năng “Tìm kiếm trạm sạc”.
+            \item Hệ thống xác định vị trí hiện tại qua GPS.
+            \item Hệ thống tìm kiếm các trạm phù hợp.
+            \item Hệ thống hiển thị kết quả trên bản đồ, kèm thông tin cơ bản.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        2a. GPS không hoạt động $\rightarrow$ Hệ thống yêu cầu nhập vị trí thủ công.\\
+        \hline
+        \textbf{Exception} & 
+        3b. Không có trạm sạc nào phù hợp $\rightarrow$ Hệ thống thông báo “Không tìm thấy trạm sạc phù hợp”.\\
+        \hline
+        \caption{Use Case Người dùng/khách tìm kiếm trạm sạc}
+    \end{longtable}
+
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UG--02 \\
+        \hline
+        \textbf{Use case name} & Người dùng/khách lọc kết quả tìm kiếm \\
+        \hline
+        \textbf{Actor} & Người dùng (user), Khách (guest) \\
+        \hline
+        \textbf{Description} & Khi thực hiện tìm kiếm, người dùng có thể mở rộng thao tác bằng cách áp dụng các bộ lọc. Hệ thống sẽ hiển thị lại danh sách trạm sạc phù hợp trên bản đồ theo điều kiện đã chọn. \\
+        \hline
+        \textbf{Preconditions} & Người dùng đã thực hiện thao tác “Tìm kiếm trạm sạc”. \\
+        \hline
+        \textbf{Postconditions} & Danh sách kết quả tìm kiếm được thu hẹp theo điều kiện lọc và hiển thị trên bản đồ. \\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Người dùng chọn chức năng “Lọc kết quả tìm kiếm”.
+            \item Hệ thống hiển thị các tùy chọn lọc (loại cổng sạc, tốc độ, chi phí, số cổng trống, tiện ích).
+            \item Người dùng chọn một hoặc nhiều điều kiện lọc.
+            \item Hệ thống áp dụng bộ lọc và cập nhật lại kết quả trên bản đồ.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        3a. Người dùng không chọn điều kiện lọc nào $\rightarrow$ Hệ thống giữ nguyên kết quả hiện tại.\\
+        \hline
+        \textbf{Exception} & 
+        4b. Không có trạm sạc nào phù hợp với điều kiện lọc $\rightarrow$ Hệ thống thông báo “Không tìm thấy trạm sạc phù hợp” và hiển thị tùy chọn xóa lọc.\\
+        \hline
+        \caption{Use Case Người dùng/khách lọc kết quả tìm kiếm}
+    \end{longtable}
+
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UG--03 \\
+        \hline
+        \textbf{Use case name} & Người dùng/khách xem thông tin trạm sạc \\
+        \hline
+        \textbf{Actor} & Người dùng (user), Khách (guest) \\
+        \hline
+        \textbf{Description} & Người dùng chọn một trạm từ kết quả tìm kiếm để xem thông tin của trạm sạc. \\
+        \hline
+        \textbf{Preconditions} & Người dùng đã thực hiện tìm kiếm trạm sạc và có danh sách trạm hiển thị. \\
+        \hline
+        \textbf{Postconditions} & Thông tin trạm sạc được hiển thị trên giao diện. \\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Người dùng chọn một trạm sạc từ danh sách hiển thị trên bản đồ.
+            \item Hệ thống truy xuất dữ liệu của trạm.
+            \item Hệ thống hiển thị thông tin cơ bản: tên trạm, địa chỉ, số lượng cổng, trạng thái hoạt động, giờ mở cửa, đánh giá trung bình.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & Không có\\
+        \hline
+        \textbf{Exception} & 
+        3b. Dữ liệu trạm không tồn tại hoặc bị lỗi $\rightarrow$ Hệ thống thông báo “Không thể tải thông tin trạm sạc”.\\
+        \hline
+        \caption{Use Case Người dùng/khách xem thông tin trạm sạc}
+    \end{longtable}
+
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UG--04 \\
+        \hline
+        \textbf{Use case name} & Người dùng/khách xem thông tin chi tiết trạm sạc \\
+        \hline
+        \textbf{Actor} & Người dùng (user), Khách (guest) \\
+        \hline
+        \textbf{Description} & Sau khi chọn một trạm sạc từ kết quả tìm kiếm, người dùng/khách có thể truy cập thông tin chi tiết của trạm sạc. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Người dùng đã chọn một trạm sạc trong kết quả tìm kiếm.
+            \item Hệ thống có dữ liệu chi tiết về trạm sạc.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & Thông tin chi tiết của trạm sạc được hiển thị đầy đủ cho User. \\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item User chọn chức năng “Xem thông tin chi tiết” từ trang thông tin trạm.
+            \item Hệ thống truy xuất dữ liệu chi tiết của trạm.
+            \item Hệ thống hiển thị thông tin chi tiết: loại cổng sạc, tình trạng hoạt động của từng cổng, giá dịch vụ, thời gian sạc ước tính, tiện ích kèm theo.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & Không có\\
+        \hline
+        \textbf{Exception} & Không có\\
+        \hline
+        \caption{Use Case Người dùng/khách xem thông tin chi tiết trạm sạc}
+    \end{longtable}
+\end{itemize}
 
 \subsubsection{Use Case Diagram -- Người dùng}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=1\textwidth]{figures/usecase/User/usecase_tong_quan2.png}
+%     \caption{Tổng quan Use Case Người dùng}
+%     \label{fig:uc_user_overview}
+% \end{figure}
 
+\paragraph*{a. Quản lý tài khoản} \mbox{} \\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/usecase/User/uc_u_1.png}
+    \caption{Use case Quản lý tài khoản}
+    \label{fig:uc_u_1}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Người dùng xem thông tin cá nhân}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--U--01 \\
+        \hline
+        \textbf{Use case name} & Người dùng xem thông tin cá nhân \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & Người dùng muốn xem thông tin của bản thân \\
+        \hline
+        \textbf{Preconditions} & Người dùng đăng nhập hợp lệ \\
+        \hline
+        \textbf{Postconditions} & 
+        \begin{itemize}
+            \item Người dùng xem thông tin cá nhân thành công.
+            \item Hệ thống hiển thị thông tin cá nhân của người dùng.
+        \end{itemize}\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Người dùng nhấn vào biểu tượng menu.
+            \item Hệ thống hiển thị menu chức năng cá nhân.
+            \item Người dùng nhấn vào xem thông tin tài khoản.
+            \item Hệ thống hiển thị thông tin cá nhân của Người dùng.
+            \item Người dùng xem được thông tin cá nhân của mình.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & Không\\
+        \hline
+        \textbf{Exception} & Không\\
+        \hline
+        \caption{Use Case Người dùng xem thông tin cá nhân}
+    \end{longtable}
+
+    \item \textbf{Người dùng sửa thông tin cá nhân}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--U--02 \\
+        \hline
+        \textbf{Use case name} & Người dùng sửa thông tin cá nhân \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & Người dùng muốn sửa thông tin tin của bản thân \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Người dùng đăng nhập hợp lệ.
+            \item Người dùng đang ở trang xem thông tin cá nhân.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        \begin{itemize}
+            \item Người dùng sửa thông tin cá nhân thành công.
+            \item Hệ thống hiển thị thông tin cá nhân mới của người dùng.
+        \end{itemize}\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Người dùng nhấn vào biểu tượng chỉnh sửa.
+            \item Hệ thống hiển thị các thông tin có thể chỉnh sửa.
+            \item Người dùng nhập các thông tin cần thay đổi.
+            \item Người dùng nhấn nút “Xác nhận” để cập nhập thông tin cá nhân mới.
+            \item Hệ thống kiểm tra dữ liệu đầu vào.
+            \item Nếu hợp lệ, hệ thống lưu thay đổi vào cơ sở dữ liệu.
+            \item Hệ thống thông báo “Cập nhật thành công” và hiển thị hồ sơ đã chỉnh sửa.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        3a. Người dùng không nhập thông tin mới $\rightarrow$ Hệ thống giữ nguyên thông tin cũ và quay về màn hình hồ sơ. \newline
+        4a. Người dùng nhấn nút đóng $\rightarrow$ Hệ thống giữ nguyên thông tin cũ và quay về màn hình hồ sơ.\\
+        \hline
+        \textbf{Exception} & 
+        5b. Có trường dữ liệu không hợp lệ $\rightarrow$ Hệ thống báo lỗi và yêu cầu nhập lại. \newline
+        6a. Lỗi kết nối cơ sở dữ liệu $\rightarrow$ Hệ thống thông báo “Không thể cập nhật, vui lòng thử lại sau”.\\
+        \hline
+        \caption{Use Case Người dùng sửa thông tin cá nhân}
+    \end{longtable}
+
+    \item \textbf{Người dùng xem hồ sơ phương tiện của bản thân}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--U--03 \\
+        \hline
+        \textbf{Use case name} & Người dùng xem hồ sơ phương tiện của bản thân \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & Người dùng muốn xem hồ sơ phương tiện của bản thân \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Người dùng đăng nhập hợp lệ.
+            \item Người dùng đang ở trang xem thông tin cá nhân.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        \begin{itemize}
+            \item Người dùng xem hồ sơ phương tiện của bản thân thành công.
+            \item Hệ thống hiển thị hồ sơ phương tiện của bản thân.
+        \end{itemize}\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Người dùng nhấn vào mục hồ sơ phương tiện.
+            \item Hệ thống hiển thị hồ sơ phương tiện của người dùng.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & Không\\
+        \hline
+        \textbf{Exception} & Không\\
+        \hline
+        \caption{Use Case Người dùng xem hồ sơ phương tiện của bản thân}
+    \end{longtable}
+
+    \item \textbf{Người dùng sửa hồ sơ phương tiện}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--U--04 \\
+        \hline
+        \textbf{Use case name} & Người dùng sửa hồ sơ phương tiện \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & Người dùng muốn sửa hồ sơ phương tiện của bản thân \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Người dùng đăng nhập hợp lệ.
+            \item Người dùng đang ở trang xem hồ sơ phương tiện.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        \begin{itemize}
+            \item Người dùng sửa hồ sơ phương tiện thành công.
+            \item Hệ thống hiển thị hồ sơ phương tiện mới của người dùng.
+        \end{itemize}\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Người dùng nhấn vào biểu tượng chỉnh sửa.
+            \item Hệ thống hiển thị các thông tin có thể chỉnh sửa.
+            \item Người dùng nhập các thông tin cần thay đổi.
+            \item Người dùng nhấn nút “Xác nhận” để cập nhập thông tin mới.
+            \item Hệ thống kiểm tra dữ liệu đầu vào.
+            \item Nếu hợp lệ, hệ thống lưu thay đổi vào cơ sở dữ liệu.
+            \item Hệ thống thông báo “Cập nhật thành công” và hiển thị hồ sơ đã chỉnh sửa.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        3a. Người dùng không nhập thông tin mới $\rightarrow$ Hệ thống giữ nguyên thông tin cũ và quay về màn hình hồ sơ. \newline
+        4a. Người dùng nhấn nút đóng $\rightarrow$ Hệ thống giữ nguyên thông tin cũ và quay về màn hình hồ sơ.\\
+        \hline
+        \textbf{Exception} & 
+        5b. Có trường dữ liệu không hợp lệ $\rightarrow$ Hệ thống báo lỗi và yêu cầu nhập lại. \newline
+        6a. Lỗi kết nối cơ sở dữ liệu $\rightarrow$ Hệ thống thông báo “Không thể cập nhật, vui lòng thử lại sau”.\\
+        \hline
+        \caption{Use Case Người dùng sửa hồ sơ phương tiện}
+    \end{longtable}
+\end{itemize}
+
+\paragraph*{b. Đặt chỗ sạc} \mbox{} \\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/usecase/User/uc_u_2.png}
+    \caption{Use case Đặt chỗ sạc}
+    \label{fig:uc_u_2}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Người dùng đặt chỗ sạc}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UO--01 \\
+        \hline
+        \textbf{Use case name} & Người dùng đặt chỗ sạc \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & Người dùng đặt trước chỗ sạc \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Người dùng đăng nhập hợp lệ.
+            \item Người dùng chọn được trạm sạc hỗ trợ đặt trước.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        \begin{itemize}
+            \item Người dùng đặt chỗ thành công.
+            \item Cổng sạc được đánh dấu là “đã đặt”.
+            \item Thông tin đặt chỗ hiển thị trong lịch sử đặt chỗ của Người dùng.
+        \end{itemize}\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Người dùng chọn một trạm sạc từ bản đồ.
+            \item Hệ thống hiển thị thông tin chi tiết (loại cổng, số lượng cổng trống, giá dịch vụ).
+            \item Người dùng chọn thời gian và cổng cần đặt.
+            \item Hệ thống kiểm tra tình trạng cổng sạc.
+            \item Người dùng xác nhận đặt chỗ.
+            \item Hệ thống hiển thị trang thanh toán cọc.
+            \item Người dùng chọn phương thức thanh toán $\rightarrow$ tiến hành thanh toán.
+            \item Hệ thống xử lý thanh toán thành công.
+            \item Hệ thống lưu thông tin đặt chỗ và gửi thông báo xác nhận cho Người dùng.
+            \item Hệ thống hiển thị trang lịch sử đặt chỗ.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        4a. Nếu không còn cổng sạc trống: hệ thống thông báo lỗi, Người dùng quay lại bước 2. \newline
+        5a. Nếu Người dùng hủy thao tác trước khi xác nhận: quá trình đặt chỗ kết thúc, không lưu dữ liệu. \newline
+        7a. Nếu Người dùng hủy thanh toán: quá trình đặt chỗ kết thúc, không lưu dữ liệu.\\
+        \hline
+        \textbf{Exception} & 
+        8b. Nếu thanh toán thất bại: hệ thống hủy yêu cầu đặt chỗ và thông báo cho Người dùng.\\
+        \hline
+        \caption{Use Case Người dùng đặt chỗ sạc}
+    \end{longtable}
+
+    \item \textbf{Người dùng xem lịch sử đặt chỗ}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UO--02 \\
+        \hline
+        \textbf{Use case name} & Người dùng xem lịch sử đặt chỗ \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & Người dùng xem lịch sử đặt chỗ của mình \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Người dùng đăng nhập hợp lệ.
+            \item Hệ thống hiển thị lịch sử đặt chỗ.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & Hệ thống xem lịch sử đặt chỗ thành công \\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Người dùng nhấn vào biểu tượng menu.
+            \item Hệ thống hiển thị menu chức năng cá nhân.
+            \item Người dùng chọn xem lịch sử đặt chỗ.
+            \item Hệ thống hiển thị danh sách các đặt chỗ trước đây của Người dùng, sắp xếp theo thời gian.
+            \item Người dùng chọn một đặt chỗ để xem chi tiết.
+            \item Hệ thống hiển thị chi tiết đặt chỗ.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & Không có\\
+        \hline
+        \textbf{Exception} & 
+        4b. Nếu Người dùng chưa từng có đặt chỗ: hệ thống hiển thị thông báo “Bạn chưa có lịch sử đặt chỗ nào”.\\
+        \hline
+        \caption{Use Case Người dùng xem lịch sử đặt chỗ}
+    \end{longtable}
+
+    \item \textbf{Người dùng hủy đặt chỗ sạc}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UO--03 \\
+        \hline
+        \textbf{Use case name} & Người dùng hủy đặt chỗ sạc \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & Người dùng hủy đặt trước chỗ sạc \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Người dùng đăng nhập hợp lệ.
+            \item Người dùng đã có ít nhất một đặt chỗ hợp lệ còn hiệu lực trong hệ thống.
+            \item Người dùng đang ở trang hiển thị lịch sử đặt chỗ.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        \begin{itemize}
+            \item Người dùng hủy đặt chỗ thành công.
+            \item Cổng sạc được giải phóng.
+            \item Hệ thống cập nhật trạng thái đặt chỗ thành “Đã hủy”.
+        \end{itemize}\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Người dùng chọn một đặt chỗ còn hiệu lực.
+            \item Hệ thống hiển thị thông tin chi tiết về lượt đặt chỗ.
+            \item Người dùng nhấn nút hủy đặt chỗ.
+            \item Hệ thống hiển thị pop-up xác nhận hủy.
+            \item Người dùng nhấn xác nhận.
+            \item Hệ thống cập nhật trạng thái đặt chỗ, giải phóng cổng sạc.
+            \item Hệ thống tiến hành quy trình hoàn tiền theo chính sách của trạm sạc.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        5a. Người dùng hủy thao tác trước khi xác nhận: quá trình hủy đặt chỗ kết thúc, không lưu dữ liệu.\\
+        \hline
+        \textbf{Exception} & 
+        7b. Nếu hoàn tiền thất bại: hệ thống thông báo lỗi, đồng thời đánh dấu đặt chỗ là “Đã hủy” nhưng gắn trạng thái “Hoàn tiền thất bại” để xử lý sau.\\
+        \hline
+        \caption{Use Case Người dùng hủy đặt chỗ sạc}
+    \end{longtable}
+\end{itemize}
+
+\paragraph*{c. Quản lý thanh toán và giao dịch} \mbox{} \\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/usecase/User/uc_u_3.png}
+    \caption{Use case Thanh toán}
+    \label{fig:uc_u_3}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Người dùng liên kết phương thức thanh toán}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UPAY--01 \\
+        \hline
+        \textbf{Use case name} & Người dùng liên kết phương thức thanh toán \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & Cho phép Người dùng thêm mới, xác thực và quản lý các phương thức thanh toán (thẻ ngân hàng, ví điện tử) để sử dụng cho các giao dịch trong hệ thống. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Người dùng đăng nhập hợp lệ.
+            \item Người dùng có tài khoản hợp lệ tại ngân hàng hoặc ví điện tử được hỗ trợ.
+            \item Hệ thống có kết nối API với đối tác thanh toán.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        \begin{itemize}
+            \item Phương thức thanh toán liên kết thành công với tài khoản Người dùng.
+            \item Người dùng có thể sử dụng phương thức này cho các giao dịch thanh toán trong hệ thống.
+        \end{itemize}\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Người dùng nhấn vào biểu tượng menu.
+            \item Hệ thống hiển thị menu chức năng cá nhân.
+            \item Người dùng chọn chức năng “Liên kết phương thức thanh toán”.
+            \item Hệ thống hiển thị các tùy chọn (ngân hàng, ví điện tử hỗ trợ).
+            \item Người dùng chọn một phương thức cụ thể.
+            \item Hệ thống chuyển hướng sang cổng xác thực của ngân hàng/ ví điện tử.
+            \item Ngân hàng/ ví điện tử xác nhận thông tin thành công.
+            \item Hệ thống lưu thông tin liên kết vào tài khoản Người dùng.
+            \item Hệ thống thông báo thành công cho Người dùng.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & Không có\\
+        \hline
+        \textbf{Exception} & 
+        6a. Nếu ngân hàng/ ví điện tử từ chối xác thực: hệ thống thông báo lỗi và hủy liên kết. \newline
+        7a. Nếu lưu dữ liệu liên kết thất bại: hệ thống thông báo lỗi và yêu cầu Người dùng thực hiện lại.\\
+        \hline
+        \caption{Use Case Người dùng liên kết phương thức thanh toán}
+    \end{longtable}
+
+    \item \textbf{Người dùng thanh toán}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UPAY--02 \\
+        \hline
+        \textbf{Use case name} & Người dùng thanh toán \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & Cho phép Người dùng thực hiện thanh toán cho việc đặt chỗ sạc (hoặc các dịch vụ khác) một cách an toàn và chính xác. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Người dùng đăng nhập hợp lệ.
+            \item Người dùng đã chọn dịch vụ cần thanh toán (đặt chỗ sạc).
+            \item Hệ thống có kết nối API với đối tác thanh toán.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        \begin{itemize}
+            \item Giao dịch thanh toán được thực hiện thành công.
+            \item Hệ thống lưu lại thông tin giao dịch (thời gian, số tiền, trạng thái).
+            \item Nếu thanh toán cho đặt chỗ, đặt chỗ được xác nhận.
+        \end{itemize}\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Hệ thống hiển thị các phương thức thanh toán khả dụng.
+            \item Người dùng chọn một phương thức và xác nhận giao dịch.
+            \item Hệ thống gửi yêu cầu đến ngân hàng/ ví điện tử.
+            \item Người dùng xác thực giao dịch (trong app ví điện tử).
+            \item Ngân hàng/ ví điện tử phản hồi kết quả thanh toán thành công.
+            \item Hệ thống cập nhật trạng thái giao dịch thành “Thành công” và lưu vào CSDL.
+            \item Hệ thống gửi thông báo giao dịch thành công đến Người dùng.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        2a. Nếu Người dùng chưa có phương thức thanh toán liên kết: hệ thống yêu cầu “Liên kết phương thức thanh toán”.\\
+        \hline
+        \textbf{Exception} & 
+        4b. Nếu Người dùng xác thực sai hoặc không xác thực kịp thời: giao dịch thất bại, hệ thống thông báo lỗi. \newline
+        5b. Nếu ngân hàng/ ví điện tử trả về trạng thái thất bại: hệ thống thông báo lỗi, thanh toán bị hủy. \newline
+        7b. Nếu lưu dữ liệu giao dịch thất bại: hệ thống thông báo lỗi và thông báo cho Người dùng thử lại.\\
+        \hline
+        \caption{Use Case Người dùng thanh toán}
+    \end{longtable}
+
+    \item \textbf{Người dùng xem lịch sử thanh toán}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UPAY--03 \\
+        \hline
+        \textbf{Use case name} & Người dùng xem lịch sử thanh toán \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & Cho phép Người dùng xem lại danh sách các giao dịch thanh toán đã thực hiện \\
+        \hline
+        \textbf{Preconditions} & Người dùng đăng nhập hợp lệ \\
+        \hline
+        \textbf{Postconditions} & Người dùng xem được danh sách các giao dịch thanh toán trước đây. \\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Người dùng nhấn vào biểu tượng menu.
+            \item Hệ thống hiển thị menu chức năng cá nhân.
+            \item Người dùng chọn chức năng “Xem lịch sử giao dịch”.
+            \item Hệ thống hiển thị danh sách giao dịch, sắp xếp theo thời gian gần nhất.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & Không có\\
+        \hline
+        \textbf{Exception} & 
+        4a. Nếu Người dùng chưa từng có giao dịch: hệ thống hiển thị thông báo “Bạn chưa có lịch sử thanh toán nào”.\\
+        \hline
+        \caption{Use Case Người dùng xem lịch sử thanh toán}
+    \end{longtable}
+
+    \item \textbf{Người dùng xem chi tiết giao dịch}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UPAY--04 \\
+        \hline
+        \textbf{Use case name} & Người dùng xem chi tiết giao dịch \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & Cho phép Người dùng xem thông tin chi tiết của một giao dịch \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Người dùng đăng nhập hợp lệ.
+            \item Người dùng đang ở trang xem lịch sử giao dịch.
+            \item Người dùng có lịch sử giao dịch.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & Người dùng xem được thông tin chi tiết của giao dịch được chọn. \\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Người dùng chọn giao dịch cần xem thông tin chi tiết.
+            \item Hệ thống hiển thị thông tin chi tiết của giao dịch được chọn.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & Không có\\
+        \hline
+        \textbf{Exception} & Không có\\
+        \hline
+        \caption{Use Case Người dùng xem chi tiết giao dịch}
+    \end{longtable}
+\end{itemize}
+
+\paragraph*{d. Đánh giá và phản ánh} \mbox{} \\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/usecase/User/uc_u_4.png}
+    \caption{Use case Đánh giá và khiếu nại}
+    \label{fig:uc_u_4}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Người dùng đánh giá trạm sạc}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UR--01 \\
+        \hline
+        \textbf{Use case name} & Người dùng đánh giá trạm sạc \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & Người dùng có thể để lại đánh giá (sao, nhận xét) cho trạm sạc. Hệ thống lưu trữ và hiển thị đánh giá này để người dùng khác tham khảo. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Người dùng đăng nhập hợp lệ.
+            \item Người dùng đã chọn trạm sạc cần đánh giá.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        \begin{itemize}
+            \item Đánh giá được lưu vào hệ thống.
+            \item Đánh giá có thể được hiển thị công khai cho người dùng khác xem.
+        \end{itemize}\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Người dùng chọn chức năng “Đánh giá trạm sạc”.
+            \item Hệ thống hiển thị form đánh giá (số sao, nhận xét).
+            \item Người dùng nhập nội dung đánh giá và gửi.
+            \item Hệ thống xác thực quyền đánh giá (Người dùng đã từng sử dụng trạm).
+            \item Hệ thống lưu đánh giá vào cơ sở dữ liệu.
+            \item Hệ thống thông báo “Gửi đánh giá thành công”.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & Không có\\
+        \hline
+        \textbf{Exception} & 
+        4b. Người dùng chưa từng sử dụng trạm sạc $\rightarrow$ Hệ thống từ chối và thông báo “Bạn cần sử dụng dịch vụ trước khi đánh giá”.\\
+        \hline
+        \caption{Use Case Người dùng đánh giá trạm sạc}
+    \end{longtable}
+
+    \item \textbf{Người dùng chỉnh sửa đánh giá trạm sạc}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UR--02 \\
+        \hline
+        \textbf{Use case name} & Người dùng chỉnh sửa đánh giá trạm sạc \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & Người dùng có thể thay đổi ý kiến hoặc bổ sung thông tin cho đánh giá trạm sạc đã tạo trước đó. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Người dùng đăng nhập hợp lệ.
+            \item Người dùng có ít nhất một đánh giá trước đó cho trạm sạc.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & Nội dung đánh giá được cập nhật và hiển thị thay thế đánh giá cũ. \\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Người dùng chọn đánh giá đã viết trước đó.
+            \item Người dùng chọn chức năng “Chỉnh sửa đánh giá”.
+            \item Hệ thống hiển thị lại đánh giá cũ.
+            \item Người dùng chỉnh sửa nội dung hoặc thay đổi số sao.
+            \item Người dùng xác nhận lưu thay đổi.
+            \item Hệ thống cập nhật dữ liệu và thông báo “Cập nhật thành công”.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & Không có\\
+        \hline
+        \textbf{Exception} & Không có\\
+        \hline
+        \caption{Use Case Người dùng chỉnh sửa đánh giá trạm sạc}
+    \end{longtable}
+
+    \item \textbf{Người dùng xóa đánh giá trạm sạc}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UR--03 \\
+        \hline
+        \textbf{Use case name} & Người dùng xóa đánh giá trạm sạc \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & Người dùng có thể xóa đánh giá trạm sạc đã tạo trước đó. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Người dùng đăng nhập hợp lệ.
+            \item Người dùng có ít nhất một đánh giá trước đó cho trạm sạc.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & Đánh giá không còn hiển thị trong danh sách đánh giá công khai. \\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Người dùng chọn đánh giá đã viết trước đó.
+            \item Người dùng chọn chức năng “Xóa đánh giá”.
+            \item Hệ thống hiển thị xác nhận thao tác.
+            \item Người dùng xác nhận xóa.
+            \item Hệ thống xóa dữ liệu đánh giá khỏi danh sách hiển thị.
+            \item Hệ thống thông báo “Đã xóa đánh giá thành công”.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        4a. Người dùng nhấn hủy xác nhận: quá trình xóa đánh giá kết thúc.\\
+        \hline
+        \textbf{Exception} & Không có\\
+        \hline
+        \caption{Use Case Người dùng xóa đánh giá trạm sạc}
+    \end{longtable}
+
+    \item \textbf{Người dùng xem danh sách đánh giá trạm sạc}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UR--04 \\
+        \hline
+        \textbf{Use case name} & Người dùng xem danh sách đánh giá trạm sạc \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & Người dùng có thể truy cập danh sách đánh giá của các trạm sạc. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Hệ thống đã có dữ liệu đánh giá cho trạm sạc.
+            \item Người dùng đã chọn một trạm sạc để xem thông tin.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & Danh sách các đánh giá của trạm sạc được hiển thị. \\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Người dùng chọn chức năng “Xem đánh giá” khi đang ở trang thông tin trạm sạc.
+            \item Hệ thống truy xuất dữ liệu đánh giá từ cơ sở dữ liệu.
+            \item Hệ thống hiển thị danh sách đánh giá gồm: số sao, nội dung nhận xét, ngày đánh giá, người đánh giá.
+            \item Hệ thống hiển thị thêm điểm trung bình dựa trên tất cả đánh giá.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & Không có\\
+        \hline
+        \textbf{Exception} & Không có\\
+        \hline
+        \caption{Use Case Người dùng xem danh sách đánh giá trạm sạc}
+    \end{longtable}
+
+    \item \textbf{Người dùng gửi phản ánh}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UR--05 \\
+        \hline
+        \textbf{Use case name} & Người dùng gửi phản ánh \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & Cho phép Người dùng gửi khiếu nại về trạm sạc hoặc dịch vụ liên quan để hệ thống quản trị xem xét và xử lý. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Người dùng đã đăng nhập hệ thống.
+            \item Người dùng có giao dịch hoặc trải nghiệm liên quan đến trạm sạc.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        \begin{itemize}
+            \item Khiếu nại được lưu trữ trong hệ thống và chuyển đến quản trị viên để xử lý.
+            \item Người dùng nhận thông báo “Gửi khiếu nại thành công”.
+        \end{itemize}\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Người dùng chọn chức năng “Gửi khiếu nại”.
+            \item Hệ thống hiển thị form khiếu nại.
+            \item Người dùng nhập nội dung khiếu nại, có thể đính kèm minh chứng.
+            \item Người dùng xác nhận gửi.
+            \item Hệ thống lưu thông tin khiếu nại và chuyển đến Super Admin/Customer Service Staff.
+            \item Hệ thống thông báo “Khiếu nại đã được gửi thành công”.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        4a. Người dùng nhấn hủy hoặc thoát ra trong quá trình viết phản ánh: quá trình phản ánh kết thúc.\\
+        \hline
+        \textbf{Exception} & Không có\\
+        \hline
+        \caption{Use Case Người dùng gửi phản ánh}
+    \end{longtable}
+
+    \item \textbf{Người dùng nhận phản hồi}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UR--06 \\
+        \hline
+        \textbf{Use case name} & Người dùng nhận phản hồi \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & Sau khi Super Admin/Customer Service Staff xử lý khiếu nại, hệ thống gửi thông báo hoặc tin nhắn phản hồi đến Người dùng. Người dùng có thể đọc nội dung phản hồi và trạng thái xử lý. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Người dùng đã gửi khiếu nại trước đó.
+            \item Super Admin/Customer Service Staff đã xử lý và gửi phản hồi.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & Người dùng nhận được phản hồi từ Super Admin/Customer Service Staff và có thể xem chi tiết trong hệ thống. \\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Super Admin/Customer Service Staff xử lý khiếu nại và gửi phản hồi qua hệ thống.
+            \item Hệ thống lưu nội dung phản hồi kèm trạng thái khiếu nại.
+            \item Hệ thống gửi thông báo đến Người dùng.
+            \item Người dùng đăng nhập và mở chức năng “Xem phản hồi”.
+            \item Hệ thống hiển thị chi tiết phản hồi từ Super Admin/Customer Service Staff.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        5a. Super Admin/Customer Service Staff chưa xử lý khiếu nại $\rightarrow$ Hệ thống hiển thị trạng thái “Đang chờ xử lý”.\\
+        \hline
+        \textbf{Exception} & Không có\\
+        \hline
+        \caption{Use Case Người dùng nhận phản hồi}
+    \end{longtable}
+\end{itemize}
+
+\paragraph*{e. Giám sát quá trình sạc (mô phỏng)} \mbox{} \\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/usecase/User/uc_u_5.png}
+    \caption{Use case Giám sát quá trình sạc}
+    \label{fig:uc_u_5}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Người dùng bắt đầu sạc}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UGS--01 \\
+        \hline
+        \textbf{Use case name} & Người dùng bắt đầu sạc \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & Use case này cho phép người dùng bắt đầu quá trình sạc (mô phỏng). \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Người dùng đã đăng nhập hệ thống.
+            \item Người dùng đã lựa chọn trạm sạc và cổng sạc cần sử dụng.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        \begin{itemize}
+            \item Phiên sạc mô phỏng được tạo và lưu trong hệ thống.
+            \item Hệ thống hiển thị trạng thái sạc ban đầu và bắt đầu mô phỏng quá trình sạc.
+        \end{itemize}\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Người dùng chọn chức năng Bắt đầu sạc.
+            \item Hệ thống yêu cầu xác nhận bắt đầu sạc (thông báo chi phí ước tính, thông tin trạm).
+            \item Người dùng xác nhận bắt đầu.
+            \item Hệ thống khởi tạo một phiên sạc mô phỏng.
+            \item Người dùng nhận thông báo đã bắt đầu sạc.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        2a. Nếu Người dùng hủy xác nhận, hệ thống không khởi tạo phiên sạc.\\
+        \hline
+        \textbf{Exception} & Không có\\
+        \hline
+        \caption{Use Case Người dùng bắt đầu sạc}
+    \end{longtable}
+
+    \item \textbf{Người dùng theo dõi quá trình sạc}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UGS--02 \\
+        \hline
+        \textbf{Use case name} & Người dùng theo dõi quá trình sạc \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & Người dùng có thể theo dõi trạng thái và tiến trình sạc mô phỏng trong thời gian thực. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item Người dùng đã đăng nhập hệ thống.
+            \item Phiên sạc đã được khởi tạo.
+            \item Người dùng đã liên kết ngân hàng/ ví điện tử.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & Người dùng nắm được thông tin trạng thái sạc hiện tại. \\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item Sau khi Người dùng bắt đầu sạc, hệ thống hiển thị mục chọn theo dõi quá trình sạc.
+            \item Người dùng chọn theo dõi quá trình sạc.
+            \item Hệ thống cập nhật trạng thái sạc theo thời gian (phần trăm pin, thời gian còn lại, chi phí tạm tính).
+            \item Người dùng quan sát tiến trình.
+            \item Khi sạc đạt mức đầy, hệ thống chuyển sang trạng thái hoàn tất và thông báo sạc hoàn tất.
+            \item Hệ thống tiến hành thanh toán tự động.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        3a. Nếu Người dùng hủy thao tác $\rightarrow$ hệ thống tiếp tục sạc như bình thường.\\
+        \hline
+        \textbf{Exception} & Không có\\
+        \hline
+        \caption{Use Case Người dùng theo dõi quá trình sạc}
+    \end{longtable}
+
+    \item \textbf{Người dùng dừng sạc từ xa}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UGS--03 \\
+        \hline
+        \textbf{Use case name} & Người dùng dừng sạc từ xa \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & User có thể chủ động kết thúc phiên sạc mô phỏng trước khi quá trình sạc hoàn tất. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item User đã đăng nhập hệ thống.
+            \item Đang có một phiên sạc mô phỏng đang diễn ra.
+            \item User đã liên kết ngân hàng/ ví điện tử.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & 
+        \begin{itemize}
+            \item Phiên sạc kết thúc ngay lập tức.
+            \item Dữ liệu phiên sạc (thời gian, dung lượng đã sạc, chi phí tạm tính) được lưu vào hệ thống.
+        \end{itemize}\\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item User chọn chức năng Dừng sạc từ xa trên giao diện theo dõi sạc.
+            \item Hệ thống hiển thị hộp thoại xác nhận thao tác.
+            \item User xác nhận dừng.
+            \item Hệ thống kết thúc phiên sạc mô phỏng.
+            \item Hệ thống lưu dữ liệu phiên sạc và thông báo “Phiên sạc đã kết thúc”.
+            \item Hệ thống tiến hành thanh toán tự động.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        3a. Nếu User hủy thao tác $\rightarrow$ hệ thống tiếp tục sạc như bình thường.\\
+        \hline
+        \textbf{Exception} & Không có\\
+        \hline
+        \caption{Use Case Người dùng dừng sạc từ xa}
+    \end{longtable}
+
+    \item \textbf{Người dùng xem lịch sử sạc}
+    \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--UGS--04 \\
+        \hline
+        \textbf{Use case name} & Người dùng xem lịch sử sạc \\
+        \hline
+        \textbf{Actor} & Người dùng (user) \\
+        \hline
+        \textbf{Description} & User có thể xem lại thông tin các phiên sạc trước đó. \\
+        \hline
+        \textbf{Preconditions} & 
+        \begin{itemize}
+            \item User đã đăng nhập hệ thống.
+            \item Hệ thống đã lưu dữ liệu các phiên sạc trước đó.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} & Danh sách các phiên sạc hiển thị trên màn hình. \\
+        \hline
+        \textbf{Normal flows} & 
+        \begin{enumerate}[label=\arabic*.]
+            \item User chọn chức năng Xem lịch sử sạc từ menu hoặc dashboard.
+            \item Hệ thống truy xuất dữ liệu lịch sử từ cơ sở dữ liệu.
+            \item Hệ thống hiển thị danh sách lịch sử gồm:
+                \begin{itemize}
+                    \item Thời gian bắt đầu – kết thúc.
+                    \item Thời lượng sạc.
+                    \item Sạc đầy hoặc được dừng.
+                    \item Chi phí tạm tính.
+                \end{itemize}
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & Không có\\
+        \hline
+        \textbf{Exception} & Không có\\
+        \hline
+        \caption{Use Case Người dùng xem lịch sử sạc}
+    \end{longtable}
+\end{itemize}
 \subsection{Mô hình hóa quy trình}
 \subsubsection{Activity Diagram -- Người quản trị hệ thống phân chia doanh thu}
 \begin{figure}[H]
@@ -1444,3 +2473,45 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
 \end{enumerate}
 
 \subsubsection{Sequence Diagram - Người dùng đặt chỗ sạc}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/sq_user_booking.png}
+    \caption{Sequence Diagram -- Người dùng đặt chỗ sạc}
+    \label{fig:sq_user_booking}
+\end{figure}
+\noindent \textbf{Luồng chính của biểu đồ trình tự:}
+\begin{enumerate}[font=\bfseries]
+    \item Người dùng chọn thời gian và nhấn nút ``Xác nhận đặt chỗ'' trên ứng dụng (Mobile App).
+    \item Ứng dụng gửi yêu cầu (API request) tạo đặt chỗ kèm theo thông tin xác thực (Authorization Header: Bearer Token) đến Backend.
+    \item Backend nhận yêu cầu và truy vấn cơ sở dữ liệu để kiểm tra trạng thái của cổng sạc.
+    \item \textbf{Kiểm tra tính khả dụng}:
+    \begin{itemize}
+        \item Nếu cổng sạc khả dụng: Cơ sở dữ liệu trả về trạng thái hợp lệ.
+        \item Backend tạo bản ghi đặt chỗ mới với trạng thái ``Chờ thanh toán'' (PENDING) vào cơ sở dữ liệu.
+        \item Cơ sở dữ liệu xác nhận việc tạo bản ghi thành công.
+    \end{itemize}
+    \item Backend gửi yêu cầu tạo phiên thanh toán đến Cổng thanh toán.
+    \item Cổng thanh toán trả về đường dẫn thanh toán (paymentUrl).
+    \item Backend phản hồi về ứng dụng mã đặt chỗ (bookingId) và đường dẫn thanh toán.
+    \item Ứng dụng hiển thị giao diện thanh toán cho người dùng.
+    \item Người dùng chọn phương thức và tiến hành thanh toán qua Cổng thanh toán.
+    \item \textbf{Xử lý kết quả thanh toán (Webhook)}:
+    \begin{itemize}
+        \item Khi thanh toán thành công, Cổng thanh toán gửi thông báo (Webhook) đến Backend một cách bất đồng bộ.
+        \item Backend xác thực Webhook và cập nhật trạng thái đặt chỗ trong cơ sở dữ liệu từ ``PENDING'' sang ``Xác nhận'' (CONFIRMED).
+        \item Cơ sở dữ liệu xác nhận cập nhật thành công.
+        \item Backend gửi thông báo ``Đặt chỗ thành công!'' đến thiết bị của người dùng.
+    \end{itemize}
+    \item Ứng dụng hiển thị trang lịch sử đặt chỗ cho người dùng.
+\end{enumerate}
+
+\textbf{Các luồng phụ:}
+\begin{enumerate}[font=\bfseries]
+    \item \textbf{Cổng sạc không khả dụng:} Tại bước kiểm tra, nếu cơ sở dữ liệu trả về trạng thái ``Đang sử dụng'', Backend sẽ trả về lỗi xung đột và ứng dụng hiển thị thông báo ``Cổng sạc không khả dụng'' cho người dùng.
+    \item \textbf{Thanh toán thất bại hoặc bị hủy:} 
+    \begin{itemize}
+        \item Nếu người dùng hủy hoặc thanh toán thất bại, Cổng thanh toán chuyển hướng người dùng trở lại ứng dụng với trạng thái lỗi/hủy.
+        \item Ứng dụng hiển thị thông báo ``Thanh toán thất bại''.
+        \item Backend không nhận được Webhook xác nhận, bản ghi ``PENDING'' sẽ tự động hết hạn theo cơ chế timeout của hệ thống.
+    \end{itemize}
+\end{enumerate}
