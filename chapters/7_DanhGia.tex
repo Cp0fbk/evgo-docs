@@ -1,3 +1,69 @@
 \section{Đánh giá}
-\subsection{Đánh giá kết quả}
-\subsection{Kế hoạch phát triển cho giai đoạn 2}
+
+\subsection{Đánh giá chức năng}
+Hệ thống đã hoàn thiện và đáp ứng tốt các yêu cầu chức năng cốt lõi đã đề ra, cụ thể:
+
+\begin{itemize}
+    \item \textbf{Quản lý tài khoản người dùng (User):}
+    \begin{itemize}
+        \item Người dùng có thể tạo tài khoản mới một cách dễ dàng.
+        \item Hỗ trợ tính năng đăng nhập nhanh (SSO) thông qua tài khoản Google, hiện tại đang chỉ hỗ trợ cho các email thuộc tổ chức \texttt{hcmut.edu.vn}, giúp sinh viên và giảng viên trường Đại học Bách Khoa dễ dàng tiếp cận hệ thống.
+        \item Người dùng có toàn quyền quản lý hồ sơ cá nhân (User Profile), bao gồm cập nhật thông tin và khôi phục tài khoản.
+    \end{itemize}
+
+    \item \textbf{Quản trị hệ thống (Super Admin):}
+    \begin{itemize}
+        \item Super Admin có khả năng quản lý toàn diện danh sách tài khoản của người dùng (User) và chủ trạm (Station Owner).
+        \item Các chức năng khóa/mở khóa tài khoản hoạt động ổn định, đảm bảo khả năng kiểm soát hệ thống.
+    \end{itemize}
+
+    \item \textbf{Quy trình đăng ký Chủ trạm (Station Owner):}
+    \begin{itemize}
+        \item Hệ thống cung cấp quy trình đăng ký trực tuyến cho các đối tác muốn trở thành chủ trạm.
+        \item Super Admin có công cụ để xét duyệt hồ sơ đăng ký. Sau khi hồ sơ được duyệt, hệ thống tự động gửi email xác thực tài khoản đến cho chủ trạm, đảm bảo quy trình vận hành khép kín và bảo mật.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Đánh giá phi chức năng và kỹ thuật}
+Về mặt kỹ thuật, hệ thống thể hiện sự ổn định và tuân thủ các tiêu chuẩn thiết kế hiện đại:
+
+\begin{itemize}
+    \item \textbf{Hiệu năng:} 
+    Để đảm bảo chất lượng dịch vụ, nhóm đã tiến hành kiểm thử hiệu năng (Performance Testing) trên môi trường cục bộ (Local) nhằm đo lường khả năng chịu tải của hệ thống. Kịch bản kiểm thử được xây dựng để mô phỏng số lượng lớn các yêu cầu truy cập đồng thời (Concurrent Requests) vào các API nghiệp vụ chính.
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\linewidth]{figures/performance/run_setup.png}
+        \caption{Cấu hình kịch bản kiểm thử hiệu năng}
+    \end{figure}
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\linewidth]{figures/performance/summary.png}
+        \caption{Bảng tổng hợp kết quả kiểm thử}
+    \end{figure}
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\linewidth]{figures/performance/result.png}
+        \caption{Biểu đồ chi tiết kết quả phản hồi}
+    \end{figure}
+
+    Kết quả thu được (như hình minh họa bên trên) cho thấy:
+    \begin{itemize}
+        \item \textbf{Thời gian phản hồi (Response Time):} Tốc độ phản hồi trung bình của hệ thống rất nhanh, duy trì ổn định ngay cả khi số lượng yêu cầu xử lý đồng thời tăng cao, đảm bảo trải nghiệm người dùng không bị gián đoạn.
+        \item \textbf{Độ ổn định (Stability):} Tỷ lệ lỗi ghi nhận là 0\%, chứng tỏ hệ thống xử lý ngoại lệ tốt và không bị quá tải tài nguyên.
+        \item \textbf{Thông lượng (Throughput):} Hệ thống đáp ứng được số lượng lớn yêu cầu xử lý trên giây, chứng minh hiệu quả của kiến trúc Modular Monolith trong việc tối ưu hóa hiệu năng.
+    \end{itemize}
+    \item \textbf{Kiến trúc hệ thống:} Việc áp dụng kiến trúc \textit{Modular Monolith} giúp hệ thống vừa giữ được sự đơn giản trong việc triển khai và vận hành, vừa đảm bảo tính module hóa cao, dễ dàng bảo trì và mở rộng các tính năng mới trong tương lai mà không ảnh hưởng đến toàn bộ hệ thống.
+    \item \textbf{Bảo mật:} Cơ chế xác thực và phân quyền sử dụng JWT (JSON Web Token) kết hợp với OAuth2 đảm bảo an toàn cho dữ liệu người dùng và ngăn chặn các truy cập trái phép.
+\end{itemize}
+
+\subsection{Đánh giá giao diện và trải nghiệm người dùng}
+Giao diện người dùng được thiết kế hướng tới sự hiện đại và tiện dụng:
+
+\begin{itemize}
+    \item \textbf{Giao diện (UI):} Màu sắc được phối hợp hài hòa, bố cục rõ ràng và trực quan. Chế độ mặc định là giao diện tối (Dark Mode) giúp giảm mỏi mắt cho người dùng và tiết kiệm pin cho thiết bị di động, phù hợp với xu hướng thiết kế hiện nay.
+    \item \textbf{Tính tương thích:} Hệ thống hiển thị tốt trên nhiều loại thiết bị và kích thước màn hình khác nhau, từ điện thoại di động đến máy tính để bàn.
+    \item \textbf{Tính khả dụng (Usability):} Các thao tác trên ứng dụng và website được thiết kế logic, dễ hiểu, giúp người dùng mới có thể nhanh chóng làm quen và sử dụng các chức năng của hệ thống.
+\end{itemize}
