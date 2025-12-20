@@ -724,7 +724,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
     
     
 \subsubsection{Use Case Diagram -- Chủ trạm sạc}
-\begin{enumerate}[label=\textbf{\alph*)}]
+\begin{enumerate}[label=\textbf{\alph*)}] 
     \item \textbf{Nộp hồ sơ đăng ký} 
     \begin{figure}[H]
         \centering
@@ -733,6 +733,44 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
         \label{fig:uc_sa_1}
     \end{figure}
     \begin{itemize}
+    \item \textbf{Tải hồ sơ mẫu} 
+    \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+    \hline
+    \textbf{Use case ID} & UC--SO--REG--01 \\
+    \hline
+    \textbf{Use case name} & Tải hồ sơ mẫu \\
+    \hline
+    \textbf{Actor} & Chủ trạm sạc (Station Owner) \\
+    \hline
+    \textbf{Description} & 
+    Station owner tải file hồ sơ mẫu từ hệ thống để điền thông tin đăng ký trạm sạc. \\
+    \hline
+    \textbf{Preconditions} & 
+    \begin{itemize}
+        \item Station owner đã truy cập vào hệ thống.
+        \item Hệ thống đang hoạt động bình thường.
+    \end{itemize}\\
+    \hline
+    \textbf{Postconditions} & 
+    File hồ sơ mẫu được tải thành công về thiết bị của station owner.\\
+    \hline
+    \textbf{Normal flows} & 
+    \begin{enumerate}[label=\arabic*.]
+        \item Station owner truy cập chức năng Nộp hồ sơ đăng ký.
+        \item Chọn tải hồ sơ mẫu.
+        \item Hệ thống hiển thị file hồ sơ mẫu.
+        \item Station owner tải file về thiết bị.
+    \end{enumerate}\\    
+    \hline
+    \textbf{Exception} & 
+    \begin{itemize}
+        \item File hồ sơ mẫu không tồn tại.
+        \item Lỗi hệ thống hoặc lỗi mạng khi tải file.
+    \end{itemize}\\
+    \hline
+    \caption{Use Case Tải hồ sơ mẫu}
+    \label{tab:uc_so_reg_01}
+    \end{longtable}
     \item \textbf{Nộp hồ sơ }
     \begin{center}
     \renewcommand{\arraystretch}{1.5}
@@ -819,10 +857,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
             \item Station owner cập nhật thông tin.
             \item Xác nhận lưu.
             \item Hệ thống lưu thông tin và thông báo thành công.
-        \end{enumerate}\\
-        \hline
-        \textbf{Alternative flows} & 
-        4a. Station owner chỉ chỉnh sửa một số thông tin của trạm.\\
+        \end{enumerate}\\       
         \hline
         \textbf{Exception} & 
         \begin{itemize}
@@ -890,7 +925,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
         \hline
         \textbf{Actor} & Chủ trạm sạc (Station Owner) \\
         \hline
-        \textbf{Description} & Station owner thiết lập bảng giá sạc cho trạm hoặc các trụ sạc. \\
+        \textbf{Description} & Station owner thiết lập bảng giá sạc cho trạm. \\
         \hline
         \textbf{Preconditions} & 
         Station owner đã đăng nhập và có quyền quản lý trạm.\\
@@ -1146,7 +1181,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
     \item \textbf{Xử lý đánh giá}
      \begin{figure}[H]
         \centering
-        \includegraphics[width=0.8\textwidth]{figures/usecase/StationOwner/uc_so_2.png}
+        \includegraphics[width=0.8\textwidth]{figures/usecase/StationOwner/uc_so_3.png}
         \caption{Use case diagram Báo cáo \& thống kê}
         \label{fig:uc_sa_1}
     \end{figure}
@@ -1227,9 +1262,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
             \item Xác nhận gửi phản hồi.
             \item Hệ thống lưu phản hồi và hiển thị thành công.
         \end{enumerate}\\
-        \hline
-        \textbf{Alternative flows} & 
-        3a. Station owner chỉnh sửa nội dung phản hồi trước khi gửi.\\
+        
         \hline
         \textbf{Exception} & 
         \begin{itemize}
