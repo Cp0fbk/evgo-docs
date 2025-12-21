@@ -758,15 +758,14 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
     \begin{enumerate}[label=\arabic*.]
         \item Station owner truy cập chức năng Nộp hồ sơ đăng ký.
         \item Chọn tải hồ sơ mẫu.
-        \item Hệ thống hiển thị file hồ sơ mẫu.
         \item Station owner tải file về thiết bị.
-    \end{enumerate}\\    
+    \end{enumerate}\\  
+    \hline
+        \textbf{Alternative flows} & 
+        Không có\\
     \hline
     \textbf{Exception} & 
-    \begin{itemize}
-        \item File hồ sơ mẫu không tồn tại.
-        \item Lỗi hệ thống hoặc lỗi mạng khi tải file.
-    \end{itemize}\\
+        2a. Hồ sơ mẫu không tồn tại.\\
     \hline
     \caption{Use Case Tải hồ sơ mẫu}
     \label{tab:uc_so_reg_01}
@@ -807,9 +806,8 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
         \hline
         \textbf{Exception} & 
          \begin{itemize}
-            \item File không đúng định dạng.   
-            \item File vượt quá dung lượng cho phép.
-            \item Lỗi mạng khi upload
+            \item 3a. File không đúng định dạng.   
+            \item 3.b File vượt quá dung lượng cho phép.
         \end{itemize}\\
         \hline
         \caption{Use Case Nộp hồ sơ}
@@ -857,13 +855,15 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
             \item Station owner cập nhật thông tin.
             \item Xác nhận lưu.
             \item Hệ thống lưu thông tin và thông báo thành công.
-        \end{enumerate}\\       
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        Không có\\
         \hline
         \textbf{Exception} & 
         \begin{itemize}
-            \item Thiếu thông tin bắt buộc.
-            \item Sai định dạng dữ liệu.
-            \item Lỗi hệ thống khi lưu thông tin.
+            \item 5a. Thiếu thông tin bắt buộc.
+            \item 5b. Sai định dạng dữ liệu.
         \end{itemize}\\
         \hline
         \caption{Use Case Chỉnh sửa thông tin trạm}
@@ -901,13 +901,10 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
         \end{enumerate}\\
         \hline
         \textbf{Alternative flows} & 
-        5a. Station owner hủy thao tác cập nhật.\\
+      Không có.\\
         \hline
         \textbf{Exception} & 
-        \begin{itemize}
-            \item Trạng thái không hợp lệ.
-            \item Lỗi mạng hoặc lỗi hệ thống.
-        \end{itemize}\\
+            \item 4a. Trạng thái không hợp lệ.
         \hline
         \caption{Use Case Cập nhật trạng thái hoạt động trạm}
         \label{tab:uc_so_st_02}
@@ -947,10 +944,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
         4a. Station owner thiết lập nhiều mức giá theo khung giờ.\\
         \hline
         \textbf{Exception} & 
-        \begin{itemize}
-            \item Giá không hợp lệ.
-            \item Dữ liệu bị trùng hoặc sai định dạng.
-        \end{itemize}\\
+            \item 4a. Giá không hợp lệ.
         \hline
         \caption{Use Case Thiết lập giá}
         \label{tab:uc_so_st_03}
@@ -988,7 +982,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
         4a. Trạm chưa có trụ sạc → hiển thị danh sách rỗng.\\
         \hline
         \textbf{Exception} & 
-        Lỗi hệ thống khi tải dữ liệu trụ sạc.\\
+       Không có.\\
         \hline
         \caption{Use Case Theo dõi thông tin trụ sạc}
         \label{tab:uc_so_st_04}
@@ -1023,10 +1017,10 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
         \end{enumerate}\\
         \hline
         \textbf{Alternative flows} & 
-        3a. Không có lượt đặt chỗ nào.\\
+        Không có.\\
         \hline
         \textbf{Exception} & 
-        Lỗi hệ thống hoặc lỗi kết nối mạng.\\
+      Không có.\\
         \hline
         \caption{Use Case Xem danh sách đặt chỗ}
         \label{tab:uc_so_st_05}
@@ -1076,11 +1070,8 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
         \textbf{Alternative flows} & 
         3a. Station owner thay đổi khoảng thời gian → hệ thống cập nhật lại dữ liệu.\\
         \hline
-        \textbf{Exception} & 
-        \begin{itemize}
-            \item Không có dữ liệu trong khoảng thời gian đã chọn.
-            \item Lỗi hệ thống khi xử lý thống kê.
-        \end{itemize}\\
+        \textbf{Exception} &            
+            4a. Lỗi hệ thống khi xử lý thống kê.
         \hline
         \caption{Use Case Thống kê số lượt sạc}
         \label{tab:uc_so_rp_01}
@@ -1119,13 +1110,12 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
         \end{enumerate}\\
         \hline
         \textbf{Alternative flows} & 
-        3a. Station owner chọn thống kê theo tháng hoặc theo năm.\\
+        3a. Station owner thay đổi khoảng thời gian → hệ thống
+cập nhật lại dữ liệu.\\
         \hline
-        \textbf{Exception} & 
-        \begin{itemize}
-            \item Không phát sinh doanh thu trong khoảng thời gian đã chọn.
-            \item Lỗi hệ thống khi tính toán doanh thu.
-        \end{itemize}\\
+        \textbf{Exception} &         
+           4a. Lỗi hệ thống khi tính toán doanh thu.
+       
         \hline
         \caption{Use Case Thống kê doanh thu}
         \label{tab:uc_so_rp_02}
@@ -1167,10 +1157,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
         2a. Station owner chỉ xuất một phần dữ liệu theo bộ lọc đã chọn.\\
         \hline
         \textbf{Exception} & 
-        \begin{itemize}
-            \item Lỗi tạo file báo cáo.
-            \item Lỗi mạng khi tải file.
-        \end{itemize}\\
+            3a. Lỗi tạo file báo cáo.
         \hline
         \caption{Use Case Xuất file báo cáo}
         \label{tab:uc_so_rp_03}
@@ -1221,10 +1208,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
         3a. Station owner sử dụng bộ lọc (theo số sao, thời gian).\\
         \hline
         \textbf{Exception} & 
-        \begin{itemize}
-            \item Không có đánh giá nào.
-            \item Lỗi hệ thống khi tải dữ liệu đánh giá.
-        \end{itemize}\\
+         Không có.
         \hline
         \caption{Use Case Xem đánh giá}
         \label{tab:uc_so_rv_01}
@@ -1262,12 +1246,15 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
             \item Xác nhận gửi phản hồi.
             \item Hệ thống lưu phản hồi và hiển thị thành công.
         \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} & 
+        Không có\\
         
         \hline
         \textbf{Exception} & 
         \begin{itemize}
-            \item Nội dung phản hồi rỗng hoặc vượt quá độ dài cho phép.
-            \item Lỗi hệ thống khi lưu phản hồi.
+            \item 4a. Nội dung phản hồi rỗng hoặc vượt quá độ dài cho phép.
+            \item 5a. Lỗi hệ thống khi lưu phản hồi.
         \end{itemize}\\
         \hline
         \caption{Use Case Phản hồi đánh giá}
