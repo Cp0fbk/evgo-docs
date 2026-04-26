@@ -2298,50 +2298,50 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \end{longtable}
 \end{itemize}
 \subsection{Mô hình hóa quy trình}
-\subsubsection{Activity Diagram -- Người quản trị hệ thống phân chia doanh thu}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{figures/activity/activity_revenue_division_setting.png}
-\caption{Activity Diagram - Người quản trị hệ thống phân chia doanh thu}
-\label{fig:activity_sa_1}
-\end{figure}
-\begin{enumerate}[font=\bfseries]
-\item Bắt đầu: Super Admin truy cập hệ thống (đã đăng nhập).
-\item Chọn chức năng: Người dùng chọn menu “Phân chia doanh thu”.
-\item Tiếp theo, Super Admin chọn phạm vi áp dụng cho việc phân chia này (có thể là cho toàn hệ thống hoặc theo từng trạm).
-\item Quyết định “Xem lịch sử?”
-\begin{itemize}
-  \item Nếu CÓ (Yes):
-    \begin{itemize}
-      \item Hệ thống sẽ hiển thị lịch sử cấu hình (bao gồm tỷ lệ, phí nền tảng...).
-      \item Super Admin chọn kỳ muốn xem.
-      \item Quyết định (Rollback): Super Admin tiếp tục có lựa chọn có rollback hay không.
-        \begin{itemize}
-          \item Nếu CÓ (Yes): Hệ thống thực hiện khôi phục cấu hình phân chia cũ và quy trình kết thúc.
-          \item Nếu KHÔNG (No): Quy trình đi tiếp đến bước nhập tỷ lệ phân chia.
-        \end{itemize}
-    \end{itemize}
-  \item Nếu KHÔNG (No) (không xem lịch sử): Quy trình đi thẳng đến bước nhập tỷ lệ phân chia.
-\end{itemize}
-\item Nhập cấu hình mới: (Đây là điểm hợp nhất của luồng "Không xem lịch sử" và "Không rollback").
-\begin{itemize}
-  \item Super Admin thực hiện nhập tỷ lệ phân chia mới.
-  \item Super Admin xác nhận lưu cấu hình.
-\end{itemize}
-\item Quyết định (Xác thực): Hệ thống sẽ kiểm tra xem định dạng, tỷ lệ có hợp lệ không?
-\begin{itemize}
-  \item Nếu KHÔNG (No):
-    \begin{itemize}
-      \item Hệ thống yêu cầu điền lại thông tin.
-      \item Quy trình lặp lại, quay về bước nhập tỷ lệ phân chia để Super Admin sửa lại.
-    \end{itemize}
-  \item Nếu CÓ (Yes):
-    \begin{itemize}
-      \item Hệ thống thực hiện lưu cấu hình mới.
-      \item Quy trình kết thúc.
-    \end{itemize}
-\end{itemize}
-\end{enumerate}
+% \subsubsection{Activity Diagram -- Người quản trị hệ thống phân chia doanh thu}
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.9\textwidth]{figures/activity/activity_revenue_division_setting.png}
+% \caption{Activity Diagram - Người quản trị hệ thống phân chia doanh thu}
+% \label{fig:activity_sa_1}
+% \end{figure}
+% \begin{enumerate}[font=\bfseries]
+% \item Bắt đầu: Super Admin truy cập hệ thống (đã đăng nhập).
+% \item Chọn chức năng: Người dùng chọn menu “Phân chia doanh thu”.
+% \item Tiếp theo, Super Admin chọn phạm vi áp dụng cho việc phân chia này (có thể là cho toàn hệ thống hoặc theo từng trạm).
+% \item Quyết định “Xem lịch sử?”
+% \begin{itemize}
+%   \item Nếu CÓ (Yes):
+%     \begin{itemize}
+%       \item Hệ thống sẽ hiển thị lịch sử cấu hình (bao gồm tỷ lệ, phí nền tảng...).
+%       \item Super Admin chọn kỳ muốn xem.
+%       \item Quyết định (Rollback): Super Admin tiếp tục có lựa chọn có rollback hay không.
+%         \begin{itemize}
+%           \item Nếu CÓ (Yes): Hệ thống thực hiện khôi phục cấu hình phân chia cũ và quy trình kết thúc.
+%           \item Nếu KHÔNG (No): Quy trình đi tiếp đến bước nhập tỷ lệ phân chia.
+%         \end{itemize}
+%     \end{itemize}
+%   \item Nếu KHÔNG (No) (không xem lịch sử): Quy trình đi thẳng đến bước nhập tỷ lệ phân chia.
+% \end{itemize}
+% \item Nhập cấu hình mới: (Đây là điểm hợp nhất của luồng "Không xem lịch sử" và "Không rollback").
+% \begin{itemize}
+%   \item Super Admin thực hiện nhập tỷ lệ phân chia mới.
+%   \item Super Admin xác nhận lưu cấu hình.
+% \end{itemize}
+% \item Quyết định (Xác thực): Hệ thống sẽ kiểm tra xem định dạng, tỷ lệ có hợp lệ không?
+% \begin{itemize}
+%   \item Nếu KHÔNG (No):
+%     \begin{itemize}
+%       \item Hệ thống yêu cầu điền lại thông tin.
+%       \item Quy trình lặp lại, quay về bước nhập tỷ lệ phân chia để Super Admin sửa lại.
+%     \end{itemize}
+%   \item Nếu CÓ (Yes):
+%     \begin{itemize}
+%       \item Hệ thống thực hiện lưu cấu hình mới.
+%       \item Quy trình kết thúc.
+%     \end{itemize}
+% \end{itemize}
+% \end{enumerate}
 \subsubsection{Activity Diagram -- Chủ trạm nộp hồ sơ đăng kí}
 \begin{figure}[H]
 \centering
@@ -2365,38 +2365,38 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \item Nếu CÓ (Yes): Hệ thống gửi thông tin kích hoạt tài khoản qua email cho chủ trạm. Quy trình kết thúc.
 \end{itemize}
 \end{enumerate}
-\subsubsection{Activity Diagram -- Xử lí khiếu nại}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{figures/activity/activity_handle_complaint.png}
-\caption{Activity Diagram -- Xử lí khiếu nại}
-\label{fig:activity_sa_3}
-\end{figure}
-\begin{enumerate}[font=\bfseries]
-\item Bắt đầu: Người dùng chọn trạm sạc muốn khiếu nại.
-\item Gửi khiếu nại: Người dùng gửi khiếu nại. Hệ thống tiếp nhận và gửi thông báo có khiếu nại mới cho Super Admin/CS Staff.
-\item Xét duyệt: Super Admin/CS Staff xem và xét duyệt khiếu nại.
-\item Quyết định "Khiếu nại có hợp lệ không?":
-\begin{itemize}
-  \item Nếu KHÔNG (No):
-    \begin{itemize}
-      \item Admin/CS Staff ghi chú lý do từ chối (tùy chọn).
-      \item Hệ thống cập nhật trạng thái khiếu nại thành "Đã từ chối".
-    \end{itemize}
-  \item Nếu CÓ (Yes):
-    \begin{itemize}
-      \item Admin/CS Staff nhập nội dung phản hồi và gửi phản hồi.
-      \item Hệ thống lưu phản hồi.
-      \item Quyết định "Cần xử lí trạm sạc?":
-        \begin{itemize}
-          \item Nếu CÓ (Yes): Admin/CS Staff khóa tài khoản hoặc trừ uy tín trạm, sau đó đánh dấu "Hoàn tất xử lý".
-          \item Nếu KHÔNG (No): Admin/CS Staff đánh dấu "Hoàn tất xử lý".
-        \end{itemize}
-      \item Hệ thống cập nhật trạng thái khiếu nại thành "Đã xử lý".
-    \end{itemize}
-\end{itemize}
-\item Kết thúc: Hệ thống gửi thông báo phản hồi đến người dùng. Người dùng nhận phản hồi từ Admin/CS Staff.
-\end{enumerate}
+% \subsubsection{Activity Diagram -- Xử lí khiếu nại}
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.9\textwidth]{figures/activity/activity_handle_complaint.png}
+% \caption{Activity Diagram -- Xử lí khiếu nại}
+% \label{fig:activity_sa_3}
+% \end{figure}
+% \begin{enumerate}[font=\bfseries]
+% \item Bắt đầu: Người dùng chọn trạm sạc muốn khiếu nại.
+% \item Gửi khiếu nại: Người dùng gửi khiếu nại. Hệ thống tiếp nhận và gửi thông báo có khiếu nại mới cho Super Admin/CS Staff.
+% \item Xét duyệt: Super Admin/CS Staff xem và xét duyệt khiếu nại.
+% \item Quyết định "Khiếu nại có hợp lệ không?":
+% \begin{itemize}
+%   \item Nếu KHÔNG (No):
+%     \begin{itemize}
+%       \item Admin/CS Staff ghi chú lý do từ chối (tùy chọn).
+%       \item Hệ thống cập nhật trạng thái khiếu nại thành "Đã từ chối".
+%     \end{itemize}
+%   \item Nếu CÓ (Yes):
+%     \begin{itemize}
+%       \item Admin/CS Staff nhập nội dung phản hồi và gửi phản hồi.
+%       \item Hệ thống lưu phản hồi.
+%       \item Quyết định "Cần xử lí trạm sạc?":
+%         \begin{itemize}
+%           \item Nếu CÓ (Yes): Admin/CS Staff khóa tài khoản hoặc trừ uy tín trạm, sau đó đánh dấu "Hoàn tất xử lý".
+%           \item Nếu KHÔNG (No): Admin/CS Staff đánh dấu "Hoàn tất xử lý".
+%         \end{itemize}
+%       \item Hệ thống cập nhật trạng thái khiếu nại thành "Đã xử lý".
+%     \end{itemize}
+% \end{itemize}
+% \item Kết thúc: Hệ thống gửi thông báo phản hồi đến người dùng. Người dùng nhận phản hồi từ Admin/CS Staff.
+% \end{enumerate}
 
 \subsubsection{Activity Diagram -- Người dùng thanh toán}
 \begin{figure}[H]
@@ -2419,13 +2419,10 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
       \item Quyết định "Giao dịch thành công?" (Cổng thanh toán):
         \begin{itemize}
           \item Nếu KHÔNG (No): Cổng thanh toán thông báo giao dịch thất bại.
-          \item Nếu CÓ (Yes):
-            \begin{itemize}
-              \item Cổng thanh toán thông báo giao dịch thành công.
-              \item Hệ thống nhận webhook, xác thực và cập nhật trạng thái phiên giao dịch.
-              \item Hệ thống lưu hóa đơn vào CSDL và gửi thông báo thành công cho người dùng.
-              \item Người dùng nhận thông báo giao dịch thành công.
-            \end{itemize}
+          \item Nếu CÓ (Yes): Cổng thanh toán thông báo giao dịch thành công.\newline
+          Hệ thống nhận webhook, xác thực và cập nhật trạng thái phiên giao dịch.\newline
+          Hệ thống lưu hóa đơn vào CSDL và gửi thông báo thành công cho người dùng.\newline
+          Người dùng nhận thông báo giao dịch thành công.
         \end{itemize}
     \end{itemize}
 
