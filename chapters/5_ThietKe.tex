@@ -264,462 +264,462 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
       \end{center}
   \end{itemize}
   %==========================================================================
-% \item \textbf{Quản lý doanh thu và trạm sạc}
-%   \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.8\textwidth]{figures/usecase/SuperAdmin/uc_sa_2.png}
-%     \caption{Use case diagram Super Admin quản lý doanh thu và trạm sạc}
-%     \label{fig:uc_sa_2}
-%   \end{figure}
-%   \begin{itemize}
-%     \item \textbf{Xem thông tin trạm sạc}
-%       \begin{center}
-%         \renewcommand{\arraystretch}{1.5}
-%         \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
-%           \hline
-%           \textbf{Use case ID} & UC--SA--PAY--01 \\
-%           \hline
-%           \textbf{Use case name} & Xem thông tin trạm sạc \\
-%           \hline
-%           \textbf{Actor} & Người quản trị hệ thống (Super Admin) \\
-%           \hline
-%           \textbf{Description} & Super Admin xem thông tin trạm sạc đã được đăng ký trên hệ thống\\
-%           \hline
-%           \textbf{Preconditions} &
-%           \begin{itemize}
-%             \item Super Admin đăng nhập thành công vào hệ thống.
-%             \item Hệ thống có dữ liệu trạm sạc
-%           \end{itemize}\\
-%           \hline
-%           \textbf{Postconditions} &
-%           Thông tin chi tiết về trạm sạc hiển thị thành công; không thay đổi dữ liệu.\\
-%           \hline
-%           \textbf{Normal flows} &
-%           \begin{enumerate}[label=\arabic*.]
-%             \item Super Admin truy cập vào trang xem danh sách các trạm sạc
-%             \item Hệ thống hiển thị danh sách trạm sạc.
-%             \item Super Admin chọn một trạm sạc cụ thể.
-%             \item Hệ thống hiển thị chi tiết trạm gồm: tên, địa chỉ, số lượng cổng, loại cổng, tốc độ sạc, trạng thái hoạt động, số sao đánh giá, số lượt sử dụng.
-%             \item Super Admin có thể quay lại danh sách hoặc tiếp tục xem trạm khác.
+\item \textbf{Quản lý doanh thu và trạm sạc}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/usecase/SuperAdmin/uc_sa_2.png}
+    \caption{Use case diagram Super Admin quản lý doanh thu và trạm sạc}
+    \label{fig:uc_sa_2}
+  \end{figure}
+  \begin{itemize}
+    \item \textbf{Xem thông tin trạm sạc}
+      \begin{center}
+        \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \hline
+          \textbf{Use case ID} & UC--SA--PAY--01 \\
+          \hline
+          \textbf{Use case name} & Xem thông tin trạm sạc \\
+          \hline
+          \textbf{Actor} & Người quản trị hệ thống (Super Admin) \\
+          \hline
+          \textbf{Description} & Super Admin xem thông tin trạm sạc đã được đăng ký trên hệ thống\\
+          \hline
+          \textbf{Preconditions} &
+          \begin{itemize}
+            \item Super Admin đăng nhập thành công vào hệ thống.
+            \item Hệ thống có dữ liệu trạm sạc
+          \end{itemize}\\
+          \hline
+          \textbf{Postconditions} &
+          Thông tin chi tiết về trạm sạc hiển thị thành công; không thay đổi dữ liệu.\\
+          \hline
+          \textbf{Normal flows} &
+          \begin{enumerate}[label=\arabic*.]
+            \item Super Admin truy cập vào trang xem danh sách các trạm sạc
+            \item Hệ thống hiển thị danh sách trạm sạc.
+            \item Super Admin chọn một trạm sạc cụ thể.
+            \item Hệ thống hiển thị chi tiết trạm gồm: tên, địa chỉ, số lượng cổng, loại cổng, tốc độ sạc, trạng thái hoạt động, số sao đánh giá, số lượt sử dụng.
+            \item Super Admin có thể quay lại danh sách hoặc tiếp tục xem trạm khác.
 
-%           \end{enumerate}\\
-%           \hline
-%           \textbf{Alternative flows} &
-%           2a. Nếu hệ thống chưa có trạm nào, hiển thị thông báo “Chưa có trạm sạc nào trong hệ thống\\
-%           \hline
-%           \textbf{Exception} &
-%           4a. Hệ thống không thể cập nhật trạng thái trạm thì hiển thị thông báo lỗi và giữ trạng thái cũ\\
-%           \hline
-%           \caption{Use Case Xem thông tin trạm sạc}
-%           \label{tab:uc_sa_pay_01}
-%         \end{longtable}
-%       \end{center}
-%       %===================================================================
-%     \item \textbf{Phân chia doanh thu}
-%       \begin{center}
-%         \renewcommand{\arraystretch}{1.5}
-%         \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
-%           \hline
-%           \textbf{Use case ID} & UC--SA--PAY--02 \\
-%           \hline
-%           \textbf{Use case name} & Phân chia doanh thu \\
-%           \hline
-%           \textbf{Actor} & Người quản trị hệ thống (Super Admin) \\
-%           \hline
-%           \textbf{Description} & Tính và thực hiện phân chia doanh thu giữa hệ thống và chủ trạm theo kỳ (ngày/tuần/tháng).\\
-%           \hline
-%           \textbf{Preconditions} &
-%           \begin{itemize}
-%             \item Super Admin đăng nhập thành công vào hệ thống.
-%             \item Dữ liệu giao dịch đã “hoàn tất” trong kỳ chọn, đã đối soát cơ bản.
-%             \item Cấu hình tỷ lệ chia, phí nền tảng, ngưỡng chi trả tối thiểu… đã thiết lập.
-%           \end{itemize}\\
-%           \hline
-%           \textbf{Postconditions} &
-%           \begin{itemize}
-%             \item Hệ thống lưu version cấu hình phân chia doanh thu
-%             \item Lịch sử cấu hình được cập nhật
-%           \end{itemize}\\
-%           \hline
-%           \textbf{Normal flows} &
-%           \begin{enumerate}[label=\arabic*.]
-%             \item Super Admin chọn chức năng Phân chia doanh thu.
-%             \item Nhập tỷ lệ chia.
-%             \item Xác nhận lưu cấu hình.
-%             \item Hệ thống cập nhật tỷ lệ chia mới.
-%           \end{enumerate}\\
-%           \hline
-%           \textbf{Alternative flows} &
-%           \begin{itemize}
-%             \item 2a. Super Admin chọn áp dụng tỷ lệ chia riêng cho từng trạm thay vì áp dụng chung.
-%             \item 2b. Super Admin xem lại lịch sử cấu hình trước đó và rollback.
-%           \end{itemize}\\
-%           \hline
-%           \textbf{Exception} &
-%           \begin{itemize}
-%             \item 3a. Nhập sai định dạng hoặc tỷ lệ không hợp lệ: Hệ thống báo lỗi.
-%             \item 4a. Lưu thất bại (lỗi DB/hệ thống): Thông báo lỗi, không thay đổi cấu hình cũ.
-%           \end{itemize}\\
-%           \hline
-%           \caption{Use Case Phân chia doanh thu}
-%           \label{tab:uc_sa_pay_02}
-%         \end{longtable}
-%       \end{center}
-%       %===================================================================
-%     \item \textbf{Theo dõi luồng giao dịch}
-%       \begin{center}
-%         \renewcommand{\arraystretch}{1.5}
-%         \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
-%           \hline
-%           \textbf{Use case ID} & UC--SA--PAY--03 \\
-%           \hline
-%           \textbf{Use case name} & Theo dõi luồng giao dịch \\
-%           \hline
-%           \textbf{Actor} & Người quản lý hệ thống (Super Admin), Cổng thanh toán \\
-%           \hline
-%           \textbf{Description} & Giúp Super Admin theo dõi mọi giao dịch thanh toán: trạng thái, hoàn/huỷ, phí, mã tham chiếu; hỗ trợ điều tra sai lệch.\\
-%           \hline
-%           \textbf{Preconditions} &
-%           \begin{itemize}
-%             \item Super Admin đăng nhập thành công vào hệ thống.
-%             \item Hệ thống nhận log/webhook từ cổng thanh toán; dữ liệu giao dịch đồng bộ
-%           \end{itemize}\\
-%           \hline
-%           \textbf{Postconditions} &
-%           \begin{itemize}
-%             \item Danh sách giao dịch hiển thị theo bộ lọc; có thể xem chi tiết từng giao dịch.
-%             \item Không làm thay đổi dữ liệu giao dịch (chỉ xem/ghi chú).
-%           \end{itemize}\\
-%           \hline
-%           \textbf{Normal flows} &
-%           \begin{enumerate}[label=\arabic*.]
-%             \item Super Admin mở màn hình theo dõi giao dịch.
-%             \item Hệ thống tải danh sách giao dịch mặc định.
-%             \item Super Admin áp bộ lọc (khoảng thời gian, trạm, trạng thái, phương thức, mã tham chiếu) hoặc tìm kiếm.
-%             \item Hệ thống hiển thị kết quả; khi Super Admin chọn một giao dịch, hệ thống mở chi tiết thông tin giao dịch.
+          \end{enumerate}\\
+          \hline
+          \textbf{Alternative flows} &
+          2a. Nếu hệ thống chưa có trạm nào, hiển thị thông báo “Chưa có trạm sạc nào trong hệ thống\\
+          \hline
+          \textbf{Exception} &
+          4a. Hệ thống không thể cập nhật trạng thái trạm thì hiển thị thông báo lỗi và giữ trạng thái cũ\\
+          \hline
+          \caption{Use Case Xem thông tin trạm sạc}
+          \label{tab:uc_sa_pay_01}
+        \end{longtable}
+      \end{center}
+      %===================================================================
+    \item \textbf{Phân chia doanh thu}
+      \begin{center}
+        \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \hline
+          \textbf{Use case ID} & UC--SA--PAY--02 \\
+          \hline
+          \textbf{Use case name} & Phân chia doanh thu \\
+          \hline
+          \textbf{Actor} & Người quản trị hệ thống (Super Admin) \\
+          \hline
+          \textbf{Description} & Tính và thực hiện phân chia doanh thu giữa hệ thống và chủ trạm theo kỳ (ngày/tuần/tháng).\\
+          \hline
+          \textbf{Preconditions} &
+          \begin{itemize}
+            \item Super Admin đăng nhập thành công vào hệ thống.
+            \item Dữ liệu giao dịch đã “hoàn tất” trong kỳ chọn, đã đối soát cơ bản.
+            \item Cấu hình tỷ lệ chia, phí nền tảng, ngưỡng chi trả tối thiểu… đã thiết lập.
+          \end{itemize}\\
+          \hline
+          \textbf{Postconditions} &
+          \begin{itemize}
+            \item Hệ thống lưu version cấu hình phân chia doanh thu
+            \item Lịch sử cấu hình được cập nhật
+          \end{itemize}\\
+          \hline
+          \textbf{Normal flows} &
+          \begin{enumerate}[label=\arabic*.]
+            \item Super Admin chọn chức năng Phân chia doanh thu.
+            \item Nhập tỷ lệ chia.
+            \item Xác nhận lưu cấu hình.
+            \item Hệ thống cập nhật tỷ lệ chia mới.
+          \end{enumerate}\\
+          \hline
+          \textbf{Alternative flows} &
+          \begin{itemize}
+            \item 2a. Super Admin chọn áp dụng tỷ lệ chia riêng cho từng trạm thay vì áp dụng chung.
+            \item 2b. Super Admin xem lại lịch sử cấu hình trước đó và rollback.
+          \end{itemize}\\
+          \hline
+          \textbf{Exception} &
+          \begin{itemize}
+            \item 3a. Nhập sai định dạng hoặc tỷ lệ không hợp lệ: Hệ thống báo lỗi.
+            \item 4a. Lưu thất bại (lỗi DB/hệ thống): Thông báo lỗi, không thay đổi cấu hình cũ.
+          \end{itemize}\\
+          \hline
+          \caption{Use Case Phân chia doanh thu}
+          \label{tab:uc_sa_pay_02}
+        \end{longtable}
+      \end{center}
+      %===================================================================
+    \item \textbf{Theo dõi luồng giao dịch}
+      \begin{center}
+        \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \hline
+          \textbf{Use case ID} & UC--SA--PAY--03 \\
+          \hline
+          \textbf{Use case name} & Theo dõi luồng giao dịch \\
+          \hline
+          \textbf{Actor} & Người quản lý hệ thống (Super Admin), Cổng thanh toán \\
+          \hline
+          \textbf{Description} & Giúp Super Admin theo dõi mọi giao dịch thanh toán: trạng thái, hoàn/huỷ, phí, mã tham chiếu; hỗ trợ điều tra sai lệch.\\
+          \hline
+          \textbf{Preconditions} &
+          \begin{itemize}
+            \item Super Admin đăng nhập thành công vào hệ thống.
+            \item Hệ thống nhận log/webhook từ cổng thanh toán; dữ liệu giao dịch đồng bộ
+          \end{itemize}\\
+          \hline
+          \textbf{Postconditions} &
+          \begin{itemize}
+            \item Danh sách giao dịch hiển thị theo bộ lọc; có thể xem chi tiết từng giao dịch.
+            \item Không làm thay đổi dữ liệu giao dịch (chỉ xem/ghi chú).
+          \end{itemize}\\
+          \hline
+          \textbf{Normal flows} &
+          \begin{enumerate}[label=\arabic*.]
+            \item Super Admin mở màn hình theo dõi giao dịch.
+            \item Hệ thống tải danh sách giao dịch mặc định.
+            \item Super Admin áp bộ lọc (khoảng thời gian, trạm, trạng thái, phương thức, mã tham chiếu) hoặc tìm kiếm.
+            \item Hệ thống hiển thị kết quả; khi Super Admin chọn một giao dịch, hệ thống mở chi tiết thông tin giao dịch.
 
-%           \end{enumerate}\\
-%           \hline
-%           \textbf{Alternative flows} &
-%           2a. Nếu hệ thống chưa ghi nhận giao dịch nào, hiển thị “Chưa có giao dịch”.\\
-%           \hline
-%           \textbf{Exception} &
-%           4a. Khi mở chi tiết, truy vấn CSDL/gateway lỗi,  hiển thị thông báo “Không thể tải chi tiết”; cho phép thử lại.\\
-%           \hline
-%           \caption{Use Case Theo dõi luồng giao dịch}
-%           \label{tab:uc_sa_pay_03}
-%         \end{longtable}
-%       \end{center}
-%   \end{itemize}
+          \end{enumerate}\\
+          \hline
+          \textbf{Alternative flows} &
+          2a. Nếu hệ thống chưa ghi nhận giao dịch nào, hiển thị “Chưa có giao dịch”.\\
+          \hline
+          \textbf{Exception} &
+          4a. Khi mở chi tiết, truy vấn CSDL/gateway lỗi,  hiển thị thông báo “Không thể tải chi tiết”; cho phép thử lại.\\
+          \hline
+          \caption{Use Case Theo dõi luồng giao dịch}
+          \label{tab:uc_sa_pay_03}
+        \end{longtable}
+      \end{center}
+  \end{itemize}
 
   %==========================================================================
-% \item \textbf{Xem báo cáo và thống kê tổng hợp}
-%   \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.8\textwidth]{figures/usecase/SuperAdmin/uc_sa_4.png}
-%     \caption{Use case diagram Super Admin quản lý doanh thu và trạm sạc}
-%     \label{fig:uc_sa_4}
-%   \end{figure}
-%   \begin{itemize}
-%     \item \textbf{Xem báo cáo và thống kê tổng hợp}
-%       \begin{center}
-%         \renewcommand{\arraystretch}{1.5}
-%         \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
-%           \hline
-%           \textbf{Use case ID} & UC--SA--RP--01 \\
-%           \hline
-%           \textbf{Use case name} & Xem báo cáo và thống kê tổng hợp \\
-%           \hline
-%           \textbf{Actor} & Người quản lý hệ thống (Super Admin) \\
-%           \hline
-%           \textbf{Description} & Super Admin xem các báo cáo tổng hợp về hoạt động của hệ thống trạm sạc.\\
-%           \hline
-%           \textbf{Preconditions} &
-%           \begin{itemize}
-%             \item Super Admin đăng nhập thành công vào hệ thống.
-%             \item Hệ thống có dữ liệu giao dịch, người dùng, trạm sạc.
-%           \end{itemize}\\
-%           \hline
-%           \textbf{Postconditions} &
-%           Báo cáo thống kê được hiển thị theo bộ lọc\\
-%           \hline
-%           \textbf{Normal flows} &
-%           \begin{enumerate}[label=\arabic*.]
-%             \item Super Admin thực hiện chức năng xem báo cáo \& thống kê tổng hợp.
-%             \item Hệ thống hiển thị bộ lọc: khoảng thời gian, phạm vi (toàn hệ thống/theo trạm/theo cổng), nhóm theo (ngày/tuần/tháng).
-%             \item Super Admin chọn bộ lọc mong muốn.
-%             \item Hệ thống xử lý dữ liệu và hiển thị báo cáo.
-%           \end{enumerate}\\
-%           \hline
-%           \textbf{Alternative flows} &
-%           4a. Nếu Super Admin chọn rollback, hệ thống sẽ khôi phục lại trạng thái trước đó của báo cáo.\\
-%           \hline
-%           \textbf{Exception} &
-%           4b. Khi mở chi tiết, truy vấn CSDL/gateway lỗi,  hiển thị thông báo “Không thể tải chi tiết”; cho phép thử lại.\\
-%           \hline
-%           \caption{Use Case Xem báo cáo và thống kê tổng hợp}
-%           \label{tab:uc_sa_rp_01}
-%         \end{longtable}
-%       \end{center}
-%       %========================================================================
-%     \item \textbf{Thống kê theo biểu đồ}
-%       \begin{center}
-%         \renewcommand{\arraystretch}{1.5}
-%         \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
-%           \hline
-%           \textbf{Use case ID} & UC--SA--RP--02 \\
-%           \hline
-%           \textbf{Use case name} & Xem báo cáo và thống kê theo biểu đồ \\
-%           \hline
-%           \textbf{Actor} & Người quản lý hệ thống (Super Admin) \\
-%           \hline
-%           \textbf{Description} & Super Admin xem các báo cáo tổng hợp về hoạt động của hệ thống trạm sạc trực quan hơn dưới dạng biểu đồ\\
-%           \hline
-%           \textbf{Preconditions} &
-%           \begin{itemize}
-%             \item Super Admin đăng nhập thành công vào hệ thống.
-%             \item Hệ thống có dữ liệu giao dịch, người dùng, trạm sạc.
-%           \end{itemize}\\
-%           \hline
-%           \textbf{Postconditions} &
-%           Báo cáo thống kê được hiển thị theo cấu hình biểu đồ\\
-%           \hline
-%           \textbf{Normal flows} &
-%           \begin{enumerate}[label=\arabic*.]
-%             \item Super Admin chọn “Thống kê theo biểu đồ”.
-%             \item Hệ thống lấy bộ lọc đã chọn ở use case UC--SA--RP--01.
-%             \item Super Admin có thể lựa chọn loại biểu đồ (Line/Bar/Pie/Area), chỉ số hiển thị (Doanh thu hoặc Lượt sạc), cách nhóm dữ liệu (theo ngày/tuần/tháng/trạm/cổng) và tùy chọn so sánh với kỳ trước.
-%             \item Hệ thống render biểu đồ, hiển thị chú giải, giá trị khi hover, tổng/ trung bình.
-%           \end{enumerate}\\
-%           \hline
-%           \textbf{Alternative flows} &
-%           4a. Chọn “Tải ảnh”, hệ thống tải về PNG/SVG của biểu đồ\\
-%           \hline
-%           \textbf{Exception} &
-%           4b. Lỗi render, hiển thị thông báo và fallback sang bảng\\
-%           \hline
-%           \caption{Use Case Thống kê theo biểu đồ}
-%           \label{tab:uc_sa_rp_02}
-%         \end{longtable}
-%       \end{center}
-%     \item \textbf{Xuất file}
-%       \begin{center}
-%         \renewcommand{\arraystretch}{1.5}
-%         \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
-%           \hline
-%           \textbf{Use case ID} & UC--SA--RP--03 \\
-%           \hline
-%           \textbf{Use case name} & Xuất file báo cáo thống kê \\
-%           \hline
-%           \textbf{Actor} & Người quản lý hệ thống (Super Admin) \\
-%           \hline
-%           \textbf{Description} & Super Admin xuất báo cáo thống kê theo bộ lọc hiện tại ra CSV/XLSX/PDF\\
-%           \hline
-%           \textbf{Preconditions} &
-%           \begin{itemize}
-%             \item Super Admin đăng nhập thành công vào hệ thống.
-%             \item Hệ thống có dữ liệu giao dịch, người dùng, trạm sạc.
-%           \end{itemize}\\
-%           \hline
-%           \textbf{Postconditions} &
-%           Super Admin tải về được file báo cáo đã xuất ra.\\
-%           \hline
-%           \textbf{Normal flows} &
-%           \begin{enumerate}[label=\arabic*.]
-%             \item Super Admin bấm “Xuất file”.
-%             \item Hệ thống hiển thị cấu hình: định dạng (CSV/XLSX/PDF), phạm vi dữ liệu (tất cả/ trang hiện tại), cột cần xuất, tên file, ngôn ngữ/định dạng số.
-%             \item Super Admin xác nhận.
-%             \item Hệ thống tạo file theo bộ lọc và cấu hình.
-%             \item Hệ thống cung cấp file để tải xuống.
-%           \end{enumerate}\\
-%           \hline
-%           \textbf{Alternative flows} &
-%           3a. Nếu Super Admin hủy xác nhận thì hệ thống ngưng xuất file\\
-%           \hline
-%           \textbf{Exception} &
-%           4a. Nếu gặp lỗi tạo file, báo lỗi và thử lại\\
-%           \hline
-%           \caption{Use Case Xuất file báo cáo thống kê}
-%           \label{tab:uc_sa_rp_03}
-%         \end{longtable}
-%       \end{center}
-%   \end{itemize}
+\item \textbf{Xem báo cáo và thống kê tổng hợp}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/usecase/SuperAdmin/uc_sa_4.png}
+    \caption{Use case diagram Super Admin quản lý doanh thu và trạm sạc}
+    \label{fig:uc_sa_4}
+  \end{figure}
+  \begin{itemize}
+    \item \textbf{Xem báo cáo và thống kê tổng hợp}
+      \begin{center}
+        \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \hline
+          \textbf{Use case ID} & UC--SA--RP--01 \\
+          \hline
+          \textbf{Use case name} & Xem báo cáo và thống kê tổng hợp \\
+          \hline
+          \textbf{Actor} & Người quản lý hệ thống (Super Admin) \\
+          \hline
+          \textbf{Description} & Super Admin xem các báo cáo tổng hợp về hoạt động của hệ thống trạm sạc.\\
+          \hline
+          \textbf{Preconditions} &
+          \begin{itemize}
+            \item Super Admin đăng nhập thành công vào hệ thống.
+            \item Hệ thống có dữ liệu giao dịch, người dùng, trạm sạc.
+          \end{itemize}\\
+          \hline
+          \textbf{Postconditions} &
+          Báo cáo thống kê được hiển thị theo bộ lọc\\
+          \hline
+          \textbf{Normal flows} &
+          \begin{enumerate}[label=\arabic*.]
+            \item Super Admin thực hiện chức năng xem báo cáo \& thống kê tổng hợp.
+            \item Hệ thống hiển thị bộ lọc: khoảng thời gian, phạm vi (toàn hệ thống/theo trạm/theo cổng), nhóm theo (ngày/tuần/tháng).
+            \item Super Admin chọn bộ lọc mong muốn.
+            \item Hệ thống xử lý dữ liệu và hiển thị báo cáo.
+          \end{enumerate}\\
+          \hline
+          \textbf{Alternative flows} &
+          4a. Nếu Super Admin chọn rollback, hệ thống sẽ khôi phục lại trạng thái trước đó của báo cáo.\\
+          \hline
+          \textbf{Exception} &
+          4b. Khi mở chi tiết, truy vấn CSDL/gateway lỗi,  hiển thị thông báo “Không thể tải chi tiết”; cho phép thử lại.\\
+          \hline
+          \caption{Use Case Xem báo cáo và thống kê tổng hợp}
+          \label{tab:uc_sa_rp_01}
+        \end{longtable}
+      \end{center}
+      %========================================================================
+    \item \textbf{Thống kê theo biểu đồ}
+      \begin{center}
+        \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \hline
+          \textbf{Use case ID} & UC--SA--RP--02 \\
+          \hline
+          \textbf{Use case name} & Xem báo cáo và thống kê theo biểu đồ \\
+          \hline
+          \textbf{Actor} & Người quản lý hệ thống (Super Admin) \\
+          \hline
+          \textbf{Description} & Super Admin xem các báo cáo tổng hợp về hoạt động của hệ thống trạm sạc trực quan hơn dưới dạng biểu đồ\\
+          \hline
+          \textbf{Preconditions} &
+          \begin{itemize}
+            \item Super Admin đăng nhập thành công vào hệ thống.
+            \item Hệ thống có dữ liệu giao dịch, người dùng, trạm sạc.
+          \end{itemize}\\
+          \hline
+          \textbf{Postconditions} &
+          Báo cáo thống kê được hiển thị theo cấu hình biểu đồ\\
+          \hline
+          \textbf{Normal flows} &
+          \begin{enumerate}[label=\arabic*.]
+            \item Super Admin chọn “Thống kê theo biểu đồ”.
+            \item Hệ thống lấy bộ lọc đã chọn ở use case UC--SA--RP--01.
+            \item Super Admin có thể lựa chọn loại biểu đồ (Line/Bar/Pie/Area), chỉ số hiển thị (Doanh thu hoặc Lượt sạc), cách nhóm dữ liệu (theo ngày/tuần/tháng/trạm/cổng) và tùy chọn so sánh với kỳ trước.
+            \item Hệ thống render biểu đồ, hiển thị chú giải, giá trị khi hover, tổng/ trung bình.
+          \end{enumerate}\\
+          \hline
+          \textbf{Alternative flows} &
+          4a. Chọn “Tải ảnh”, hệ thống tải về PNG/SVG của biểu đồ\\
+          \hline
+          \textbf{Exception} &
+          4b. Lỗi render, hiển thị thông báo và fallback sang bảng\\
+          \hline
+          \caption{Use Case Thống kê theo biểu đồ}
+          \label{tab:uc_sa_rp_02}
+        \end{longtable}
+      \end{center}
+    \item \textbf{Xuất file}
+      \begin{center}
+        \renewcommand{\arraystretch}{1.5}
+        \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \hline
+          \textbf{Use case ID} & UC--SA--RP--03 \\
+          \hline
+          \textbf{Use case name} & Xuất file báo cáo thống kê \\
+          \hline
+          \textbf{Actor} & Người quản lý hệ thống (Super Admin) \\
+          \hline
+          \textbf{Description} & Super Admin xuất báo cáo thống kê theo bộ lọc hiện tại ra CSV/XLSX/PDF\\
+          \hline
+          \textbf{Preconditions} &
+          \begin{itemize}
+            \item Super Admin đăng nhập thành công vào hệ thống.
+            \item Hệ thống có dữ liệu giao dịch, người dùng, trạm sạc.
+          \end{itemize}\\
+          \hline
+          \textbf{Postconditions} &
+          Super Admin tải về được file báo cáo đã xuất ra.\\
+          \hline
+          \textbf{Normal flows} &
+          \begin{enumerate}[label=\arabic*.]
+            \item Super Admin bấm “Xuất file”.
+            \item Hệ thống hiển thị cấu hình: định dạng (CSV/XLSX/PDF), phạm vi dữ liệu (tất cả/ trang hiện tại), cột cần xuất, tên file, ngôn ngữ/định dạng số.
+            \item Super Admin xác nhận.
+            \item Hệ thống tạo file theo bộ lọc và cấu hình.
+            \item Hệ thống cung cấp file để tải xuống.
+          \end{enumerate}\\
+          \hline
+          \textbf{Alternative flows} &
+          3a. Nếu Super Admin hủy xác nhận thì hệ thống ngưng xuất file\\
+          \hline
+          \textbf{Exception} &
+          4a. Nếu gặp lỗi tạo file, báo lỗi và thử lại\\
+          \hline
+          \caption{Use Case Xuất file báo cáo thống kê}
+          \label{tab:uc_sa_rp_03}
+        \end{longtable}
+      \end{center}
+  \end{itemize}
 \end{enumerate}
 %==============================================================================
-% \subsubsection{Use Case Diagram -- Người quản trị hệ thống và nhân viên chăm sóc khách hàng }
-% \begin{figure}[H]
-% \centering
-% \includegraphics[width=0.8\textwidth]{figures/usecase/SuperAdmin/uc_sa_3.png}
-% \caption{Use case diagram Xử lý khiếu nại của khách hàng}
-% \label{fig:uc_sa_3}
-% \end{figure}
-% \begin{itemize}
-% \item \textbf{Xem danh sách khiếu nại}
-%   \begin{center}
-%     \renewcommand{\arraystretch}{1.5}
-%     \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
-%       \hline
-%       \textbf{Use case ID} & UC--SA--CP--01 \\
-%       \hline
-%       \textbf{Use case name} & Xem danh sách khiếu nại \\
-%       \hline
-%       \textbf{Actor} & Người quản lý hệ thống (Super Admin), Nhân viên chăm sóc khách hàng (Customer Service Staff) \\
-%       \hline
-%       \textbf{Description} & Cho phép Super Admin/Customer Service Staff xem danh sách tất cả các khiếu nại do người dùng gửi lên.\\
-%       \hline
-%       \textbf{Preconditions} &
-%       \begin{itemize}
-%         \item Super Admin/Customer Service Staff đã đăng nhập hợp lệ.
-%         \item Khiếu nại đã được tạo trong hệ thống (từ người dùng hoặc chủ trạm) với mã khiếu nại, mô tả, bằng chứng (nếu có)
-%       \end{itemize}\\
-%       \hline
-%       \textbf{Postconditions} &
-%       Hiển thị danh sách khiếu nại với trạng thái (chưa xử lý, đang xử lý, đã xử lý)\\
-%       \hline
-%       \textbf{Normal flows} &
-%       \begin{enumerate}[label=\arabic*.]
-%         \item Super Admin/Customer Service Staff chọn “Xem danh sách khiếu nại”.
-%         \item Hệ thống hiển thị bảng danh sách gồm: ID khiếu nại, người gửi, thời gian, tiêu đề, trạng thái.
-%         \item Super Admin/Customer Service Staff có thể lọc theo trạng thái, thời gian, người gửi.
-%         \item Super Admin/Customer Service Staff chọn một khiếu nại để xem chi tiết.
-%       \end{enumerate}\\
-%       \hline
-%       \textbf{Alternative flows} &
-%       Không có\\
-%       \hline
-%       \textbf{Exception} &
-%       2a. Nếu không thể truy xuất dữ liệu thì báo lỗi và thử lại\\
-%       \hline
-%       \caption{Use Case Xem danh sách khiếu nại}
-%       \label{tab:uc_sa_cp_01}
-%     \end{longtable}
-%   \end{center}
-%   %=====================================================================
-% \item \textbf{Xem chi tiết khiếu nại}
-%   \begin{center}
-%     \renewcommand{\arraystretch}{1.5}
-%     \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
-%       \hline
-%       \textbf{Use case ID} & UC--SA--CP--02 \\
-%       \hline
-%       \textbf{Use case name} & Xem chi tiết khiếu nại \\
-%       \hline
-%       \textbf{Actor} & Người quản lý hệ thống (Super Admin), Nhân viên chăm sóc khách hàng (Customer Service Staff) \\
-%       \hline
-%       \textbf{Description} & Cho phép Super Admin/Customer Service Staff xem chi tiết nội dung của một khiếu nại.\\
-%       \hline
-%       \textbf{Preconditions} &
-%       \begin{itemize}
-%         \item Super Admin/Customer Service Staff đã đăng nhập hợp lệ.
-%         \item Khiếu nại đã được tạo trong hệ thống (từ người dùng hoặc chủ trạm) với mã khiếu nại, mô tả, bằng chứng (nếu có)
-%         \item Super Admin/Customer Service Staff chọn một khiếu nại từ danh sách
-%       \end{itemize}\\
-%       \hline
-%       \textbf{Postconditions} &
-%       Super Admin/Customer Service Staff có thể xem toàn bộ nội dung chi tiết của khiếu nại.\\
-%       \hline
-%       \textbf{Normal flows} &
-%       \begin{enumerate}[label=\arabic*.]
-%         \item Super Admin/Customer Service Staff chọn một khiếu nại từ danh sách.
-%         \item Hệ thống hiển thị chi tiết: nội dung khiếu nại, người gửi, minh chứng (ảnh/tệp), lịch sử trao đổi.
-%       \end{enumerate}\\
-%       \hline
-%       \textbf{Alternative flows} &
-%       Không có\\
-%       \hline
-%       \textbf{Exception} &
-%       1a. Khiếu nại đã bị xóa hoặc không còn tồn tại, hiển thị thông báo lỗi\\
-%       \hline
-%       \caption{Use Case Xem chi tiết khiếu nại}
-%       \label{tab:uc_sa_cp_02}
-%     \end{longtable}
-%   \end{center}
-%   %=====================================================================
-% \item \textbf{Khóa/mở khóa tài khoản}
-%   \begin{center}
-%     \renewcommand{\arraystretch}{1.5}
-%     \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
-%       \hline
-%       \textbf{Use case ID} & UC--SA--CP--03 \\
-%       \hline
-%       \textbf{Use case name} & Khóa/mở khóa tài khoản \\
-%       \hline
-%       \textbf{Actor} & Người quản lý hệ thống (Super Admin), Nhân viên chăm sóc khách hàng (Customer Service Staff) \\
-%       \hline
-%       \textbf{Description} & Cho phép Super Admin/Customer Service Staff khóa/mở khóa tài khoản bị phản ánh trong khiếu nại\\
-%       \hline
-%       \textbf{Preconditions} &
-%       \begin{itemize}
-%         \item Super Admin/Customer Service Staff đã đăng nhập hợp lệ.
-%         \item Khiếu nại đã được tạo trong hệ thống (từ người dùng hoặc chủ trạm) với mã khiếu nại, mô tả, bằng chứng (nếu có)
-%         \item Super Admin/Customer Service Staff đang xem chi tiết khiếu nại có liên quan đến một tài khoản cụ thể
-%       \end{itemize}\\
-%       \hline
-%       \textbf{Postconditions} &
-%       Tài khoản bị khóa hoặc được mở khóa theo hành động của Super Admin/Customer Service Staff\\
-%       \hline
-%       \textbf{Normal flows} &
-%       \begin{enumerate}[label=\arabic*.]
-%         \item Super Admin/Customer Service Staff chọn “Khóa/Mở khóa tài khoản”.
-%         \item Hệ thống hiển thị hộp xác nhận hành động.
-%         \item Super Admin/Customer Service Staff xác nhận.
-%         \item Hệ thống thay đổi trạng thái tài khoản (ACTIVE sang LOCKED hoặc ngược lại).
-%         \item Lưu lại lịch sử xử lý trong log khiếu nại.
-%       \end{enumerate}\\
-%       \hline
-%       \textbf{Alternative flows} &
-%       Không có\\
-%       \hline
-%       \textbf{Exception} &
-%       1a. Khiếu nại đã bị xóa hoặc không còn tồn tại, hiển thị thông báo lỗi\\
-%       \hline
-%       \caption{Use Case Khóa/mở khóa tài khoản}
-%       \label{tab:uc_sa_cp_03}
-%     \end{longtable}
-%   \end{center}
-%   %=====================================================================
-% \item \textbf{Phản hồi khiếu nại}
-%   \begin{center}
-%     \renewcommand{\arraystretch}{1.5}
-%     \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
-%       \hline
-%       \textbf{Use case ID} & UC--SA--CP--04 \\
-%       \hline
-%       \textbf{Use case name} & Phản hồi khiếu nại \\
-%       \hline
-%       \textbf{Actor} & Người quản lý hệ thống (Super Admin), Nhân viên chăm sóc khách hàng (Customer Service Staff) \\
-%       \hline
-%       \textbf{Description} & Cho phép Super Admin/Customer Service Staff phản hồi khiếu nại từ người dùng\\
-%       \hline
-%       \textbf{Preconditions} &
-%       \begin{itemize}
-%         \item Super Admin/Customer Service Staff đã đăng nhập hợp lệ.
-%         \item Khiếu nại đã được tạo trong hệ thống (từ người dùng hoặc chủ trạm) với mã khiếu nại, mô tả, bằng chứng (nếu có)
-%         \item Super Admin/Customer Service Staff đang xem chi tiết khiếu nại có liên quan đến một tài khoản cụ thể
-%       \end{itemize}\\
-%       \hline
-%       \textbf{Postconditions} &
-%       Phản hồi được gửi đến người dùng và lưu trong lịch sử khiếu nại.\\
-%       \hline
-%       \textbf{Normal flows} &
-%       \begin{enumerate}[label=\arabic*.]
-%         \item Super Admin/Customer Service Staff nhập nội dung phản hồi.
-%         \item Hệ thống xác nhận và lưu phản hồi.
-%         \item Hệ thống gửi thông báo đến người khiếu nại (qua app/email).
-%         \item Trạng thái khiếu nại được cập nhật.
-%       \end{enumerate}\\
-%       \hline
-%       \textbf{Alternative flows} &
-%       Không có\\
-%       \hline
-%       \textbf{Exception} &
-%       3a. Lỗi khi gửi phản hồi, hiển thị thông báo lỗi và gửi lại\\
-%       \hline
-%       \caption{Use Case Phản hồi khiếu nại}
-%       \label{tab:uc_sa_cp_04}
-%     \end{longtable}
-%   \end{center}
-% \end{itemize}
+\subsubsection{Use Case Diagram -- Người quản trị hệ thống và nhân viên chăm sóc khách hàng }
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/usecase/SuperAdmin/uc_sa_3.png}
+\caption{Use case diagram Xử lý khiếu nại của khách hàng}
+\label{fig:uc_sa_3}
+\end{figure}
+\begin{itemize}
+\item \textbf{Xem danh sách khiếu nại}
+  \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+      \hline
+      \textbf{Use case ID} & UC--SA--CP--01 \\
+      \hline
+      \textbf{Use case name} & Xem danh sách khiếu nại \\
+      \hline
+      \textbf{Actor} & Người quản lý hệ thống (Super Admin), Nhân viên chăm sóc khách hàng (Customer Service Staff) \\
+      \hline
+      \textbf{Description} & Cho phép Super Admin/Customer Service Staff xem danh sách tất cả các khiếu nại do người dùng gửi lên.\\
+      \hline
+      \textbf{Preconditions} &
+      \begin{itemize}
+        \item Super Admin/Customer Service Staff đã đăng nhập hợp lệ.
+        \item Khiếu nại đã được tạo trong hệ thống (từ người dùng hoặc chủ trạm) với mã khiếu nại, mô tả, bằng chứng (nếu có)
+      \end{itemize}\\
+      \hline
+      \textbf{Postconditions} &
+      Hiển thị danh sách khiếu nại với trạng thái (chưa xử lý, đang xử lý, đã xử lý)\\
+      \hline
+      \textbf{Normal flows} &
+      \begin{enumerate}[label=\arabic*.]
+        \item Super Admin/Customer Service Staff chọn “Xem danh sách khiếu nại”.
+        \item Hệ thống hiển thị bảng danh sách gồm: ID khiếu nại, người gửi, thời gian, tiêu đề, trạng thái.
+        \item Super Admin/Customer Service Staff có thể lọc theo trạng thái, thời gian, người gửi.
+        \item Super Admin/Customer Service Staff chọn một khiếu nại để xem chi tiết.
+      \end{enumerate}\\
+      \hline
+      \textbf{Alternative flows} &
+      Không có\\
+      \hline
+      \textbf{Exception} &
+      2a. Nếu không thể truy xuất dữ liệu thì báo lỗi và thử lại\\
+      \hline
+      \caption{Use Case Xem danh sách khiếu nại}
+      \label{tab:uc_sa_cp_01}
+    \end{longtable}
+  \end{center}
+  %=====================================================================
+\item \textbf{Xem chi tiết khiếu nại}
+  \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+      \hline
+      \textbf{Use case ID} & UC--SA--CP--02 \\
+      \hline
+      \textbf{Use case name} & Xem chi tiết khiếu nại \\
+      \hline
+      \textbf{Actor} & Người quản lý hệ thống (Super Admin), Nhân viên chăm sóc khách hàng (Customer Service Staff) \\
+      \hline
+      \textbf{Description} & Cho phép Super Admin/Customer Service Staff xem chi tiết nội dung của một khiếu nại.\\
+      \hline
+      \textbf{Preconditions} &
+      \begin{itemize}
+        \item Super Admin/Customer Service Staff đã đăng nhập hợp lệ.
+        \item Khiếu nại đã được tạo trong hệ thống (từ người dùng hoặc chủ trạm) với mã khiếu nại, mô tả, bằng chứng (nếu có)
+        \item Super Admin/Customer Service Staff chọn một khiếu nại từ danh sách
+      \end{itemize}\\
+      \hline
+      \textbf{Postconditions} &
+      Super Admin/Customer Service Staff có thể xem toàn bộ nội dung chi tiết của khiếu nại.\\
+      \hline
+      \textbf{Normal flows} &
+      \begin{enumerate}[label=\arabic*.]
+        \item Super Admin/Customer Service Staff chọn một khiếu nại từ danh sách.
+        \item Hệ thống hiển thị chi tiết: nội dung khiếu nại, người gửi, minh chứng (ảnh/tệp), lịch sử trao đổi.
+      \end{enumerate}\\
+      \hline
+      \textbf{Alternative flows} &
+      Không có\\
+      \hline
+      \textbf{Exception} &
+      1a. Khiếu nại đã bị xóa hoặc không còn tồn tại, hiển thị thông báo lỗi\\
+      \hline
+      \caption{Use Case Xem chi tiết khiếu nại}
+      \label{tab:uc_sa_cp_02}
+    \end{longtable}
+  \end{center}
+  %=====================================================================
+\item \textbf{Khóa/mở khóa tài khoản}
+  \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+      \hline
+      \textbf{Use case ID} & UC--SA--CP--03 \\
+      \hline
+      \textbf{Use case name} & Khóa/mở khóa tài khoản \\
+      \hline
+      \textbf{Actor} & Người quản lý hệ thống (Super Admin), Nhân viên chăm sóc khách hàng (Customer Service Staff) \\
+      \hline
+      \textbf{Description} & Cho phép Super Admin/Customer Service Staff khóa/mở khóa tài khoản bị phản ánh trong khiếu nại\\
+      \hline
+      \textbf{Preconditions} &
+      \begin{itemize}
+        \item Super Admin/Customer Service Staff đã đăng nhập hợp lệ.
+        \item Khiếu nại đã được tạo trong hệ thống (từ người dùng hoặc chủ trạm) với mã khiếu nại, mô tả, bằng chứng (nếu có)
+        \item Super Admin/Customer Service Staff đang xem chi tiết khiếu nại có liên quan đến một tài khoản cụ thể
+      \end{itemize}\\
+      \hline
+      \textbf{Postconditions} &
+      Tài khoản bị khóa hoặc được mở khóa theo hành động của Super Admin/Customer Service Staff\\
+      \hline
+      \textbf{Normal flows} &
+      \begin{enumerate}[label=\arabic*.]
+        \item Super Admin/Customer Service Staff chọn “Khóa/Mở khóa tài khoản”.
+        \item Hệ thống hiển thị hộp xác nhận hành động.
+        \item Super Admin/Customer Service Staff xác nhận.
+        \item Hệ thống thay đổi trạng thái tài khoản (ACTIVE sang LOCKED hoặc ngược lại).
+        \item Lưu lại lịch sử xử lý trong log khiếu nại.
+      \end{enumerate}\\
+      \hline
+      \textbf{Alternative flows} &
+      Không có\\
+      \hline
+      \textbf{Exception} &
+      1a. Khiếu nại đã bị xóa hoặc không còn tồn tại, hiển thị thông báo lỗi\\
+      \hline
+      \caption{Use Case Khóa/mở khóa tài khoản}
+      \label{tab:uc_sa_cp_03}
+    \end{longtable}
+  \end{center}
+  %=====================================================================
+\item \textbf{Phản hồi khiếu nại}
+  \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+      \hline
+      \textbf{Use case ID} & UC--SA--CP--04 \\
+      \hline
+      \textbf{Use case name} & Phản hồi khiếu nại \\
+      \hline
+      \textbf{Actor} & Người quản lý hệ thống (Super Admin), Nhân viên chăm sóc khách hàng (Customer Service Staff) \\
+      \hline
+      \textbf{Description} & Cho phép Super Admin/Customer Service Staff phản hồi khiếu nại từ người dùng\\
+      \hline
+      \textbf{Preconditions} &
+      \begin{itemize}
+        \item Super Admin/Customer Service Staff đã đăng nhập hợp lệ.
+        \item Khiếu nại đã được tạo trong hệ thống (từ người dùng hoặc chủ trạm) với mã khiếu nại, mô tả, bằng chứng (nếu có)
+        \item Super Admin/Customer Service Staff đang xem chi tiết khiếu nại có liên quan đến một tài khoản cụ thể
+      \end{itemize}\\
+      \hline
+      \textbf{Postconditions} &
+      Phản hồi được gửi đến người dùng và lưu trong lịch sử khiếu nại.\\
+      \hline
+      \textbf{Normal flows} &
+      \begin{enumerate}[label=\arabic*.]
+        \item Super Admin/Customer Service Staff nhập nội dung phản hồi.
+        \item Hệ thống xác nhận và lưu phản hồi.
+        \item Hệ thống gửi thông báo đến người khiếu nại (qua app/email).
+        \item Trạng thái khiếu nại được cập nhật.
+      \end{enumerate}\\
+      \hline
+      \textbf{Alternative flows} &
+      Không có\\
+      \hline
+      \textbf{Exception} &
+      3a. Lỗi khi gửi phản hồi, hiển thị thông báo lỗi và gửi lại\\
+      \hline
+      \caption{Use Case Phản hồi khiếu nại}
+      \label{tab:uc_sa_cp_04}
+    \end{longtable}
+  \end{center}
+\end{itemize}
 
 
 \subsubsection{Use Case Diagram -- Chủ trạm sạc}
@@ -1164,103 +1164,103 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
     \end{center}
 \end{itemize}
 
-% \item \textbf{Xử lý đánh giá}
-% \begin{figure}[H]
-%   \centering
-%   \includegraphics[width=0.8\textwidth]{figures/usecase/StationOwner/uc_so_3.png}
-%   \caption{Use case diagram Báo cáo \& thống kê}
-%   \label{fig:uc_so_3}
-% \end{figure}
-% \begin{itemize}
-%   \item \textbf{Xem đánh giá}
-%     \begin{center}
-%       \renewcommand{\arraystretch}{1.5}
-%       \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
-%         \hline
-%         \textbf{Use case ID} & UC--SO--RV--01 \\
-%         \hline
-%         \textbf{Use case name} & Xem đánh giá \\
-%         \hline
-%         \textbf{Actor} & Chủ trạm sạc (Station Owner) \\
-%         \hline
-%         \textbf{Description} &
-%         Station owner xem các đánh giá và nhận xét của người dùng về trạm sạc và trụ sạc. \\
-%         \hline
-%         \textbf{Preconditions} &
-%         \begin{itemize}
-%           \item Station owner đã đăng nhập hệ thống.
-%           \item Trạm sạc thuộc quyền quản lý của station owner.
-%         \end{itemize}\\
-%         \hline
-%         \textbf{Postconditions} &
-%         Danh sách đánh giá được hiển thị cho station owner.\\
-%         \hline
-%         \textbf{Normal flows} &
-%         \begin{enumerate}[label=\arabic*.]
-%           \item Station owner truy cập chức năng Xử lý đánh giá.
-%           \item Chọn xem đánh giá.
-%           \item Hệ thống hiển thị danh sách đánh giá (số sao, nội dung, thời gian).
-%           \item Station owner chọn một đánh giá để xem chi tiết.
-%         \end{enumerate}\\
-%         \hline
-%         \textbf{Alternative flows} &
-%         3a. Station owner sử dụng bộ lọc (theo số sao, thời gian).\\
-%         \hline
-%         \textbf{Exception} &
-%         Không có.\\
-%         \hline
-%         \caption{Use Case Xem đánh giá}
-%         \label{tab:uc_so_rv_01}
-%       \end{longtable}
-%     \end{center}
+\item \textbf{Xử lý đánh giá}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/usecase/StationOwner/uc_so_3.png}
+  \caption{Use case diagram Báo cáo \& thống kê}
+  \label{fig:uc_so_3}
+\end{figure}
+\begin{itemize}
+  \item \textbf{Xem đánh giá}
+    \begin{center}
+      \renewcommand{\arraystretch}{1.5}
+      \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SO--RV--01 \\
+        \hline
+        \textbf{Use case name} & Xem đánh giá \\
+        \hline
+        \textbf{Actor} & Chủ trạm sạc (Station Owner) \\
+        \hline
+        \textbf{Description} &
+        Station owner xem các đánh giá và nhận xét của người dùng về trạm sạc và trụ sạc. \\
+        \hline
+        \textbf{Preconditions} &
+        \begin{itemize}
+          \item Station owner đã đăng nhập hệ thống.
+          \item Trạm sạc thuộc quyền quản lý của station owner.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} &
+        Danh sách đánh giá được hiển thị cho station owner.\\
+        \hline
+        \textbf{Normal flows} &
+        \begin{enumerate}[label=\arabic*.]
+          \item Station owner truy cập chức năng Xử lý đánh giá.
+          \item Chọn xem đánh giá.
+          \item Hệ thống hiển thị danh sách đánh giá (số sao, nội dung, thời gian).
+          \item Station owner chọn một đánh giá để xem chi tiết.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} &
+        3a. Station owner sử dụng bộ lọc (theo số sao, thời gian).\\
+        \hline
+        \textbf{Exception} &
+        Không có.\\
+        \hline
+        \caption{Use Case Xem đánh giá}
+        \label{tab:uc_so_rv_01}
+      \end{longtable}
+    \end{center}
 
-%   \item \textbf{Phản hồi đánh giá}
-%     \begin{center}
-%       \renewcommand{\arraystretch}{1.5}
-%       \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
-%         \hline
-%         \textbf{Use case ID} & UC--SO--RV--02 \\
-%         \hline
-%         \textbf{Use case name} & Phản hồi đánh giá \\
-%         \hline
-%         \textbf{Actor} & Chủ trạm sạc (Station Owner) \\
-%         \hline
-%         \textbf{Description} &
-%         Station owner phản hồi lại đánh giá của người dùng nhằm giải thích, cảm ơn hoặc xử lý phản ánh. \\
-%         \hline
-%         \textbf{Preconditions} &
-%         \begin{itemize}
-%           \item Station owner đã đăng nhập.
-%           \item Station owner đang xem chi tiết một đánh giá.
-%         \end{itemize}\\
-%         \hline
-%         \textbf{Postconditions} &
-%         Nội dung phản hồi được lưu và hiển thị dưới đánh giá tương ứng.\\
-%         \hline
-%         \textbf{Normal flows} &
-%         \begin{enumerate}[label=\arabic*.]
-%           \item Station owner chọn một đánh giá.
-%           \item Chọn chức năng phản hồi đánh giá.
-%           \item Nhập nội dung phản hồi.
-%           \item Xác nhận gửi phản hồi.
-%           \item Hệ thống lưu phản hồi và hiển thị thành công.
-%         \end{enumerate}\\
-%         \hline
-%         \textbf{Alternative flows} &
-%         Không có\\
+  \item \textbf{Phản hồi đánh giá}
+    \begin{center}
+      \renewcommand{\arraystretch}{1.5}
+      \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+        \hline
+        \textbf{Use case ID} & UC--SO--RV--02 \\
+        \hline
+        \textbf{Use case name} & Phản hồi đánh giá \\
+        \hline
+        \textbf{Actor} & Chủ trạm sạc (Station Owner) \\
+        \hline
+        \textbf{Description} &
+        Station owner phản hồi lại đánh giá của người dùng nhằm giải thích, cảm ơn hoặc xử lý phản ánh. \\
+        \hline
+        \textbf{Preconditions} &
+        \begin{itemize}
+          \item Station owner đã đăng nhập.
+          \item Station owner đang xem chi tiết một đánh giá.
+        \end{itemize}\\
+        \hline
+        \textbf{Postconditions} &
+        Nội dung phản hồi được lưu và hiển thị dưới đánh giá tương ứng.\\
+        \hline
+        \textbf{Normal flows} &
+        \begin{enumerate}[label=\arabic*.]
+          \item Station owner chọn một đánh giá.
+          \item Chọn chức năng phản hồi đánh giá.
+          \item Nhập nội dung phản hồi.
+          \item Xác nhận gửi phản hồi.
+          \item Hệ thống lưu phản hồi và hiển thị thành công.
+        \end{enumerate}\\
+        \hline
+        \textbf{Alternative flows} &
+        Không có\\
 
-%         \hline
-%         \textbf{Exception} &
-%         \begin{itemize}
-%           \item 4a. Nội dung phản hồi rỗng hoặc vượt quá độ dài cho phép.
-%           \item 5a. Lỗi hệ thống khi lưu phản hồi.
-%         \end{itemize}\\
-%         \hline
-%         \caption{Use Case Phản hồi đánh giá}
-%         \label{tab:uc_so_rv_02}
-%       \end{longtable}
-%     \end{center}
-% \end{itemize}
+        \hline
+        \textbf{Exception} &
+        \begin{itemize}
+          \item 4a. Nội dung phản hồi rỗng hoặc vượt quá độ dài cho phép.
+          \item 5a. Lỗi hệ thống khi lưu phản hồi.
+        \end{itemize}\\
+        \hline
+        \caption{Use Case Phản hồi đánh giá}
+        \label{tab:uc_so_rv_02}
+      \end{longtable}
+    \end{center}
+\end{itemize}
 
 \end{enumerate}
 
@@ -2298,50 +2298,50 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
 \end{longtable}
 \end{itemize}
 \subsection{Mô hình hóa quy trình}
-% \subsubsection{Activity Diagram -- Người quản trị hệ thống phân chia doanh thu}
-% \begin{figure}[H]
-% \centering
-% \includegraphics[width=0.9\textwidth]{figures/activity/activity_revenue_division_setting.png}
-% \caption{Activity Diagram - Người quản trị hệ thống phân chia doanh thu}
-% \label{fig:activity_sa_1}
-% \end{figure}
-% \begin{enumerate}[font=\bfseries]
-% \item Bắt đầu: Super Admin truy cập hệ thống (đã đăng nhập).
-% \item Chọn chức năng: Người dùng chọn menu “Phân chia doanh thu”.
-% \item Tiếp theo, Super Admin chọn phạm vi áp dụng cho việc phân chia này (có thể là cho toàn hệ thống hoặc theo từng trạm).
-% \item Quyết định “Xem lịch sử?”
-% \begin{itemize}
-%   \item Nếu CÓ (Yes):
-%     \begin{itemize}
-%       \item Hệ thống sẽ hiển thị lịch sử cấu hình (bao gồm tỷ lệ, phí nền tảng...).
-%       \item Super Admin chọn kỳ muốn xem.
-%       \item Quyết định (Rollback): Super Admin tiếp tục có lựa chọn có rollback hay không.
-%         \begin{itemize}
-%           \item Nếu CÓ (Yes): Hệ thống thực hiện khôi phục cấu hình phân chia cũ và quy trình kết thúc.
-%           \item Nếu KHÔNG (No): Quy trình đi tiếp đến bước nhập tỷ lệ phân chia.
-%         \end{itemize}
-%     \end{itemize}
-%   \item Nếu KHÔNG (No) (không xem lịch sử): Quy trình đi thẳng đến bước nhập tỷ lệ phân chia.
-% \end{itemize}
-% \item Nhập cấu hình mới: (Đây là điểm hợp nhất của luồng "Không xem lịch sử" và "Không rollback").
-% \begin{itemize}
-%   \item Super Admin thực hiện nhập tỷ lệ phân chia mới.
-%   \item Super Admin xác nhận lưu cấu hình.
-% \end{itemize}
-% \item Quyết định (Xác thực): Hệ thống sẽ kiểm tra xem định dạng, tỷ lệ có hợp lệ không?
-% \begin{itemize}
-%   \item Nếu KHÔNG (No):
-%     \begin{itemize}
-%       \item Hệ thống yêu cầu điền lại thông tin.
-%       \item Quy trình lặp lại, quay về bước nhập tỷ lệ phân chia để Super Admin sửa lại.
-%     \end{itemize}
-%   \item Nếu CÓ (Yes):
-%     \begin{itemize}
-%       \item Hệ thống thực hiện lưu cấu hình mới.
-%       \item Quy trình kết thúc.
-%     \end{itemize}
-% \end{itemize}
-% \end{enumerate}
+\subsubsection{Activity Diagram -- Người quản trị hệ thống phân chia doanh thu}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/activity/activity_revenue_division_setting.png}
+\caption{Activity Diagram - Người quản trị hệ thống phân chia doanh thu}
+\label{fig:activity_sa_1}
+\end{figure}
+\begin{enumerate}[font=\bfseries]
+\item Bắt đầu: Super Admin truy cập hệ thống (đã đăng nhập).
+\item Chọn chức năng: Người dùng chọn menu “Phân chia doanh thu”.
+\item Tiếp theo, Super Admin chọn phạm vi áp dụng cho việc phân chia này (có thể là cho toàn hệ thống hoặc theo từng trạm).
+\item Quyết định “Xem lịch sử?”
+\begin{itemize}
+  \item Nếu CÓ (Yes):
+    \begin{itemize}
+      \item Hệ thống sẽ hiển thị lịch sử cấu hình (bao gồm tỷ lệ, phí nền tảng...).
+      \item Super Admin chọn kỳ muốn xem.
+      \item Quyết định (Rollback): Super Admin tiếp tục có lựa chọn có rollback hay không.
+        \begin{itemize}
+          \item Nếu CÓ (Yes): Hệ thống thực hiện khôi phục cấu hình phân chia cũ và quy trình kết thúc.
+          \item Nếu KHÔNG (No): Quy trình đi tiếp đến bước nhập tỷ lệ phân chia.
+        \end{itemize}
+    \end{itemize}
+  \item Nếu KHÔNG (No) (không xem lịch sử): Quy trình đi thẳng đến bước nhập tỷ lệ phân chia.
+\end{itemize}
+\item Nhập cấu hình mới: (Đây là điểm hợp nhất của luồng "Không xem lịch sử" và "Không rollback").
+\begin{itemize}
+  \item Super Admin thực hiện nhập tỷ lệ phân chia mới.
+  \item Super Admin xác nhận lưu cấu hình.
+\end{itemize}
+\item Quyết định (Xác thực): Hệ thống sẽ kiểm tra xem định dạng, tỷ lệ có hợp lệ không?
+\begin{itemize}
+  \item Nếu KHÔNG (No):
+    \begin{itemize}
+      \item Hệ thống yêu cầu điền lại thông tin.
+      \item Quy trình lặp lại, quay về bước nhập tỷ lệ phân chia để Super Admin sửa lại.
+    \end{itemize}
+  \item Nếu CÓ (Yes):
+    \begin{itemize}
+      \item Hệ thống thực hiện lưu cấu hình mới.
+      \item Quy trình kết thúc.
+    \end{itemize}
+\end{itemize}
+\end{enumerate}
 \subsubsection{Activity Diagram -- Chủ trạm nộp hồ sơ đăng kí}
 \begin{figure}[H]
 \centering
@@ -2365,38 +2365,38 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \item Nếu CÓ (Yes): Hệ thống gửi thông tin kích hoạt tài khoản qua email cho chủ trạm. Quy trình kết thúc.
 \end{itemize}
 \end{enumerate}
-% \subsubsection{Activity Diagram -- Xử lí khiếu nại}
-% \begin{figure}[H]
-% \centering
-% \includegraphics[width=0.9\textwidth]{figures/activity/activity_handle_complaint.png}
-% \caption{Activity Diagram -- Xử lí khiếu nại}
-% \label{fig:activity_sa_3}
-% \end{figure}
-% \begin{enumerate}[font=\bfseries]
-% \item Bắt đầu: Người dùng chọn trạm sạc muốn khiếu nại.
-% \item Gửi khiếu nại: Người dùng gửi khiếu nại. Hệ thống tiếp nhận và gửi thông báo có khiếu nại mới cho Super Admin/CS Staff.
-% \item Xét duyệt: Super Admin/CS Staff xem và xét duyệt khiếu nại.
-% \item Quyết định "Khiếu nại có hợp lệ không?":
-% \begin{itemize}
-%   \item Nếu KHÔNG (No):
-%     \begin{itemize}
-%       \item Admin/CS Staff ghi chú lý do từ chối (tùy chọn).
-%       \item Hệ thống cập nhật trạng thái khiếu nại thành "Đã từ chối".
-%     \end{itemize}
-%   \item Nếu CÓ (Yes):
-%     \begin{itemize}
-%       \item Admin/CS Staff nhập nội dung phản hồi và gửi phản hồi.
-%       \item Hệ thống lưu phản hồi.
-%       \item Quyết định "Cần xử lí trạm sạc?":
-%         \begin{itemize}
-%           \item Nếu CÓ (Yes): Admin/CS Staff khóa tài khoản hoặc trừ uy tín trạm, sau đó đánh dấu "Hoàn tất xử lý".
-%           \item Nếu KHÔNG (No): Admin/CS Staff đánh dấu "Hoàn tất xử lý".
-%         \end{itemize}
-%       \item Hệ thống cập nhật trạng thái khiếu nại thành "Đã xử lý".
-%     \end{itemize}
-% \end{itemize}
-% \item Kết thúc: Hệ thống gửi thông báo phản hồi đến người dùng. Người dùng nhận phản hồi từ Admin/CS Staff.
-% \end{enumerate}
+\subsubsection{Activity Diagram -- Xử lí khiếu nại}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/activity/activity_handle_complaint.png}
+\caption{Activity Diagram -- Xử lí khiếu nại}
+\label{fig:activity_sa_3}
+\end{figure}
+\begin{enumerate}[font=\bfseries]
+\item Bắt đầu: Người dùng chọn trạm sạc muốn khiếu nại.
+\item Gửi khiếu nại: Người dùng gửi khiếu nại. Hệ thống tiếp nhận và gửi thông báo có khiếu nại mới cho Super Admin/CS Staff.
+\item Xét duyệt: Super Admin/CS Staff xem và xét duyệt khiếu nại.
+\item Quyết định "Khiếu nại có hợp lệ không?":
+\begin{itemize}
+  \item Nếu KHÔNG (No):
+    \begin{itemize}
+      \item Admin/CS Staff ghi chú lý do từ chối (tùy chọn).
+      \item Hệ thống cập nhật trạng thái khiếu nại thành "Đã từ chối".
+    \end{itemize}
+  \item Nếu CÓ (Yes):
+    \begin{itemize}
+      \item Admin/CS Staff nhập nội dung phản hồi và gửi phản hồi.
+      \item Hệ thống lưu phản hồi.
+      \item Quyết định "Cần xử lí trạm sạc?":
+        \begin{itemize}
+          \item Nếu CÓ (Yes): Admin/CS Staff khóa tài khoản hoặc trừ uy tín trạm, sau đó đánh dấu "Hoàn tất xử lý".
+          \item Nếu KHÔNG (No): Admin/CS Staff đánh dấu "Hoàn tất xử lý".
+        \end{itemize}
+      \item Hệ thống cập nhật trạng thái khiếu nại thành "Đã xử lý".
+    \end{itemize}
+\end{itemize}
+\item Kết thúc: Hệ thống gửi thông báo phản hồi đến người dùng. Người dùng nhận phản hồi từ Admin/CS Staff.
+\end{enumerate}
 
 \subsubsection{Activity Diagram -- Người dùng thanh toán}
 \begin{figure}[H]
@@ -2419,10 +2419,13 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
       \item Quyết định "Giao dịch thành công?" (Cổng thanh toán):
         \begin{itemize}
           \item Nếu KHÔNG (No): Cổng thanh toán thông báo giao dịch thất bại.
-          \item Nếu CÓ (Yes): Cổng thanh toán thông báo giao dịch thành công.\newline
-          Hệ thống nhận webhook, xác thực và cập nhật trạng thái phiên giao dịch.\newline
-          Hệ thống lưu hóa đơn vào CSDL và gửi thông báo thành công cho người dùng.\newline
-          Người dùng nhận thông báo giao dịch thành công.
+          \item Nếu CÓ (Yes):
+            \begin{itemize}
+              \item Cổng thanh toán thông báo giao dịch thành công.
+              \item Hệ thống nhận webhook, xác thực và cập nhật trạng thái phiên giao dịch.
+              \item Hệ thống lưu hóa đơn vào CSDL và gửi thông báo thành công cho người dùng.
+              \item Người dùng nhận thông báo giao dịch thành công.
+            \end{itemize}
         \end{itemize}
     \end{itemize}
 
