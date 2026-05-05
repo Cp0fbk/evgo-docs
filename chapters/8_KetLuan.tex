@@ -1,36 +1,42 @@
 \section{Kết luận}
 
 \subsection{Kết quả đạt được}
-Sau quá trình nghiên cứu và thực hiện đồ án, nhóm đã xây dựng thành công hệ thống quản lý trạm sạc xe máy điện EVGo với các kết quả cụ thể như sau:
+Trải qua quá trình nghiên cứu và thực hiện đồ án tốt nghiệp, nhóm đã xây dựng và triển khai thành công hệ thống phần mềm quản lý trạm sạc xe máy điện EV-Go. Với trọng tâm ưu tiên hàng đầu là tối ưu hóa trải nghiệm của người dùng cuối, hệ thống đã đáp ứng được các mục tiêu đề ra. Các kết quả cụ thể bao gồm:
 
 \begin{itemize}
-    \item \textbf{Về mặt chức năng:}
+    \item \textbf{Về mặt nghiệp vụ và Trải nghiệm người dùng:}
     \begin{itemize}
-        \item Hoàn thiện các luồng nghiệp vụ cơ bản cho ba đối tượng người dùng: Người dùng (User), Quản trị viên (Super Admin) và Chủ trạm (Station Owner).
-        \item Tích hợp thành công tính năng đăng nhập nhanh (SSO) thông qua Google cho các tài khoản thuộc tổ chức \texttt{hcmut.edu.vn}.
-        \item Xây dựng quy trình đăng ký và xét duyệt chủ trạm trực tuyến, bao gồm cơ chế gửi email xác thực tự động.
+        \item Hoàn thiện toàn diện chu trình khép kín dành cho người lái xe điện trên ứng dụng di động: từ việc tìm kiếm trạm sạc trên bản đồ số, đặt chỗ, cho đến việc quản lý quá trình sạc và thanh toán tự động.
+        \item Triển khai thành công tính năng Đặt chỗ với cơ chế giải quyết xung đột bằng Redis Distributed Lock, đảm bảo tính chính xác tuyệt đối khi nhiều người dùng cùng truy cập vào một cổng sạc.
+        \item Tích hợp thành công giao thức OCPP 1.6J để giao tiếp với trạm sạc, kết hợp công nghệ Server-Sent Events nhằm truyền tải dữ liệu trạng thái sạc đến ứng dụng di động theo thời gian thực với độ trễ thấp.
+        \item Tích hợp tự động hóa luồng thanh toán điện tử thông qua ZaloPay (Deep link và Webhook) cùng hệ thống thông báo đẩy thời gian thực qua Expo Push API.
     \end{itemize}
     
-    \item \textbf{Về mặt kỹ thuật và giao diện:}
+    \item \textbf{Về mặt kỹ thuật và kiến trúc:}
     \begin{itemize}
-        \item Áp dụng thành công kiến trúc Modular Monolith, giúp hệ thống dễ dàng bảo trì và mở rộng.
-        \item Giao diện người dùng được thiết kế hiện đại với chế độ Dark Mode mặc định, đảm bảo tính thẩm mỹ và trải nghiệm người dùng tốt.
+        \item Áp dụng triệt để kiến trúc Modular Monolith với Spring Modulith, giúp hệ thống phân tách miền nghiệp vụ rõ ràng, tối ưu hóa quá trình phát triển độc lập và tạo nền tảng vững chắc để chuyển đổi sang Microservices trong tương lai.
+        \item Xây dựng ứng dụng di động đa nền tảng bằng React Native (Expo) với giao diện hiện đại, UX/UI được trau chuốt, xử lý mượt mà các trạng thái của dòng dữ liệu thời gian thực.
+        \item Triển khai thành công hệ thống Backend và Cơ sở dữ liệu lên môi trường điện toán đám mây, đảm bảo tính sẵn sàng cao để phục vụ thử nghiệm thực tế.
     \end{itemize}
 \end{itemize}
 
 \subsection{Hạn chế}
-Bên cạnh những kết quả đạt được, hệ thống vẫn còn tồn tại một số hạn chế nhất định:
+Mặc dù đã đạt được những kết quả đáng kể và hoàn thiện được ứng dụng di động chất lượng cao, hệ thống EV-Go vẫn còn một số hạn chế nhất định:
 
 \begin{itemize}
-    \item \textbf{Phạm vi người dùng:} Tính năng đăng nhập nhanh (SSO) hiện tại chỉ giới hạn cho các email thuộc tổ chức \texttt{hcmut.edu.vn} do các rào cản về chi phí khi mở rộng phạm vi xác thực cho người dùng phổ thông.
-    \item \textbf{Kết nối phần cứng:} Hệ thống chưa được kết nối với các trạm sạc vật lý thực tế. Việc giao tiếp hiện tại hoàn toàn dựa trên cơ chế giả lập thông qua giao thức OCPP, do đó chưa thể đánh giá được toàn diện các vấn đề phát sinh trong môi trường vận hành thực tế với phần cứng.
+    \item \textbf{Kết nối phần cứng:} Do giới hạn về nguồn lực và rào cản thiết bị, hệ thống chưa được kiểm thử trực tiếp với các trụ sạc vật lý. Các tương tác phần cứng hiện được thực thi thông qua hệ thống giả lập chuẩn OCPP (OCPP ChargePoint Simulator).
+    \item \textbf{Hệ thống Web Admin:} Do chủ đích dồn toàn lực vào kiến trúc Backend và trải nghiệm Ứng dụng Di động, phân hệ Web Admin dành cho chủ trạm và ban quản trị chỉ dừng ở mức cung cấp các chức năng quản lý cơ bản, chưa được đầu tư mạnh về giao diện và các báo cáo phân tích chuyên sâu.
+    \item \textbf{Giới hạn thanh toán thực tế:} Luồng thanh toán qua ZaloPay hiện chỉ hoạt động ở môi trường thử nghiệm (Sandbox). Việc đưa vào vận hành thực tế cần thêm các thủ tục pháp lý để xử lý dòng tiền thật và mở rộng thêm các cổng thanh toán khác.
+    \item \textbf{Khả năng chịu tải cực lớn:} Kiến trúc Modular Monolith đáp ứng xuất sắc yêu cầu về độ trễ và quản lý nghiệp vụ hiện tại. Tuy nhiên, nếu triển khai ở quy mô quốc gia với hàng triệu giao dịch/giây, hệ thống sẽ cần nâng cấp hạ tầng phân tán sâu hơn.
 \end{itemize}
 
-\subsection{Kế hoạch phát triển cho giai đoạn 2}
-Trong giai đoạn 2 của dự án (Đồ án tốt nghiệp), nhóm định hướng tập trung vào việc hoàn thiện và đưa sản phẩm đến gần hơn với thực tế triển khai. Các mục tiêu cụ thể bao gồm:
+\subsection{Hướng phát triển tương lai}
+Để hệ thống ngày càng hoàn thiện và có thể thương mại hóa, nhóm đề xuất các hướng phát triển tiếp theo như sau:
 
 \begin{itemize}
-    \item \textbf{Hoàn thiện toàn diện chức năng:} Tập trung hiện thực hóa đầy đủ tất cả các tính năng đã thiết kế, đảm bảo hệ thống vận hành trơn tru với đầy đủ các nghiệp vụ từ phía người dùng, chủ trạm đến quản trị viên.
-    \item \textbf{Triển khai hạ tầng thực tế (Deployment):} Thay vì chạy trên môi trường cục bộ (Localhost), hệ thống Server sẽ được triển khai lên hạ tầng điện toán đám mây sử dụng máy ảo trên nền tảng Microsoft Azure. Điều này giúp hệ thống có thể truy cập được từ Internet và sẵn sàng cho việc kiểm thử diện rộng.
-    \item \textbf{Phát hành ứng dụng di động:} Nếu điều kiện kinh phí cho phép, nhóm sẽ tiến hành đưa ứng dụng di động lên các kho ứng dụng chính thức là Google Play Store (CH Play) và Apple App Store. Việc này nhằm mục đích giúp người dùng cuối có thể tải về, cài đặt và trải nghiệm thực tế sản phẩm một cách dễ dàng nhất.
+    \item \textbf{Hoàn thiện hệ thống Web Admin:} Đầu tư phát triển mạnh mẽ giao diện quản trị Web, tích hợp các công cụ Dashboard phân tích dữ liệu chuyên sâu giúp chủ trạm tối ưu hóa doanh thu và quản lý thiết bị hiệu quả hơn.
+    \item \textbf{Nâng cấp giao thức OCPP:} Hỗ trợ song song chuẩn OCPP 2.0.1 nhằm tận dụng các tính năng bảo mật nâng cao và công nghệ thanh toán trơn tru như Plug \& Charge (ISO 15118).
+    \item \textbf{Tích hợp Trạm sạc vật lý \& IoT:} Triển khai thử nghiệm hệ thống với các trụ sạc thương mại thực tế. Bổ sung các mạng cảm biến IoT để tự động giám sát nhiệt độ, công suất và cảnh báo an toàn tại điểm sạc.
+    \item \textbf{Chuyển đổi sang Microservices:} Tiến hành bóc tách các module chịu tải lớn (đặc biệt là phân hệ WebSocket/SSE xử lý dữ liệu thời gian thực) thành các Microservices độc lập để dễ dàng scaling theo chiều ngang.
+    \item \textbf{Ứng dụng Trí tuệ nhân tạo (AI):} Khai thác dữ liệu lịch sử để áp dụng Machine Learning, qua đó dự đoán nhu cầu sạc theo khu vực, gợi ý thời điểm sạc có giá điện tối ưu, và tự động hóa điều hướng lộ trình trạm sạc cho tài xế.
 \end{itemize}

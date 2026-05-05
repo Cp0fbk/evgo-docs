@@ -1,7 +1,7 @@
 \section{Phân tích và thiết kế hệ thống}
-
 \subsection{Kiến trúc hệ thống}
 Dựa trên yêu cầu về tính linh hoạt, khả năng bảo trì và mở rộng trong tương lai, hệ thống EV-Go được thiết kế và triển khai theo kiến trúc Modular Monolith. Đây là sự kết hợp giữa tính đơn giản trong vận hành của kiến trúc Monolithic truyền thống và tính tách biệt, lỏng lẻo của kiến trúc Microservices. Để hiện thực hóa kiến trúc này một cách chặt chẽ, dự án sử dụng Spring Modulith làm nền tảng công nghệ chính.
+
 \begin{figure}[H]
   \centering
   \includegraphics[width=1\textwidth]{figures/evgo-Architecture.png}
@@ -2281,7 +2281,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
     \item Hệ thống truy xuất dữ liệu lịch sử từ cơ sở dữ liệu.
     \item Hệ thống hiển thị danh sách lịch sử gồm:
       \begin{itemize}
-        \item Thời gian bắt đầu – kết thúc.
+        \item Thời gian bắt đầu - kết thúc.
         \item Thời lượng sạc.
         \item Sạc đầy hoặc được dừng.
         \item Chi phí tạm tính.
@@ -2465,12 +2465,12 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
 \begin{enumerate}[font=\bfseries]
 \item Người dùng chọn thời gian và nhấn nút ``Xác nhận đặt chỗ'' trên ứng dụng (Mobile App).
 \item Ứng dụng gửi yêu cầu (API request) tạo đặt chỗ kèm theo thông tin xác thực (Authorization Header: Bearer Token) đến Backend.
-\item Backend nhận yêu cầu và truy vấn cơ sở dữ liệu để kiểm tra trạng thái của cổng sạc.
+\item \textbf{Khởi tạo Redis Lock}: Backend yêu cầu một distributed lock từ Redis sử dụng \texttt{portId} và \texttt{startTime} để ngăn chặn Race Condition (trường hợp nhiều yêu cầu đặt trùng một cổng cùng lúc).
 \item \textbf{Kiểm tra tính khả dụng}:
 \begin{itemize}
-  \item Nếu cổng sạc khả dụng: Cơ sở dữ liệu trả về trạng thái hợp lệ.
-  \item Backend tạo bản ghi đặt chỗ mới với trạng thái ``Chờ thanh toán'' (PENDING) vào cơ sở dữ liệu.
-  \item Cơ sở dữ liệu xác nhận việc tạo bản ghi thành công.
+  \item Nếu thiết lập lock thành công: Backend truy vấn cơ sở dữ liệu để xác nhận cổng sạc có khả dụng trong khung giờ yêu cầu hay không.
+  \item Nếu cổng sạc khả dụng: Backend tạo bản ghi đặt chỗ mới với trạng thái ``Chờ thanh toán'' (PENDING) vào cơ sở dữ liệu.
+  \item \textbf{Giải phóng Redis Lock} ngay sau khi trạng thái đặt chỗ được giữ chỗ thành công để tối ưu hiệu năng hệ thống.
 \end{itemize}
 \item Backend gửi yêu cầu tạo phiên thanh toán đến Cổng thanh toán.
 \item Cổng thanh toán trả về đường dẫn thanh toán (paymentUrl).
@@ -2489,11 +2489,54 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
 
 \textbf{Các luồng phụ:}
 \begin{enumerate}[font=\bfseries]
-\item \textbf{Cổng sạc không khả dụng:} Tại bước kiểm tra, nếu cơ sở dữ liệu trả về trạng thái ``Đang sử dụng'', Backend sẽ trả về lỗi xung đột và ứng dụng hiển thị thông báo ``Cổng sạc không khả dụng'' cho người dùng.
+\item \textbf{Cổng sạc không khả dụng / Khóa bị chiếm (Lock acquisition failed):} Tại bước kiểm tra, nếu cơ sở dữ liệu trả về trạng thái ``Đang sử dụng'' hoặc không lấy được Redis Lock do có giao dịch khác đang thực hiện, Backend sẽ trả về lỗi xung đột và ứng dụng hiển thị thông báo ``Cổng sạc hiện không khả dụng'' cho người dùng.
 \item \textbf{Thanh toán thất bại hoặc bị hủy:}
 \begin{itemize}
   \item Nếu người dùng hủy hoặc thanh toán thất bại, Cổng thanh toán chuyển hướng người dùng trở lại ứng dụng với trạng thái lỗi/hủy.
   \item Ứng dụng hiển thị thông báo ``Thanh toán thất bại''.
   \item Backend không nhận được Webhook xác nhận, bản ghi ``PENDING'' sẽ tự động hết hạn theo cơ chế timeout của hệ thống.
 \end{itemize}
+\end{enumerate}
+
+\subsubsection{Sequence Diagram -- Người dùng sạc xe và giám sát thời gian thực}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{figures/sq_user_booking.png}
+\caption{Sequence Diagram -- Người dùng sạc xe và giám sát thời gian thực qua SSE}
+\label{fig:sq_user_charging_sse}
+\end{figure}
+\noindent \textbf{Luồng chính của biểu đồ trình tự:}
+\begin{enumerate}[font=\bfseries]
+\item Người dùng quét mã QR tại trạm hoặc chọn cổng sạc từ ứng dụng và nhấn nút ``Bắt đầu sạc''.
+\item Ứng dụng gửi yêu cầu (API Request) \texttt{startCharging} đến Backend kèm thông tin định danh cổng sạc.
+\item Backend kiểm tra trạng thái cổng sạc trong cơ sở dữ liệu, đảm bảo cổng đang ở trạng thái \textit{AVAILABLE} hoặc \textit{RESERVED} hợp lệ theo đặt chỗ.
+\item \textbf{Khởi tạo phiên sạc}:
+\begin{itemize}
+    \item Backend tạo một bản ghi \texttt{ChargingSession} mới với trạng thái \textit{IN\_PROGRESS}.
+    \item Backend gửi bản tin \texttt{RemoteStartTransaction} qua giao thức WebSocket (OCPP) đến Trụ sạc (hoặc \textbf{OCPP CP Simulator}).
+\end{itemize}
+\item Trụ sạc/Simulator tiếp nhận lệnh, kiểm tra an toàn điện, bắt đầu cung cấp năng lượng và phản hồi \texttt{StartTransaction.req}.
+\item Backend lưu \texttt{transactionId} và xác nhận quá trình sạc bắt đầu thành công với ứng dụng di động.
+\item \textbf{Giám sát thời gian thực qua SSE}:
+\begin{itemize}
+    \item Ứng dụng di động thiết lập một kết nối Server-Sent Events (SSE) đến Backend để lắng nghe dữ liệu trạng thái.
+    \item Định kỳ, Simulator gửi bản tin \texttt{MeterValues.req} (bao gồm dòng điện, điện áp, năng lượng) về Backend.
+    \item Backend tiếp nhận dữ liệu, tính toán phần trăm pin, thời gian còn lại ($T_{remain}$) và chi phí hiện tại.
+    \item Backend chủ động đẩy (push) sự kiện chứa các chỉ số này qua kết nối SSE về ứng dụng di động.
+    \item Ứng dụng cập nhật giao diện hiển thị thời gian thực cho người dùng ngay lập tức.
+\end{itemize}
+\item \textbf{Kết thúc quá trình sạc}:
+\begin{itemize}
+    \item Người dùng nhấn ``Dừng sạc'' trên ứng dụng hoặc pin đã đầy 100\% (dựa trên thông tin từ Simulator).
+    \item Nếu người dùng chủ động dừng, Backend gửi lệnh \texttt{RemoteStopTransaction} đến Simulator.
+    \item Simulator ngừng cấp điện và gửi bản tin \texttt{StopTransaction.req} kèm theo tổng năng lượng đã tiêu thụ.
+    \item Backend nhận thông tin, tính toán tổng chi phí, cập nhật trạng thái phiên sạc thành \textit{COMPLETED} và chủ động ngắt kết nối SSE.
+    \item Ứng dụng chuyển hướng người dùng đến màn hình thanh toán hóa đơn.
+\end{itemize}
+\end{enumerate}
+
+\textbf{Các luồng phụ:}
+\begin{enumerate}[font=\bfseries]
+\item \textbf{Lỗi mất kết nối (Mất mạng tạm thời):} Nếu kết nối SSE bị ngắt, ứng dụng di động sẽ tự động thử kết nối lại (Auto-reconnect). Trong lúc đó, quá trình sạc ở Simulator vẫn diễn ra bình thường, và khi kết nối lại, hệ thống sẽ đẩy trạng thái mới nhất thay vì mất đi thông tin sạc.
+\item \textbf{Lỗi thiết bị (Phần cứng/Simulator):} Nếu Simulator giả lập lỗi quá dòng (Overcurrent) hoặc ngắt khẩn cấp, nó sẽ tự động ngắt điện và gửi \texttt{StatusNotification} (Faulted). Backend nhận được sẽ tự động kết thúc phiên sạc, tạo hóa đơn tới thời điểm lỗi và thông báo cho người dùng thông qua Push Notification hoặc ngắt SSE với mã lỗi đặc biệt.
 \end{enumerate}

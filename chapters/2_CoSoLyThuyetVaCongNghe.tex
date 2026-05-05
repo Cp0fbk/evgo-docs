@@ -3,56 +3,75 @@
 \subsection{Kiến thức nền tảng}
 
 \subsubsection{Giao thức OCPP (Open Charge Point Protocol)}
-Open Charge Point Protocol (OCPP) là giao thức truyền thông tiêu chuẩn mở, được công nhận toàn cầu, cho phép giao tiếp hai chiều giữa Trạm sạc xe điện (EVSE - Electric Vehicle Supply Equipment) và Hệ thống quản lý trung tâm (CSMS - Charging Station Management System).
+Open Charge Point Protocol (OCPP) là giao thức truyền thông tiêu chuẩn mở dành cho trạm sạc xe điện, được phát triển và duy trì bởi tổ chức Open Charge Alliance (OCA) \cite{ocpp_spec}. Đây là tiêu chuẩn thực tế được công nhận và áp dụng rộng rãi nhất trên thế giới, giúp định nghĩa ngôn ngữ giao tiếp chuẩn mực giữa thiết bị sạc và Hệ thống Quản lý Trạm sạc (Charging Station Management System - CSMS). Trong kiến trúc này, CSMS đóng vai trò là máy chủ trung tâm chịu trách nhiệm giám sát, điều khiển và thu thập dữ liệu từ hàng loạt các trạm sạc phân tán.
 
-Trong phạm vi đề tài, hệ thống áp dụng phiên bản OCPP 1.6J (JSON over WebSocket) với các đặc điểm lý thuyết sau:
+Trong phạm vi đồ án, hệ thống được triển khai dựa trên phiên bản OCPP 1.6J (JSON over WebSocket). Phiên bản này - đặc biệt là bản cập nhật Edition 2 (2017) \cite{ocpp_spec} - đã chuẩn hóa các đặc tả kỹ thuật, loại bỏ các điểm mơ hồ trong các phiên bản tiền nhiệm và bổ sung các hồ sơ tính năng (Feature Profiles) tối ưu cho việc quản lý vận hành. Hậu tố 'J' biểu thị việc sử dụng định dạng dữ liệu JSON truyền tải qua giao thức WebSocket, giúp tối ưu hóa hiệu suất và giảm độ trễ so với phương thức SOAP/HTTP truyền thống.
+
+\textbf{Kiến trúc và mô hình hoạt động:}
 \begin{itemize}
-    \item \textbf{Mô hình hướng sự kiện (Event-Driven):} Khác với mô hình Polling truyền thống, OCPP hoạt động dựa trên sự kiện. Trạm sạc sẽ chủ động gửi bản tin (Message) khi có thay đổi trạng thái (ví dụ: \textit{StatusNotification} khi súng sạc được cắm, \textit{MeterValues} định kỳ để báo chỉ số điện năng).
-    \item \textbf{Cơ chế quản lý phiên (Transaction Management):} Một phiên sạc được định nghĩa chặt chẽ bởi cặp bản tin \textit{StartTransaction} và \textit{StopTransaction}. Hệ thống phải đảm bảo tính nguyên tử (Atomicity) và toàn vẹn của cặp bản tin này để tính toán chi phí chính xác.
-    \item \textbf{Operations Profiles:} Các nhóm chức năng cốt lõi bao gồm:
+    \item \textbf{Thành phần cốt lõi:} Giao tiếp được thực hiện giữa hai thực thể là \textbf{Charge Point (CP)} - thiết bị phần cứng tại trạm sạc, và \textbf{Central System (CS)} hay CSMS. Trong phiên bản 1.6J, kết nối WebSocket luôn được chủ động khởi tạo từ phía Charge Point (CP $\rightarrow$ CS).
+    \item \textbf{Mô hình cổng sạc:} Mỗi Charge Point được chia thành nhiều cổng sạc, phân biệt qua mã định danh \texttt{connectorId} (từ $1$ trở lên). Mã \texttt{connectorId = 0} là cổng ảo đặc biệt, đại diện cho toàn bộ hệ thống phần cứng của trạm sạc (Sử dụng trong các bản tin như thay đổi cấu hình toàn cục).
+    \item \textbf{Cấu trúc bản tin:} OCPP 1.6J áp dụng cơ chế gọi hàm từ xa (Remote Procedure Call - RPC) hai chiều. Cấu trúc JSON cơ bản gồm ba loại bản tin:
     \begin{itemize}
-        \item \textit{Core Profile:} Khởi động, dừng sạc, xác thực thẻ RFID, và gửi trạng thái.
-        \item \textit{Firmware Management:} Cập nhật phần mềm trạm sạc từ xa.
-        \item \textit{Remote Trigger:} Cho phép Server chủ động yêu cầu trạm sạc gửi dữ liệu mà không cần đợi chu kỳ định sẵn.
+        \item \textbf{CALL (Yêu cầu):} \texttt{[2, "MessageId", "Action", \{Payload\}]}
+        \item \textbf{CALLRESULT (Phản hồi thành công):} \texttt{[3, "MessageId", \{Payload\}]}
+        \item \textbf{CALLERROR (Phản hồi lỗi):} \texttt{[4, "MessageId", "ErrorCode",} \\
+        \texttt{"ErrorDescription", \{Details\}]}    
     \end{itemize}
 \end{itemize}
 
-% \subsubsection{Mô phỏng tiến trình sạc}
-% Do hạn chế về phần cứng vật lý trong quá trình phát triển, việc xây dựng mô hình mô phỏng dựa trên hành vi vật lý của pin là cần thiết.
-% Mô hình toán học tập trung vào sự biến thiên của SoC (State of Charge):
-% \begin{itemize}
-%     \item \textbf{Hàm sạc phi tuyến tính:} Công suất sạc $P(t)$ không hằng số mà phụ thuộc vào trạng thái hiện tại của pin, tuân theo mô hình CC-CV (Constant Current - Constant Voltage).
-%     \item \textbf{Công thức ước lượng:} Thời gian còn lại ($T_{remain}$) được tính toán dựa trên dung lượng pin $C_{total}$, mức năng lượng hiện tại $E_{current}$ và công suất sạc tức thời $P_{inst}$:
-%     $$ T_{remain} = \frac{C_{total} - E_{current}}{P_{inst} \times \eta} $$
-%     Trong đó $\eta$ là hiệu suất chuyển đổi năng lượng (Charging Efficiency).
-% \end{itemize}
+\textbf{Các luồng bản tin trọng tâm áp dụng trong hệ thống:}
+Hệ thống EV-Go tập trung khai thác các bản tin thuộc \textbf{Core Profile} để quản lý toàn diện vòng đời của một phiên sạc. Các bản tin này được chia thành ba nhóm nghiệp vụ chính:
+
+\begin{enumerate}
+    \item Nhóm Khởi tạo và Duy trì kết nối:
+    \begin{itemize}
+        \item \textbf{BootNotification (CP $\rightarrow$ CS):} Gửi ngay khi trạm sạc vừa khởi động nhằm xác thực thiết bị với CSMS. Bản tin chứa thông tin nhà sản xuất, tên mô hình và phiên bản firmware. CSMS phản hồi trạng thái \texttt{Accepted} kèm theo thời gian chuẩn của máy chủ để trạm sạc đồng bộ đồng hồ nội bộ.
+        \item \textbf{Heartbeat (CP $\rightarrow$ CS):} Tín hiệu "nhịp tim" gửi định kỳ để CSMS xác nhận trạm sạc vẫn đang trong trạng thái trực tuyến.
+    \end{itemize}
+    
+    \item Nhóm Quản lý trạng thái:
+    \begin{itemize}
+        \item \textbf{StatusNotification (CP $\rightarrow$ CS):} Cập nhật trạng thái tức thời của từng cổng sạc. Các trạng thái phổ biến trong hệ thống bao gồm: \texttt{Available} (Sẵn sàng), \texttt{Preparing} (Cáp đã cắm, chờ lệnh sạc), \texttt{Charging} (Đang nạp điện), \texttt{Finishing} (Đã ngắt điện, chờ rút cáp), và \texttt{Faulted} (Gặp sự cố phần cứng).
+    \end{itemize}
+    
+    \item Nhóm Điều khiển và Đo lường phiên sạc:
+    \begin{itemize}
+        \item \textbf{RemoteStartTransaction / RemoteStopTransaction (CS $\rightarrow$ CP):} Máy chủ CSMS chủ động gửi lệnh xuống trạm sạc để yêu cầu bắt đầu hoặc chấm dứt luồng điện. Đây là cơ sở để hiện thực hóa tính năng điều khiển trạm sạc trực tiếp qua ứng dụng di động mà không cần dùng thẻ từ (RFID).
+        \item \textbf{StartTransaction / StopTransaction (CP $\rightarrow$ CS):} Trạm sạc phản hồi lại CSMS để chính thức đánh dấu mốc thời gian bắt đầu hoặc kết thúc phiên sạc. Trạm sạc đính kèm chỉ số điện kế (\texttt{meterStart}, \texttt{meterStop}) làm căn cứ để CSMS tính toán và xuất hóa đơn thanh toán xác thực.
+        \item \textbf{MeterValues (CP $\rightarrow$ CS):} Bản tin đo lường được trạm sạc đẩy liên tục định kỳ trong suốt quá trình sạc. Dữ liệu bao gồm các chỉ số vận hành tức thời như: công suất tiêu thụ (kW), cường độ dòng điện (A) và trạng thái mức pin (SoC). Hệ thống trung tâm (CSMS) sẽ phân tích, sau đó điều phối và đẩy các thông số này đến ứng dụng người dùng theo thời gian thực thông qua cơ chế Server-Sent Events (SSE).
+    \end{itemize}
+\end{enumerate}
+
 \subsubsection{Mô phỏng tiến trình sạc}
-Do hạn chế về phần cứng vật lý trong quá trình phát triển, việc xây dựng mô hình mô phỏng dựa trên hành vi vật lý của pin là cần thiết để kiểm thử logic tính toán.
-Mô hình toán học tập trung vào sự biến thiên của trạng thái sạc SoC (State of Charge):
+Do hạn chế về phần cứng vật lý trong quá trình phát triển, việc tích hợp công cụ mô phỏng là giải pháp thiết yếu để kiểm thử logic tính toán và giao tiếp của hệ thống. Đồ án sử dụng \textbf{OCPP ChargePoint Simulator} \cite{ocpp_spec} kết hợp với mô hình toán học về hành vi vật lý của pin để giả lập quá trình sạc một cách thực tế nhất.
 
 \begin{itemize}
-    \item \textbf{Chu trình sạc CC-CV:} Quá trình sạc pin Li-ion được chia thành hai giai đoạn chính:
+    \item \textbf{OCPP ChargePoint Simulator:} Đây là một website giả lập đóng vai trò như một trạm sạc thực tế (Charge Point). Công cụ này cho phép thiết lập kết nối WebSocket với CSMS và tự động hoặc thủ công gửi/nhận các bản tin OCPP. Việc sử dụng Simulator giúp xác minh tính chính xác của Backend trong việc xử lý các lệnh điều khiển, cũng như khả năng đồng bộ trạng thái sạc theo thời gian thực mà không cần kết nối với phần cứng đắt tiền.
+    
+    \item \textbf{Chu trình sạc CC-CV (Constant Current - Constant Voltage):} Quá trình sạc pin Li-ion trong thực tế, vốn được Simulator giả lập, chia thành hai giai đoạn chính:
     \begin{itemize}
         \item \textit{Constant Current (CC):} Dòng điện sạc được giữ cố định, điện áp pin tăng dần đến ngưỡng cắt ($V_{cut-off}$). Đây là giai đoạn sạc nhanh, công suất $P(t)$ tăng tuyến tính.
         \item \textit{Constant Voltage (CV):} Điện áp được giữ cố định tại $V_{cut-off}$, dòng điện giảm dần theo hàm mũ cho đến khi pin đầy. Công suất $P(t)$ giảm dần.
     \end{itemize}
     
-    \item \textbf{Công thức ước lượng thời gian:} Thời gian sạc còn lại dự kiến ($T_{\text{remain}}$) tại thời điểm $t$ được ước lượng dựa trên tổng năng lượng pin ($E_{\text{max}}$), mức năng lượng hiện tại ($E_{\text{current}}$) và công suất sạc tức thời ($P_{\text{inst}}$):
+    \item \textbf{Công thức ước lượng thời gian:} Dựa vào các chỉ số do Simulator liên tục gửi qua \textit{MeterValues}, thời gian sạc còn lại dự kiến ($T_{\text{remain}}$) tại thời điểm $t$ được hệ thống ước lượng theo công thức:
     
     $$ T_{\text{remain}} \approx \frac{E_{\text{max}} - E_{\text{current}}}{P_{\text{inst}}(t) \times \eta} $$
     
     Trong đó:
     \begin{itemize}
         \item $E_{\text{max}}$: Tổng năng lượng thiết kế của pin (Wh).
+        \item $E_{\text{current}}$: Năng lượng hiện tại (Wh) tính toán từ mức SoC.
         \item $\eta$: Hiệu suất chuyển đổi của bộ sạc (Charging Efficiency), thường lấy $\eta \approx 0.85 - 0.95$.
-        \item $P_{\text{inst}}(t)$: Công suất sạc đo được tại thời điểm $t$.
+        \item $P_{\text{inst}}(t)$: Công suất sạc tức thời do Simulator báo cáo tại thời điểm $t$.
     \end{itemize}
 \end{itemize}
 
-\subsection{Các công nghệ sử dụng}
+\subsection{Công nghệ sử dụng}
 
 \subsubsection{Spring Boot Framework \& Spring Modulith}
-Spring Boot được lựa chọn làm nền tảng cốt lõi để xây dựng các dịch vụ phía server (backend), kết hợp với kiến trúc Modular Monolith thông qua Spring Modulith.
+Spring Boot được lựa chọn làm nền tảng cốt lõi để xây dựng các dịch vụ phía server, kết hợp với kiến trúc Modular Monolith thông qua Spring Modulith \cite{spring_modulith}.
 
 \textbf{Cơ sở lựa chọn:}
 Đặc thù của hệ thống quản lý trạm sạc là phải duy trì kết nối song công với số lượng lớn thiết bị thông qua giao thức WebSocket để thu thập dữ liệu đo lường theo thời gian thực. Java cung cấp mô hình đa luồng ổn định và kiểu dữ liệu \texttt{BigDecimal}, giúp loại bỏ sai số trong các thuật toán tính toán chi phí. Kiến trúc Modular Monolith được lựa chọn thay vì Microservices truyền thống trong giai đoạn đầu nhằm giảm thiểu độ phức tạp vận hành mà vẫn đảm bảo tính mạch lạc của mã nguồn.
@@ -60,10 +79,10 @@ Spring Boot được lựa chọn làm nền tảng cốt lõi để xây dựng
 \textbf{Phân tích kỹ thuật:}
 Việc sử dụng Spring Modulith cho phép tổ chức hệ thống thành các module nghiệp vụ logic độc lập (như User, Station, Booking, Payment) trong cùng một đơn vị triển khai. Công nghệ này hỗ trợ kiểm soát ranh giới module ngay tại thời điểm biên dịch, ngăn chặn các tham chiếu vòng và đảm bảo các module chỉ giao tiếp thông qua các API công khai được định nghĩa rõ ràng. Điều này mang lại sự cân bằng tối ưu: tận hưởng sự đơn giản trong triển khai của Monolith đồng thời duy trì tính tách biệt cao để sẵn sàng chuyển đổi sang Microservices khi quy mô tăng trưởng.
 
-Bên cạnh đó, việc áp dụng kiến trúc Inversion of Control (IoC) và Dependency Injection (DI) giúp tăng cường tính module hóa. Hệ sinh thái Spring cung cấp các giải pháp an ninh mạnh mẽ với Spring Security, hỗ trợ cơ chế xác thực không trạng thái thông qua JWT và tích hợp đăng nhập mạng xã hội với chuẩn OAuth2, đảm bảo an toàn cho dữ liệu người dùng.
+Bên cạnh đó, việc áp dụng kiến trúc Inversion of Control (IoC) và Dependency Injection (DI) giúp tăng cường tính module hóa. Hệ sinh thái Spring cung cấp các giải pháp an ninh mạnh mẽ với Spring Security, hỗ trợ cơ chế xác thực không trạng thái thông qua JWT và tích hợp đăng nhập mạng xã hội với chuẩn OAuth2 \cite{oauth2_duende}, đảm bảo an toàn cho dữ liệu người dùng.
 
 \subsubsection{Hệ sinh thái React (ReactJS \& React Native)}
-Để thống nhất trải nghiệm người dùng trên đa nền tảng, hệ thống sử dụng hệ sinh thái React của Meta cho cả Web Admin và Ứng dụng di động.
+Để thống nhất trải nghiệm người dùng trên đa nền tảng, hệ thống sử dụng hệ sinh thái React của Meta cho cả Web Admin và Ứng dụng di động \cite{react_native_docs}.
 
 \textbf{Cơ sở lựa chọn:}
 Yêu cầu quan trọng của dự án là khả năng phản hồi giao diện theo thời gian thực để hiển thị chính xác trạng thái thiết bị (như mức pin SoC, công suất sạc) với độ trễ thấp nhất. React sử dụng cơ chế Virtual DOM giúp cập nhật giao diện hiệu quả mà không cần tải lại toàn bộ trang. Chiến lược sử dụng chung công nghệ lõi giúp đồng nhất logic nghiệp vụ và quy trình phát triển giữa nền tảng Web và Mobile.
@@ -75,27 +94,27 @@ Kiến trúc dựa trên thành phần (Component-based) cho phép xây dựng h
 PostgreSQL được lựa chọn làm hệ quản trị cơ sở dữ liệu quan hệ chính của hệ thống nhờ vào khả năng mở rộng và hỗ trợ đa dạng các kiểu dữ liệu phức tạp.
 
 \textbf{Cơ sở lựa chọn:}
-Hệ thống EVGo yêu cầu xử lý dữ liệu không gian địa lý để hỗ trợ tính năng tìm kiếm và dẫn đường đến trạm sạc. PostgreSQL với phần mở rộng PostGIS cung cấp khả năng lưu trữ và truy vấn không gian mạnh mẽ, vượt trội so với các giải pháp RDBMS khác. Bên cạnh đó, khả năng hỗ trợ kiểu dữ liệu JSONB cho phép lưu trữ linh hoạt cấu hình đặc thù của nhiều dòng trạm sạc khác nhau mà không phá vỡ cấu trúc bảng cố định.
+Hệ thống EVGo yêu cầu xử lý dữ liệu không gian địa lý để hỗ trợ tính năng tìm kiếm và dẫn đường đến trạm sạc. PostgreSQL với phần mở rộng PostGIS \cite{postgresql_postgis} cung cấp khả năng lưu trữ và truy vấn không gian mạnh mẽ, vượt trội so với các giải pháp RDBMS khác. Bên cạnh đó, khả năng hỗ trợ kiểu dữ liệu JSONB cho phép lưu trữ linh hoạt cấu hình đặc thù của nhiều dòng trạm sạc khác nhau mà không phá vỡ cấu trúc bảng cố định.
 
 \textbf{Phân tích kỹ thuật:}
 Tính tuân thủ chuẩn ACID của PostgreSQL đảm bảo tính toàn vẹn tuyệt đối cho các giao dịch nạp tiền và thanh toán phiên sạc. Các cơ chế đánh chỉ mục nâng cao (như GiST, GIN) tối ưu hóa tốc độ truy vấn trên dữ liệu bản đồ. Mặc dù tốc độ ghi dữ liệu log thô có thể thấp hơn so với các cơ sở dữ liệu NoSQL chuyên dụng, nhưng sự cân bằng giữa tính nhất quán, độ tin cậy và khả năng truy vấn phức tạp làm cho PostgreSQL trở thành lựa chọn phù hợp nhất cho dữ liệu nghiệp vụ cốt lõi.
 
 \subsubsection{Redis}
-Redis đóng vai trò là lớp đệm dữ liệu (Caching) và quản lý phiên làm việc tập trung.
+Trong kiến trúc hệ thống, Redis \cite{redis_docs} được triển khai như một lớp lưu trữ trên bộ nhớ tạm, đóng vai trò tối ưu hóa tốc độ truy xuất qua cơ chế Caching, quản lý phiên làm việc tập trung và cung cấp cơ chế khóa phân tán (Distributed Lock) để kiểm soát tương tranh hiệu quả.
 
 \textbf{Cơ sở lựa chọn:}
-Trong hệ thống quản lý trạm sạc, các truy vấn liên quan đến trạng thái thời gian thực từ phía ứng dụng người dùng thường có tần suất rất cao và đòi hỏi phản hồi tức thời. Việc truy vấn trực tiếp vào cơ sở dữ liệu cho mọi yêu cầu sẽ gây ra hiện tượng tắc nghẽn hiệu năng (I/O Bottleneck) tại tầng lưu trữ thứ cấp. Do đó, việc triển khai Redis với cơ chế lưu trữ trên bộ nhớ trong (In-memory Storage) là giải pháp thiết yếu, giúp cung cấp tốc độ truy xuất ở mức mili-giây, đảm bảo độ trễ thấp và tối ưu hóa khả năng đáp ứng của hệ thống.
+Trong hệ thống quản lý trạm sạc, các truy vấn liên quan đến trạng thái thời gian thực từ phía ứng dụng người dùng thường có tần suất rất cao và đòi hỏi phản hồi tức thời. Việc truy vấn trực tiếp vào cơ sở dữ liệu cho mọi yêu cầu sẽ gây ra hiện tượng tắc nghẽn hiệu năng (I/O Bottleneck). Do đó, việc triển khai Redis với cơ chế lưu trữ trên bộ nhớ trong (In-memory Storage) là giải pháp thiết yếu, giúp cung cấp tốc độ truy xuất ở mức mili-giây, đảm bảo độ trễ thấp và tăng cường khả năng mở rộng của hệ thống.
 
 \textbf{Phân tích kỹ thuật:}
 Hệ thống sử dụng Redis cho các mục đích chính sau:
 \begin{itemize}
-    \item \textbf{Caching:} Lưu trữ tạm thời các dữ liệu ít biến động như danh sách tiện ích trạm sạc, cấu hình giá, giúp giảm tải cho PostgreSQL.
-    \item \textbf{Token Management:} Quản lý danh sách các token cần thu hồi (Blacklist) để hỗ trợ tính năng đăng xuất an toàn và vô hiệu hóa phiên làm việc ngay lập tức khi cần thiết.
-    \item \textbf{Distributed Locking:} Cung cấp cơ chế khóa phân tán để đảm bảo tính toàn vẹn dữ liệu khi có nhiều người dùng cùng thao tác đặt chỗ tại một thời điểm, ngăn chặn tình trạng xung đột.
+    \item \textbf{Caching:} Lưu trữ tạm thời các dữ liệu ít biến động như danh sách tiện ích trạm sạc, cấu hình giá, giúp giảm tải đáng kể cho PostgreSQL.
+    \item \textbf{Token Management:} Quản lý danh sách các token cần thu hồi (Blacklist) để hỗ trợ tính năng đăng xuất an toàn và vô hiệu hóa các phiên làm việc ngay lập tức khi cần thiết.
+    \item \textbf{Distributed Locking:} Đây là kỹ thuật quan trọng để giải quyết bài toán xung đột dữ liệu (Race Condition). Khi nhiều người dùng cùng lúc yêu cầu đặt chỗ một cổng sạc, hệ thống áp dụng cơ chế khóa phân tán của Redis để đồng bộ hóa các luồng xử lý. Khóa đảm bảo chỉ có một luồng giao dịch được phép cập nhật trạng thái cổng sạc thành công, trong khi các yêu cầu đến sau sẽ bị từ chối ngay lập tức. Điều này ngăn chặn triệt để tình trạng đặt trùng lịch và phòng chống các hành vi spam API liên tục.
 \end{itemize}
 
 \subsubsection{Giao thức WebSocket}
-Giao thức WebSocket được sử dụng để thiết lập kênh giao tiếp hai chiều giữa máy chủ và các trạm sạc, đóng vai trò nền tảng cho việc triển khai giao thức OCPP.
+Giao thức WebSocket \cite{mdn_websocket_client} được sử dụng để thiết lập kênh giao tiếp hai chiều giữa máy chủ và các trạm sạc, đóng vai trò nền tảng cho việc triển khai giao thức OCPP.
 
 \textbf{Cơ sở lựa chọn:}
 Khác với giao thức HTTP truyền thống, chuẩn OCPP yêu cầu Server phải có khả năng chủ động gửi lệnh điều khiển xuống trạm sạc (ví dụ: khởi động sạc từ xa, cập nhật firmware) bất kỳ lúc nào. WebSocket giải quyết vấn đề này bằng cách duy trì một kết nối TCP liên tục, cho phép trao đổi dữ liệu tức thời.
@@ -103,8 +122,17 @@ Khác với giao thức HTTP truyền thống, chuẩn OCPP yêu cầu Server ph
 \textbf{Phân tích kỹ thuật:}
 Việc sử dụng WebSocket giúp giảm thiểu độ trễ mạng bằng cách loại bỏ quá trình bắt tay TCP lặp lại và giảm kích thước header của gói tin, giúp tiết kiệm băng thông viễn thông cho các trạm sạc. Thách thức chính khi triển khai là việc quản lý trạng thái kết nối trên quy mô lớn, đòi hỏi các giải pháp cân bằng tải thông minh để duy trì tính sẵn sàng của hệ thống.
 
+\subsubsection{Giao thức Server-Sent Events (SSE)}
+Server-Sent Events (SSE) \cite{sse_mdn} là một công nghệ truyền tải luồng dữ liệu một chiều (Server-to-Client) qua giao thức HTTP tiêu chuẩn, được ứng dụng để giám sát tiến trình sạc theo thời gian thực.
+
+\textbf{Cơ sở lựa chọn:}
+Mặc dù WebSocket rất phù hợp cho giao tiếp hai chiều giữa trạm sạc và máy chủ, SSE lại là giải pháp tối ưu hơn để truyền tải liên tục các chỉ số trạng thái sạc (SoC, dòng điện, công suất) từ máy chủ đến ứng dụng di động của người dùng. SSE hoạt động qua giao thức HTTP/HTTPS truyền thống, dễ dàng đi qua các tường lửa (Firewall) và proxy, tự động khôi phục kết nối (Auto-reconnect) khi tín hiệu mạng chập chờn, và tiêu thụ ít tài nguyên thiết bị hơn so với việc duy trì thêm một kết nối WebSocket thứ hai trên điện thoại.
+
+\textbf{Phân tích kỹ thuật:}
+Khi một phiên sạc đang diễn ra, trạm sạc liên tục gửi bản tin \texttt{MeterValues} về Backend (CSMS) thông qua WebSocket. Backend sử dụng Spring WebFlux kết hợp cùng \texttt{SseEmitter} để tiếp nhận và phát trực tiếp (stream) các sự kiện dữ liệu này xuống ứng dụng React Native đang lắng nghe. Kiến trúc này giúp loại bỏ hoàn toàn cơ chế Polling (gọi API định kỳ), giải quyết triệt để độ trễ dữ liệu và tối ưu hóa hiệu năng tổng thể của ứng dụng di động.
+
 \subsubsection{Công nghệ Container hóa (Docker)}
-Docker được sử dụng để ảo hóa môi trường vận hành, đảm bảo tính nhất quán trong quy trình phát triển và triển khai phần mềm (CI/CD).
+Docker \cite{docker_docs} được sử dụng để ảo hóa môi trường vận hành, đảm bảo tính nhất quán trong quy trình phát triển và triển khai phần mềm (CI/CD).
 
 \textbf{Cơ sở lựa chọn:}
 Hệ thống EVGo bao gồm nhiều thành phần công nghệ khác nhau (Java, NodeJS, Database). Docker giúp đóng gói các ứng dụng và thư viện phụ thuộc vào các container độc lập, loại bỏ vấn đề xung đột môi trường và đơn giản hóa quy trình cài đặt.
@@ -113,9 +141,11 @@ Hệ thống EVGo bao gồm nhiều thành phần công nghệ khác nhau (Java,
 Kiến trúc container hỗ trợ mạnh mẽ cho việc triển khai microservices, cho phép mỗi dịch vụ được mở rộng độc lập theo nhu cầu tải. Việc khởi động container nhanh chóng giúp tối ưu hóa thời gian triển khai và phục hồi hệ thống.
 
 \subsubsection{Các dịch vụ tích hợp}
-Hệ thống kết nối với các dịch vụ bên thứ ba để tối ưu hóa trải nghiệm và mở rộng tính năng:
+Hệ thống EV-Go kết nối với các dịch vụ bên thứ ba để mở rộng chức năng và nâng cao trải nghiệm người dùng.
+
 \begin{itemize}
-    \item \textbf{Cổng thanh toán MoMo:} Giải pháp thanh toán điện tử phổ biến nhất tại Việt Nam, cho phép người dùng nạp tiền và thanh toán phí sạc nhanh chóng qua ví điện tử, đảm bảo tính tiện lợi và an toàn giao dịch.
-    \item \textbf{Lưu trữ đám mây Cloudinary:} Dịch vụ quản lý media dùng để lưu trữ và tối ưu hóa hình ảnh (như avatar, ảnh trạm sạc), giúp giảm tải băng thông cho server chính và tăng tốc độ tải trang.
-    \item \textbf{Google Maps Platform:} Nền tảng bản đồ số cung cấp dịch vụ định vị và dẫn đường chính xác. Việc tích hợp Google Maps giúp giải quyết nỗi lo hết pin (Range Anxiety) thông qua tính năng tìm kiếm trạm sạc gần nhất và ước lượng quãng đường di chuyển dựa trên tình hình giao thông thực tế.
+    \item \textbf{ZaloPay:} Cổng thanh toán điện tử phổ biến tại Việt Nam \cite{zalopay_docs}, được tích hợp qua cơ chế \textit{Deep Link} (chuyển hướng ứng dụng) và \textit{Webhook/IPN} (thông báo trạng thái tự động). Đây là lõi xử lý các giao dịch thanh toán trực tuyến cho chi phí đặt chỗ và chi phí sạc thực tế, hỗ trợ đối soát và kiểm tra công nợ an toàn.
+    \item \textbf{Expo Push Notifications API:} Hệ thống trung gian điều phối và gửi thông báo đẩy (Push Notifications) \cite{expo_push} thời gian thực đến thiết bị di động của người dùng (trên cả iOS và Android). Công nghệ này đóng vai trò quan trọng trong việc cảnh báo người dùng về các sự kiện nghiệp vụ như: cổng sạc sắp bị hủy do người dùng đến trễ, tiến trình sạc đã hoàn tất, hoặc sự cố lỗi gián đoạn.
+    \item \textbf{Cloudinary:} Dịch vụ lưu trữ ảnh và nội dung đa phương tiện trên đám mây. Việc sử dụng Cloudinary giúp giảm tải băng thông cho máy chủ Backend, đồng thời tối ưu tốc độ tải trang thông qua mạng lưới CDN (Content Delivery Network).
+    \item \textbf{Google Maps Platform:} Cung cấp nền tảng bản đồ số cốt lõi, hỗ trợ người dùng tìm kiếm trực quan vị trí các trạm sạc xung quanh, tính toán khoảng cách và gợi ý định tuyến lộ trình di chuyển tối ưu.
 \end{itemize}
