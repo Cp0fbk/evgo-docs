@@ -40,7 +40,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textheight, angle=90, keepaspectratio]{figures/evgo-ERD.png}
+  \includegraphics[width=1\textwidth, keepaspectratio]{figures/evgo-ERD.png}
   \caption{Sơ đồ thực thể mối quan hệ (ERD) của hệ thống EV-Go}
   \label{fig:evgo_erd}
 \end{figure}Dựa trên sơ đồ, dữ liệu của hệ thống được tổ chức thành các nhóm thực thể chính như sau:
@@ -48,33 +48,36 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
 \begin{itemize}
   \item \textbf{Nhóm thực thể Người dùng và Quản trị}
     \begin{itemize}
-      \item \textbf{User}: Lưu trữ thông tin định danh và cá nhân của người dùng tham gia hệ thống. Các thuộc tính quan trọng bao gồm \textit{user\_id} (khóa chính), \textit{email}, \textit{password} (mật khẩu đã mã hóa), \textit{full\_name}, \textit{phone\_number}, và \textit{status} (trạng thái hoạt động). Ngoài ra, hệ thống hỗ trợ xác thực qua bên thứ ba thông qua các trường \textit{auth\_provider} và \textit{provider\_id}.
-      \item \textbf{Role}: Định nghĩa các vai trò trong hệ thống (ví dụ: Admin, Station Owner, Customer). Mối quan hệ giữa \textit{User} và \textit{Role} là quan hệ nhiều-nhiều (N-M), cho phép một người dùng có thể đảm nhận nhiều vai trò khác nhau.
-      \item \textbf{StationOwnerProfile}: Thực thể mở rộng dành cho người dùng có vai trò chủ trạm, lưu trữ thông tin pháp lý và kinh doanh như \textit{business\_name}, \textit{tax\_code} (mã số thuế) và thông tin liên hệ doanh nghiệp. Mối quan hệ giữa \textit{User} và \textit{StationOwnerProfile} là một-một (1-1).
-      \item \textbf{Vehicle}: Quản lý danh sách phương tiện của người dùng. Mỗi phương tiện được gắn với một người dùng (\textit{user\_id}) và chứa thông tin về \textit{model\_name}, \textit{brand}, và \textit{connector\_type} (loại cổng sạc tương thích).
+      \item \textbf{User}: Lưu trữ thông tin định danh và cá nhân của người dùng tham gia hệ thống. Các thuộc tính quan trọng bao gồm \textit{user\_id} (khóa chính), \textit{email}, \textit{password} (mật khẩu đã mã hóa), \textit{full\_name}, \textit{phone\_number}, \textit{birthday}, \textit{gender}, \textit{avatar\_url} và \textit{status} (trạng thái hoạt động). Ngoài ra, hệ thống hỗ trợ xác thực qua bên thứ ba thông qua các trường \textit{auth\_provider} và \textit{provider\_id}.
+      \item \textbf{Role}: Định nghĩa các vai trò trong hệ thống (ví dụ: Admin, Station Owner, Customer). Mối quan hệ giữa \textit{User} và \textit{Role} là quan hệ N-M, cho phép một người dùng có thể đảm nhận nhiều vai trò khác nhau.
+      \item \textbf{StationOwnerProfile}: Thực thể mở rộng dành cho người dùng có vai trò chủ trạm, giúp lưu trữ thông tin pháp lý và kinh doanh như \textit{business\_name}, \textit{tax\_code} (mã số thuế), \textit{identity\_number} (CCCD/CMND), \textit{owner\_type}, \textit{contact\_phone}, \textit{contact\_email}, \textit{bank\_account}, \textit{bank\_name} và \textit{pdf\_file\_path} (đường dẫn đến tài liệu đăng ký). Mối quan hệ giữa \textit{User} và \textit{StationOwnerProfile} là 1-1.
+      \item \textbf{Vehicle}: Quản lý danh sách phương tiện của người dùng. Mỗi phương tiện được gắn với một người dùng và chứa thông tin về xe như \textit{model\_name}, \textit{brand}, \textit{connector\_type} (loại cổng sạc tương thích) và trạng thái \textit{in\_use}.
+      \item \textbf{PushToken}: Lưu trữ các token thiết bị (\textit{device\_token}) và loại thiết bị (\textit{device\_type}) nhằm hỗ trợ tính năng gửi thông báo đẩy theo thời gian thực tới người dùng. Mối quan hệ giữa \textit{User} và \textit{PushToken} là 1-N.
     \end{itemize}
     \item \textbf{Nhóm thực thể Quản lý Trạm sạc}
     \begin{itemize}
-        \item \textbf{Station}: Đại diện cho một trạm sạc vật lý. Thực thể này chứa thông tin địa lý (\textit{latitude}, \textit{longitude}, \textit{address}) nhằm phục vụ tính năng tìm kiếm trên bản đồ. Các thuộc tính trạng thái như \textit{status}, \textit{rate} (đánh giá trung bình) và cờ cảnh báo \textit{is\_flagged\_low\_quality} giúp quản lý chất lượng dịch vụ. Một chủ trạm có thể sở hữu nhiều trạm sạc.
-        \item \textbf{Charger}: Đại diện cho trụ sạc tại trạm. Mỗi trạm có thể có nhiều trụ sạc. Thông tin bao gồm \textit{max\_power} (công suất tối đa), \textit{connector\_type} (loại cổng sạc) và \textit{status} (trạng thái hoạt động).
-        \item \textbf{Port}: Đại diện cho súng sạc/cổng sạc cụ thể trên một trụ. Đây là tài nguyên cơ sở để người dùng thực hiện đặt chỗ hoặc sạc xe.
-        \item \textbf{PriceSetting}: Lưu trữ cấu hình giá dịch vụ mà chủ trạm cài đặt cho trạm sạc, bao gồm \textit{charging\_price\_per\_kwh} (giá cho mỗi kWh sạc), \textit{booking\_price} (phí đặt chỗ) và \textit{penalty\_price} (phí phạt quá giờ). Thiết kế này cho phép chủ trạm linh hoạt điều chỉnh chính sách giá theo thời điểm.
+        \item \textbf{Station}: Đại diện cho một trạm sạc vật lý, thực thể này chứa các thông tin địa lý (\textit{latitude}, \textit{longitude}, \textit{address}) nhằm phục vụ tính năng tìm kiếm trên bản đồ. Các thuộc tính trạng thái như \textit{status}, \textit{rate} và cờ cảnh báo \textit{is\_flagged\_low\_quality} giúp quản lý chất lượng dịch vụ. Một chủ trạm có thể sở hữu nhiều trạm sạc.
+        \item \textbf{StationPhoto}: Lưu trữ hình ảnh minh họa cho trạm sạc, bao gồm \textit{image\_url}, \textit{caption} và định danh ảnh trên hệ thống lưu trữ (\textit{cloudinary\_public\_id}).
+        \item \textbf{StationOpeningHours}: Quản lý giờ hoạt động của trạm sạc theo từng ngày trong tuần (\textit{day\_of\_week}), với các thuộc tính \textit{open\_time}, \textit{close\_time} và trạng thái \textit{is\_open} để đánh dấu ngày nghỉ.
+        \item \textbf{Charger}: Đại diện cho trụ sạc tại trạm. Các thông tin cơ bản bao gồm \textit{max\_power}, \textit{connector\_type} và \textit{status}. Ngoài ra để hỗ trợ giao tiếp với phần cứng qua giao thức OCPP, thực thể bổ sung các trường \textit{charge\_point\_vendor}, \textit{charge\_point\_model}, \textit{charge\_point\_serial}, \textit{firmware\_version} là những thông tin được trả về từ phần cứng của trụ sạc khi kết nối với Backend thành công và \textit{last\_heartbeat}
+        \item \textbf{Port}: Đại diện cho súng sạc/cổng sạc cụ thể trên một trụ, lưu trữ \textit{port\_number} và trạng thái khả dụng (\textit{status}). Đây là tài nguyên cơ sở để người dùng thực hiện đặt chỗ hoặc sạc xe.
+        \item \textbf{PriceSetting}: Lưu trữ cấu hình giá dịch vụ mà chủ trạm cài đặt, các thiết lập bao gồm \textit{charging\_rate\_per\_kwh} (giá cho mỗi kWh sạc), \textit{booking\_fee} (phí đặt chỗ) và \textit{idle\_penalty\_per\_minute} (phí phạt quá giờ tính theo phút) và thời gian ân hạn (\textit{grace\_period\_minutes}). Thiết kế này còn hỗ trợ quản lý lịch sử cài đặt thông qua \textit{version} và \textit{is\_active}.
     \end{itemize}
     \item \textbf{Nhóm thực thể Vận hành (Booking \& Charging)}
     \begin{itemize}
-        \item \textbf{Booking}: Ghi nhận yêu cầu đặt chỗ trước của người dùng tại một cổng sạc trong một khoảng thời gian cụ thể. Mỗi lượt đặt chỗ sẽ sinh ra một hóa đơn tương ứng.
-        \item \textbf{ChargingSession}: Lưu trữ dữ liệu chi tiết của một phiên sạc thực tế. Các thông tin quan trọng bao gồm năng lượng tiêu thụ (\textit{energy\_consumed}), phần trăm pin bắt đầu/kết thúc (\textit{percentage\_start/end}) và thời gian sạc. Tương tự như đặt chỗ, mỗi phiên sạc cũng được liên kết với một hóa đơn thanh toán.
+        \item \textbf{Booking}: Ghi nhận yêu cầu đặt chỗ trước của người dùng tại một cổng sạc trong một khoảng thời gian cụ thể. Thực thể này lưu trữ \textit{start\_time}, \textit{end\_time}, trạng thái đặt chỗ (\textit{status}), phí đặt chỗ (\textit{fee}) và tổng chi phí (\textit{total\_price}). Mỗi lượt đặt chỗ sẽ sinh ra một hóa đơn tương ứng.
+        \item \textbf{ChargingSession}: Lưu trữ dữ liệu chi tiết của một phiên sạc thực tế. Các thông tin quan trọng bao gồm năng lượng tiêu thụ (\textit{total\_kwh}), chỉ số điện kế ban đầu (\textit{meter\_start}), mã giao dịch phần cứng (\textit{transaction\_id}), và thời gian sạc (\textit{start\_time}, \textit{end\_time}). Tương tự như đặt chỗ, mỗi phiên sạc cũng được liên kết với một hóa đơn thanh toán.
     \end{itemize}
     \item \textbf{Nhóm thực thể Tài chính và Thanh toán}
     \begin{itemize}
-        \item \textbf{Invoice}: Hóa đơn tổng hợp chi phí cho các dịch vụ sử dụng (đặt chỗ hoặc sạc). Hóa đơn lưu trữ tổng tiền, phương thức thanh toán và trạng thái thanh toán.
-        \item \textbf{Transaction}: Ghi lại lịch sử giao dịch thanh toán chi tiết qua cổng thanh toán. Thực thể này lưu trữ các mã tham chiếu từ cổng thanh toán (\textit{gateway\_transaction\_id}, \textit{gateway\_request\_id}) và kết quả giao dịch (\textit{result\_code}), phục vụ cho việc đối soát doanh thu. Mối quan hệ giữa \textit{Invoice} và \textit{Transaction} là một-nhiều (1-N), cho phép một hóa đơn có thể có nhiều lần thử thanh toán (bao gồm cả các giao dịch thất bại).
+        \item \textbf{Invoice}: Hóa đơn tổng hợp chi phí cho các dịch vụ sử dụng (đặt chỗ hoặc sạc). Hóa đơn lưu trữ mã số (\textit{number}), mục đích giao dịch (\textit{purpose}), tổng tiền (\textit{total\_cost}), phương thức thanh toán (\textit{payment\_method}) và trạng thái thanh toán (\textit{status}).
+        \item \textbf{Transaction}: Ghi lại lịch sử giao dịch thanh toán chi tiết qua cổng thanh toán (cụ thể ở đây là ZaloPay). Thực thể này lưu trữ các mã tham chiếu từ cổng thanh toán (\textit{gateway\_transaction\_id}, \textit{zp\_trans\_token}), đường dẫn thanh toán (\textit{order\_url}), số tiền (\textit{amount}), và kết quả giao dịch (\textit{return\_code}) phục vụ cho việc đối soát doanh thu. Mối quan hệ giữa \textit{Invoice} và \textit{Transaction} là một-nhiều (1-N).
     \end{itemize}
     \item \textbf{Nhóm thực thể Phản hồi và Hỗ trợ}
     \begin{itemize}
-        \item \textbf{Review}: Cho phép người dùng đánh giá và bình luận về chất lượng của một trạm sạc sau khi sử dụng dịch vụ. Dữ liệu này là cơ sở để tính toán thuộc tính \textit{rate} của trạm.
-        \item \textbf{Complaint}: Hệ thống quản lý khiếu nại của người dùng về các vấn đề phát sinh. Mỗi khiếu nại bao gồm tiêu đề, mô tả và trạng thái xử lý.
-        \item \textbf{ComplaintResponse}: Lưu trữ lịch sử phản hồi và trao đổi giữa quản trị viên và người dùng liên quan đến một khiếu nại cụ thể.
+        \item \textbf{Review}: Cho phép người dùng đánh giá (\textit{rating}) và bình luận (\textit{comment}) về chất lượng của một trạm sạc sau khi sử dụng dịch vụ. Dữ liệu này là cơ sở để tính toán thuộc tính \textit{rate} của trạm.
+        \item \textbf{Complaint}: Hệ thống quản lý khiếu nại của người dùng về các vấn đề phát sinh. Mỗi khiếu nại bao gồm tiêu đề (\textit{title}), mô tả (\textit{description}) và trạng thái xử lý (\textit{status}).
+        \item \textbf{ComplaintResponse}: Lưu trữ lịch sử phản hồi (\textit{message}) và trao đổi giữa quản trị viên và người dùng liên quan đến một khiếu nại cụ thể.
     \end{itemize}
 \end{itemize}
 
@@ -2425,7 +2428,6 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
             \end{itemize}
         \end{itemize}
     \end{itemize}
-
 \end{itemize}
 \item Kết thúc (Thất bại): Nếu người dùng hủy hoặc giao dịch thất bại, người dùng nhận thông báo thất bại và kết thúc quá trình thanh toán.
 \end{enumerate}
@@ -2463,80 +2465,72 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
 \end{figure}
 \noindent \textbf{Luồng chính của biểu đồ trình tự:}
 \begin{enumerate}[font=\bfseries]
-\item Người dùng chọn thời gian và nhấn nút ``Xác nhận đặt chỗ'' trên ứng dụng (Mobile App).
-\item Ứng dụng gửi yêu cầu (API request) tạo đặt chỗ kèm theo thông tin xác thực (Authorization Header: Bearer Token) đến Backend.
-\item \textbf{Khởi tạo Redis Lock}: Backend yêu cầu một distributed lock từ Redis sử dụng \texttt{portId} và \texttt{startTime} để ngăn chặn Race Condition (trường hợp nhiều yêu cầu đặt trùng một cổng cùng lúc).
-\item \textbf{Kiểm tra tính khả dụng}:
+\item Người dùng nhấn nút ``Xác nhận đặt chỗ'' trên ứng dụng (Mobile App).
+\item Ứng dụng gửi yêu cầu Đặt chỗ và Thanh toán đến Backend.
+\item \textbf{Kiểm tra tính khả dụng}: Backend giao tiếp với cơ sở dữ liệu (Redis/DB) để kiểm tra tình trạng trùng lịch và thiết lập Redis Lock cho cổng sạc (với thời gian chờ TTL là 8 phút).
+\item \textbf{Xử lý nếu hợp lệ}:
 \begin{itemize}
-  \item Nếu thiết lập lock thành công: Backend truy vấn cơ sở dữ liệu để xác nhận cổng sạc có khả dụng trong khung giờ yêu cầu hay không.
-  \item Nếu cổng sạc khả dụng: Backend tạo bản ghi đặt chỗ mới với trạng thái ``Chờ thanh toán'' (PENDING) vào cơ sở dữ liệu.
-  \item \textbf{Giải phóng Redis Lock} ngay sau khi trạng thái đặt chỗ được giữ chỗ thành công để tối ưu hiệu năng hệ thống.
+    \item Backend lưu thông tin Booking và Invoice mới vào cơ sở dữ liệu với trạng thái \texttt{PENDING}.
+    \item Backend gọi API đến cổng thanh toán ZaloPay để khởi tạo phiên thanh toán.
+    \item ZaloPay trả về đường dẫn URL thanh toán. Backend chuyển tiếp URL này về ứng dụng di động.
 \end{itemize}
-\item Backend gửi yêu cầu tạo phiên thanh toán đến Cổng thanh toán.
-\item Cổng thanh toán trả về đường dẫn thanh toán (paymentUrl).
-\item Backend phản hồi về ứng dụng mã đặt chỗ (bookingId) và đường dẫn thanh toán.
-\item Ứng dụng hiển thị giao diện thanh toán cho người dùng.
-\item Người dùng chọn phương thức và tiến hành thanh toán qua Cổng thanh toán.
-\item \textbf{Xử lý kết quả thanh toán (Webhook)}:
+\item Ứng dụng tự động điều hướng sang ứng dụng ZaloPay. Người dùng tiến hành xác nhận và thực hiện thanh toán trên ZaloPay.
+\item \textbf{Xử lý thanh toán thành công (Webhook)}:
 \begin{itemize}
-  \item Khi thanh toán thành công, Cổng thanh toán gửi thông báo (Webhook) đến Backend một cách bất đồng bộ.
-  \item Backend xác thực Webhook và cập nhật trạng thái đặt chỗ trong cơ sở dữ liệu từ ``PENDING'' sang ``Xác nhận'' (CONFIRMED).
-  \item Cơ sở dữ liệu xác nhận cập nhật thành công.
-  \item Backend gửi thông báo ``Đặt chỗ thành công!'' đến thiết bị của người dùng.
+    \item Cổng thanh toán ZaloPay gửi thông báo Webhook (Payment Success) về Backend một cách độc lập.
+    \item Backend xử lý Webhook, cập nhật trạng thái Booking thành \texttt{CONFIRMED}, Invoice thành \texttt{PAID}, đồng thời tiến hành xóa Redis Lock.
+    \item Nếu thời gian bắt đầu sạc dự kiến cách thời điểm hiện tại dưới 10 phút, Backend lập tức gửi lệnh \texttt{ReserveNow} qua giao thức OCPP tới Trạm sạc để tiến hành giữ chỗ.
+    \item Backend phản hồi mã HTTP 200 OK lại cho ZaloPay để xác nhận đã xử lý xong Webhook.
 \end{itemize}
-\item Ứng dụng hiển thị trang lịch sử đặt chỗ cho người dùng.
+\item Sau khi thanh toán thành công, màn hình ZaloPay thông báo hoàn tất, người dùng quay trở lại ứng dụng EV-Go và mở mục My Booking.
+\item Ứng dụng gửi yêu cầu lấy danh sách đặt chỗ mới nhất, Backend trả về thông tin Booking ở trạng thái \texttt{CONFIRMED} và ứng dụng cập nhật giao diện hiển thị ``Đã xác nhận''.
 \end{enumerate}
 
 \textbf{Các luồng phụ:}
 \begin{enumerate}[font=\bfseries]
-\item \textbf{Cổng sạc không khả dụng / Khóa bị chiếm (Lock acquisition failed):} Tại bước kiểm tra, nếu cơ sở dữ liệu trả về trạng thái ``Đang sử dụng'' hoặc không lấy được Redis Lock do có giao dịch khác đang thực hiện, Backend sẽ trả về lỗi xung đột và ứng dụng hiển thị thông báo ``Cổng sạc hiện không khả dụng'' cho người dùng.
-\item \textbf{Thanh toán thất bại hoặc bị hủy:}
+\item \textbf{Cổng sạc không khả dụng / Lỗi khóa (Lock failed):} Tại bước kiểm tra, nếu cổng sạc đã bị chiếm lịch hoặc không thiết lập được Redis Lock, Backend sẽ từ chối giao dịch và ứng dụng hiển thị thông báo lỗi ``Cổng sạc không khả dụng''.
+\item \textbf{Thanh toán thất bại hoặc quá hạn:}
 \begin{itemize}
-  \item Nếu người dùng hủy hoặc thanh toán thất bại, Cổng thanh toán chuyển hướng người dùng trở lại ứng dụng với trạng thái lỗi/hủy.
-  \item Ứng dụng hiển thị thông báo ``Thanh toán thất bại''.
-  \item Backend không nhận được Webhook xác nhận, bản ghi ``PENDING'' sẽ tự động hết hạn theo cơ chế timeout của hệ thống.
+  \item Nếu giao dịch bị lỗi hoặc hết thời gian chờ, ZaloPay sẽ hiển thị lỗi giao dịch cho người dùng.
+  \item Backend không nhận được Webhook thanh toán thành công, Redis Lock sẽ tự động hết hạn theo TTL. Đồng thời, một Background Worker sẽ định kỳ quét và dọn dẹp các bản ghi đặt chỗ có trạng thái \texttt{PENDING} đã quá hạn.
 \end{itemize}
 \end{enumerate}
 
 \subsubsection{Sequence Diagram -- Người dùng sạc xe và giám sát thời gian thực}
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{figures/sq_user_booking.png}
+\includegraphics[width=1\textwidth]{figures/sq_user_charging.png}
 \caption{Sequence Diagram -- Người dùng sạc xe và giám sát thời gian thực qua SSE}
-\label{fig:sq_user_charging_sse}
+\label{fig:sq_user_charging}
 \end{figure}
 \noindent \textbf{Luồng chính của biểu đồ trình tự:}
 \begin{enumerate}[font=\bfseries]
-\item Người dùng quét mã QR tại trạm hoặc chọn cổng sạc từ ứng dụng và nhấn nút ``Bắt đầu sạc''.
-\item Ứng dụng gửi yêu cầu (API Request) \texttt{startCharging} đến Backend kèm thông tin định danh cổng sạc.
-\item Backend kiểm tra trạng thái cổng sạc trong cơ sở dữ liệu, đảm bảo cổng đang ở trạng thái \textit{AVAILABLE} hoặc \textit{RESERVED} hợp lệ theo đặt chỗ.
-\item \textbf{Khởi tạo phiên sạc}:
+\item Người dùng nhấn nút ``Bắt đầu sạc'' trên ứng dụng di động.
+\item Ứng dụng gửi yêu cầu bắt đầu sạc (\texttt{POST /charging/start}) tới Backend.
+\item Backend tiến hành kiểm tra điều kiện sạc hợp lệ, khởi tạo một bản ghi phiên sạc (Session) mới với trạng thái \texttt{PREPARING} trong cơ sở dữ liệu.
+\item \textbf{Kích hoạt sạc từ xa}: 
 \begin{itemize}
-    \item Backend tạo một bản ghi \texttt{ChargingSession} mới với trạng thái \textit{IN\_PROGRESS}.
-    \item Backend gửi bản tin \texttt{RemoteStartTransaction} qua giao thức WebSocket (OCPP) đến Trụ sạc (hoặc \textbf{OCPP CP Simulator}).
+    \item Backend gửi lệnh \texttt{RemoteStartTransaction.req} thông qua giao thức OCPP tới Trạm sạc.
+    \item Đồng thời Backend phản hồi lại thông tin phiên sạc (đang ở trạng thái \texttt{PREPARING}) về cho ứng dụng di động.
 \end{itemize}
-\item Trụ sạc/Simulator tiếp nhận lệnh, kiểm tra an toàn điện, bắt đầu cung cấp năng lượng và phản hồi \texttt{StartTransaction.req}.
-\item Backend lưu \texttt{transactionId} và xác nhận quá trình sạc bắt đầu thành công với ứng dụng di động.
-\item \textbf{Giám sát thời gian thực qua SSE}:
+\item Trạm sạc phản hồi lại bằng bản tin \texttt{StartTransaction.req} tới Backend. Backend tiến hành lưu Transaction ID, cập nhật trạng thái phiên sạc thành \texttt{CHARGING}, và gửi xác nhận \texttt{StartTransaction.conf} trở lại cho Trạm sạc.
+\item \textbf{Khởi tạo giám sát thời gian thực}: Ứng dụng di động đăng ký giám sát phiên sạc (SSE Subscribe) với Backend. Backend xác nhận và mở kết nối Server-Sent Events (SSE) để truyền dữ liệu một chiều về ứng dụng di động.
+\item \textbf{Luồng truyền dữ liệu liên tục}: 
 \begin{itemize}
-    \item Ứng dụng di động thiết lập một kết nối Server-Sent Events (SSE) đến Backend để lắng nghe dữ liệu trạng thái.
-    \item Định kỳ, Simulator gửi bản tin \texttt{MeterValues.req} (bao gồm dòng điện, điện áp, năng lượng) về Backend.
-    \item Backend tiếp nhận dữ liệu, tính toán phần trăm pin, thời gian còn lại ($T_{remain}$) và chi phí hiện tại.
-    \item Backend chủ động đẩy (push) sự kiện chứa các chỉ số này qua kết nối SSE về ứng dụng di động.
-    \item Ứng dụng cập nhật giao diện hiển thị thời gian thực cho người dùng ngay lập tức.
+    \item Trạm sạc liên tục gửi định kỳ các bản tin đo lường \texttt{MeterValues.req} về Backend.
+    \item Backend lưu dữ liệu hiện trạng vào bộ đệm (Redis) để truy xuất nhanh, đồng thời chủ động đẩy các thông số tiêu thụ điện (kWh) và chi phí tạm tính về cho ứng dụng di động thông qua SSE đã được thiết lập.
+    \item Ứng dụng di động liên tục cập nhật giao diện hiển thị thông số sạc cho người dùng theo thời gian thực.
 \end{itemize}
-\item \textbf{Kết thúc quá trình sạc}:
+\item \textbf{Dừng sạc}:
 \begin{itemize}
-    \item Người dùng nhấn ``Dừng sạc'' trên ứng dụng hoặc pin đã đầy 100\% (dựa trên thông tin từ Simulator).
-    \item Nếu người dùng chủ động dừng, Backend gửi lệnh \texttt{RemoteStopTransaction} đến Simulator.
-    \item Simulator ngừng cấp điện và gửi bản tin \texttt{StopTransaction.req} kèm theo tổng năng lượng đã tiêu thụ.
-    \item Backend nhận thông tin, tính toán tổng chi phí, cập nhật trạng thái phiên sạc thành \textit{COMPLETED} và chủ động ngắt kết nối SSE.
-    \item Ứng dụng chuyển hướng người dùng đến màn hình thanh toán hóa đơn.
+    \item Người dùng nhấn nút ``Dừng sạc'' trên ứng dụng. Ứng dụng gửi yêu cầu dừng sạc (\texttt{POST /charging/stop}) tới Backend.
+    \item Backend gửi lệnh \texttt{RemoteStopTransaction.req} tới Trạm sạc và trả về thông báo xác nhận đã tiếp nhận yêu cầu dừng cho ứng dụng di động.
 \end{itemize}
-\end{enumerate}
-
-\textbf{Các luồng phụ:}
-\begin{enumerate}[font=\bfseries]
-\item \textbf{Lỗi mất kết nối (Mất mạng tạm thời):} Nếu kết nối SSE bị ngắt, ứng dụng di động sẽ tự động thử kết nối lại (Auto-reconnect). Trong lúc đó, quá trình sạc ở Simulator vẫn diễn ra bình thường, và khi kết nối lại, hệ thống sẽ đẩy trạng thái mới nhất thay vì mất đi thông tin sạc.
-\item \textbf{Lỗi thiết bị (Phần cứng/Simulator):} Nếu Simulator giả lập lỗi quá dòng (Overcurrent) hoặc ngắt khẩn cấp, nó sẽ tự động ngắt điện và gửi \texttt{StatusNotification} (Faulted). Backend nhận được sẽ tự động kết thúc phiên sạc, tạo hóa đơn tới thời điểm lỗi và thông báo cho người dùng thông qua Push Notification hoặc ngắt SSE với mã lỗi đặc biệt.
+\item \textbf{Kết thúc phiên sạc}:
+\begin{itemize}
+    \item Trạm sạc chính thức ngắt điện và gửi bản tin kết thúc \texttt{StopTransaction.req} (kèm tổng điện năng tiêu thụ) tới Backend.
+    \item Backend cập nhật phiên sạc sang trạng thái \texttt{COMPLETED} trong cơ sở dữ liệu, đồng thời tính toán tổng chi phí cuối cùng.
+    \item Backend đẩy một sự kiện SSE cuối cùng (\texttt{session-ended}) về ứng dụng di động báo hiệu kết thúc và tiến hành đóng kết nối SSE. Đồng thời trả về \texttt{StopTransaction.conf} cho Trạm sạc.
+\end{itemize}
+\item Ứng dụng nhận được sự kiện kết thúc phiên sạc sẽ tự động chuyển hướng người dùng sang màn hình Hóa đơn.
 \end{enumerate}

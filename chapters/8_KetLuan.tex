@@ -26,8 +26,7 @@ Mặc dù đã đạt được những kết quả đáng kể và hoàn thiện
 \begin{itemize}
     \item \textbf{Kết nối phần cứng:} Do giới hạn về nguồn lực và rào cản thiết bị, hệ thống chưa được kiểm thử trực tiếp với các trụ sạc vật lý. Các tương tác phần cứng hiện được thực thi thông qua hệ thống giả lập chuẩn OCPP (OCPP ChargePoint Simulator).
     \item \textbf{Hệ thống Web Admin:} Do chủ đích dồn toàn lực vào kiến trúc Backend và trải nghiệm Ứng dụng Di động, phân hệ Web Admin dành cho chủ trạm và ban quản trị chỉ dừng ở mức cung cấp các chức năng quản lý cơ bản, chưa được đầu tư mạnh về giao diện và các báo cáo phân tích chuyên sâu.
-    \item \textbf{Giới hạn thanh toán thực tế:} Luồng thanh toán qua ZaloPay hiện chỉ hoạt động ở môi trường thử nghiệm (Sandbox). Việc đưa vào vận hành thực tế cần thêm các thủ tục pháp lý để xử lý dòng tiền thật và mở rộng thêm các cổng thanh toán khác.
-    \item \textbf{Khả năng chịu tải cực lớn:} Kiến trúc Modular Monolith đáp ứng xuất sắc yêu cầu về độ trễ và quản lý nghiệp vụ hiện tại. Tuy nhiên, nếu triển khai ở quy mô quốc gia với hàng triệu giao dịch/giây, hệ thống sẽ cần nâng cấp hạ tầng phân tán sâu hơn.
+    \item \textbf{Giới hạn thanh toán thực tế:} Luồng thanh toán qua ZaloPay hiện chỉ hoạt động ở môi trường thử nghiệm (Sandbox). Việc đưa vào vận hành thực tế cần thêm các thủ tục pháp lý để xử lý dòng tiền thật và mở rộng thêm các cổng thanh toán khác. Hệ thống cũng chưa hoàn thiện luồng hoàn trả tiền cho người dùng.
 \end{itemize}
 
 \subsection{Hướng phát triển tương lai}

@@ -131,7 +131,7 @@ Mặc dù WebSocket rất phù hợp cho giao tiếp hai chiều giữa trạm s
 \textbf{Phân tích kỹ thuật:}
 Khi một phiên sạc đang diễn ra, trạm sạc liên tục gửi bản tin \texttt{MeterValues} về Backend (CSMS) thông qua WebSocket. Backend sử dụng Spring WebFlux kết hợp cùng \texttt{SseEmitter} để tiếp nhận và phát trực tiếp (stream) các sự kiện dữ liệu này xuống ứng dụng React Native đang lắng nghe. Kiến trúc này giúp loại bỏ hoàn toàn cơ chế Polling (gọi API định kỳ), giải quyết triệt để độ trễ dữ liệu và tối ưu hóa hiệu năng tổng thể của ứng dụng di động.
 
-\subsubsection{Công nghệ Container hóa (Docker)}
+\subsubsection{Công nghệ Container hóa Docker}
 Docker \cite{docker_docs} được sử dụng để ảo hóa môi trường vận hành, đảm bảo tính nhất quán trong quy trình phát triển và triển khai phần mềm (CI/CD).
 
 \textbf{Cơ sở lựa chọn:}
