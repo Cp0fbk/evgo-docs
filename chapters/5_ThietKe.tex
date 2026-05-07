@@ -94,6 +94,8 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
       \begin{center}
         \renewcommand{\arraystretch}{1.5}
         \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Xem danh sách tài khoản}
+          \label{tab:uc_sa_adm_01} \\
           \hline
           \textbf{Use case ID} & UC--SA--ADM--01 \\
           \hline
@@ -125,15 +127,15 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
           \textbf{Exception} &
           2b. Lỗi truy vấn database: Hiển thị thông báo lỗi chung; ghi log; không thay đổi dữ liệu\\
           \hline
-          \caption{Use Case Xem danh sách tài khoản}
-          \label{tab:uc_sa_adm_01}
-        \end{longtable}
+          \end{longtable}
       \end{center}
       %===================================================================
     \item \textbf{Khóa/mở khóa tài khoản}
       \begin{center}
         \renewcommand{\arraystretch}{1.5}
         \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Khóa/mở khóa tài khoản}
+          \label{tab:uc_sa_adm_02} \\
           \hline
           \textbf{Use case ID} & UC--SA--ADM--02 \\
           \hline
@@ -172,15 +174,15 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
           \textbf{Exception} &
           4a. Cập nhật thất bại (CSDL/mạng): Hiển thị lỗi, giữ nguyên trạng thái cũ, ghi log\\
           \hline
-          \caption{Use Case Khóa/mở khóa tài khoản}
-          \label{tab:uc_sa_adm_02}
-        \end{longtable}
+          \end{longtable}
       \end{center}
       %===================================================================
     \item \textbf{Gửi email kích hoạt tài khoản chủ trạm}
       \begin{center}
         \renewcommand{\arraystretch}{1.5}
         \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Gửi email kích hoạt tài khoản chủ trạm}
+          \label{tab:uc_sa_adm_03} \\
           \hline
           \textbf{Use case ID} & UC--SA--ADM--03 \\
           \hline
@@ -215,15 +217,15 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
           \textbf{Exception} &
           4a. Lỗi gửi email (SMTP/ESP): Hiển thị lỗi “Gửi thất bại, vui lòng thử lại”; không thay đổi status; vẫn lưu log thất bại.\\
           \hline
-          \caption{Use Case Gửi email kích hoạt tài khoản chủ trạm}
-          \label{tab:uc_sa_adm_03}
-        \end{longtable}
+          \end{longtable}
       \end{center}
       %===================================================================
     \item \textbf{Từ chối yêu cầu kích hoạt tài khoản}
       \begin{center}
         \renewcommand{\arraystretch}{1.5}
         \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Từ chối yêu cầu kích hoạt tài khoản}
+          \label{tab:uc_sa_adm_04} \\
           \hline
           \textbf{Use case ID} & UC--SA--ADM--04 \\
           \hline
@@ -258,9 +260,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
           \textbf{Exception} &
           5a. Lỗi gửi email (SMTP/ESP): Hiển thị lỗi “Gửi thất bại, vui lòng thử lại”; không thay đổi status; vẫn lưu log thất bại.\\
           \hline
-          \caption{Use Case Từ chối yêu cầu kích hoạt tài khoản}
-          \label{tab:uc_sa_adm_04}
-        \end{longtable}
+          \end{longtable}
       \end{center}
   \end{itemize}
   %==========================================================================
@@ -276,6 +276,8 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
       \begin{center}
         \renewcommand{\arraystretch}{1.5}
         \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Xem thông tin trạm sạc}
+          \label{tab:uc_sa_pay_01} \\
           \hline
           \textbf{Use case ID} & UC--SA--PAY--01 \\
           \hline
@@ -310,15 +312,15 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
           \textbf{Exception} &
           4a. Hệ thống không thể cập nhật trạng thái trạm thì hiển thị thông báo lỗi và giữ trạng thái cũ\\
           \hline
-          \caption{Use Case Xem thông tin trạm sạc}
-          \label{tab:uc_sa_pay_01}
-        \end{longtable}
+          \end{longtable}
       \end{center}
       %===================================================================
     \item \textbf{Phân chia doanh thu}
       \begin{center}
         \renewcommand{\arraystretch}{1.5}
         \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Phân chia doanh thu}
+          \label{tab:uc_sa_pay_02} \\
           \hline
           \textbf{Use case ID} & UC--SA--PAY--02 \\
           \hline
@@ -361,15 +363,15 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
             \item 4a. Lưu thất bại (lỗi DB/hệ thống): Thông báo lỗi, không thay đổi cấu hình cũ.
           \end{itemize}\\
           \hline
-          \caption{Use Case Phân chia doanh thu}
-          \label{tab:uc_sa_pay_02}
-        \end{longtable}
+          \end{longtable}
       \end{center}
       %===================================================================
     \item \textbf{Theo dõi luồng giao dịch}
       \begin{center}
         \renewcommand{\arraystretch}{1.5}
         \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Theo dõi luồng giao dịch}
+          \label{tab:uc_sa_pay_03} \\
           \hline
           \textbf{Use case ID} & UC--SA--PAY--03 \\
           \hline
@@ -406,9 +408,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
           \textbf{Exception} &
           4a. Khi mở chi tiết, truy vấn CSDL/gateway lỗi,  hiển thị thông báo “Không thể tải chi tiết”; cho phép thử lại.\\
           \hline
-          \caption{Use Case Theo dõi luồng giao dịch}
-          \label{tab:uc_sa_pay_03}
-        \end{longtable}
+          \end{longtable}
       \end{center}
   \end{itemize}
 
@@ -425,6 +425,8 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
       \begin{center}
         \renewcommand{\arraystretch}{1.5}
         \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Xem báo cáo và thống kê tổng hợp}
+          \label{tab:uc_sa_rp_01} \\
           \hline
           \textbf{Use case ID} & UC--SA--RP--01 \\
           \hline
@@ -457,15 +459,15 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
           \textbf{Exception} &
           4b. Khi mở chi tiết, truy vấn CSDL/gateway lỗi,  hiển thị thông báo “Không thể tải chi tiết”; cho phép thử lại.\\
           \hline
-          \caption{Use Case Xem báo cáo và thống kê tổng hợp}
-          \label{tab:uc_sa_rp_01}
-        \end{longtable}
+          \end{longtable}
       \end{center}
       %========================================================================
     \item \textbf{Thống kê theo biểu đồ}
       \begin{center}
         \renewcommand{\arraystretch}{1.5}
         \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Thống kê theo biểu đồ}
+          \label{tab:uc_sa_rp_02} \\
           \hline
           \textbf{Use case ID} & UC--SA--RP--02 \\
           \hline
@@ -498,14 +500,14 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
           \textbf{Exception} &
           4b. Lỗi render, hiển thị thông báo và fallback sang bảng\\
           \hline
-          \caption{Use Case Thống kê theo biểu đồ}
-          \label{tab:uc_sa_rp_02}
-        \end{longtable}
+          \end{longtable}
       \end{center}
     \item \textbf{Xuất file}
       \begin{center}
         \renewcommand{\arraystretch}{1.5}
         \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Xuất file báo cáo thống kê}
+          \label{tab:uc_sa_rp_03} \\
           \hline
           \textbf{Use case ID} & UC--SA--RP--03 \\
           \hline
@@ -539,9 +541,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
           \textbf{Exception} &
           4a. Nếu gặp lỗi tạo file, báo lỗi và thử lại\\
           \hline
-          \caption{Use Case Xuất file báo cáo thống kê}
-          \label{tab:uc_sa_rp_03}
-        \end{longtable}
+          \end{longtable}
       \end{center}
   \end{itemize}
 \end{enumerate}
@@ -558,6 +558,8 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \begin{center}
     \renewcommand{\arraystretch}{1.5}
     \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Xem danh sách khiếu nại}
+      \label{tab:uc_sa_cp_01} \\
       \hline
       \textbf{Use case ID} & UC--SA--CP--01 \\
       \hline
@@ -590,15 +592,15 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
       \textbf{Exception} &
       2a. Nếu không thể truy xuất dữ liệu thì báo lỗi và thử lại\\
       \hline
-      \caption{Use Case Xem danh sách khiếu nại}
-      \label{tab:uc_sa_cp_01}
-    \end{longtable}
+      \end{longtable}
   \end{center}
   %=====================================================================
 \item \textbf{Xem chi tiết khiếu nại}
   \begin{center}
     \renewcommand{\arraystretch}{1.5}
     \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Xem chi tiết khiếu nại}
+      \label{tab:uc_sa_cp_02} \\
       \hline
       \textbf{Use case ID} & UC--SA--CP--02 \\
       \hline
@@ -630,15 +632,15 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
       \textbf{Exception} &
       1a. Khiếu nại đã bị xóa hoặc không còn tồn tại, hiển thị thông báo lỗi\\
       \hline
-      \caption{Use Case Xem chi tiết khiếu nại}
-      \label{tab:uc_sa_cp_02}
-    \end{longtable}
+      \end{longtable}
   \end{center}
   %=====================================================================
 \item \textbf{Khóa/mở khóa tài khoản}
   \begin{center}
     \renewcommand{\arraystretch}{1.5}
     \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Khóa/mở khóa tài khoản}
+      \label{tab:uc_sa_cp_03} \\
       \hline
       \textbf{Use case ID} & UC--SA--CP--03 \\
       \hline
@@ -673,15 +675,15 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
       \textbf{Exception} &
       1a. Khiếu nại đã bị xóa hoặc không còn tồn tại, hiển thị thông báo lỗi\\
       \hline
-      \caption{Use Case Khóa/mở khóa tài khoản}
-      \label{tab:uc_sa_cp_03}
-    \end{longtable}
+      \end{longtable}
   \end{center}
   %=====================================================================
 \item \textbf{Phản hồi khiếu nại}
   \begin{center}
     \renewcommand{\arraystretch}{1.5}
     \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Phản hồi khiếu nại}
+      \label{tab:uc_sa_cp_04} \\
       \hline
       \textbf{Use case ID} & UC--SA--CP--04 \\
       \hline
@@ -715,9 +717,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
       \textbf{Exception} &
       3a. Lỗi khi gửi phản hồi, hiển thị thông báo lỗi và gửi lại\\
       \hline
-      \caption{Use Case Phản hồi khiếu nại}
-      \label{tab:uc_sa_cp_04}
-    \end{longtable}
+      \end{longtable}
   \end{center}
 \end{itemize}
 
@@ -734,6 +734,8 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
 \begin{itemize}
   \item \textbf{Tải hồ sơ mẫu}
     \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Tải hồ sơ mẫu}
+      \label{tab:uc_so_reg_01} \\
       \hline
       \textbf{Use case ID} & UC--SO--REG--01 \\
       \hline
@@ -766,13 +768,13 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
       \textbf{Exception} &
       2a. Hồ sơ mẫu không tồn tại.\\
       \hline
-      \caption{Use Case Tải hồ sơ mẫu}
-      \label{tab:uc_so_reg_01}
-    \end{longtable}
+      \end{longtable}
   \item \textbf{Nộp hồ sơ }
     \begin{center}
       \renewcommand{\arraystretch}{1.5}
       \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Nộp hồ sơ}
+        \label{tab:uc_so_reg_02} \\
         \hline
         \textbf{Use case ID} & UC--SO--REG--02 \\
         \hline
@@ -809,9 +811,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
           \item 3.b File vượt quá dung lượng cho phép.
         \end{itemize}\\
         \hline
-        \caption{Use Case Nộp hồ sơ}
-        \label{tab:uc_so_reg_02}
-      \end{longtable}
+        \end{longtable}
     \end{center}
 \end{itemize}
 
@@ -827,6 +827,8 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
     \begin{center}
       \renewcommand{\arraystretch}{1.5}
       \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Chỉnh sửa thông tin trạm}
+        \label{tab:uc_so_st_01} \\
         \hline
         \textbf{Use case ID} & UC--SO--ST--01 \\
         \hline
@@ -865,15 +867,15 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
           \item 5b. Sai định dạng dữ liệu.
         \end{itemize}\\
         \hline
-        \caption{Use Case Chỉnh sửa thông tin trạm}
-        \label{tab:uc_so_st_01}
-      \end{longtable}
+        \end{longtable}
     \end{center}
 
   \item \textbf{Cập nhật trạng thái hoạt động}
     \begin{center}
       \renewcommand{\arraystretch}{1.5}
       \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Cập nhật trạng thái hoạt động trạm}
+        \label{tab:uc_so_st_02} \\
         \hline
         \textbf{Use case ID} & UC--SO--ST--02 \\
         \hline
@@ -905,15 +907,15 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
         \textbf{Exception} &
         4a. Trạng thái không hợp lệ.\\
         \hline
-        \caption{Use Case Cập nhật trạng thái hoạt động trạm}
-        \label{tab:uc_so_st_02}
-      \end{longtable}
+        \end{longtable}
     \end{center}
 
   \item \textbf{Thiết lập giá}
     \begin{center}
       \renewcommand{\arraystretch}{1.5}
       \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Thiết lập giá}
+        \label{tab:uc_so_st_03} \\
         \hline
         \textbf{Use case ID} & UC--SO--ST--03 \\
         \hline
@@ -945,15 +947,15 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
         \textbf{Exception} &
         4a. Giá không hợp lệ.\\
         \hline
-        \caption{Use Case Thiết lập giá}
-        \label{tab:uc_so_st_03}
-      \end{longtable}
+        \end{longtable}
     \end{center}
 
   \item \textbf{Theo dõi thông tin trụ sạc}
     \begin{center}
       \renewcommand{\arraystretch}{1.5}
       \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Theo dõi thông tin trụ sạc}
+        \label{tab:uc_so_st_04} \\
         \hline
         \textbf{Use case ID} & UC--SO--ST--04 \\
         \hline
@@ -983,15 +985,15 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
         \textbf{Exception} &
         Không có.\\
         \hline
-        \caption{Use Case Theo dõi thông tin trụ sạc}
-        \label{tab:uc_so_st_04}
-      \end{longtable}
+        \end{longtable}
     \end{center}
 
   \item \textbf{Xem danh sách đặt chỗ}
     \begin{center}
       \renewcommand{\arraystretch}{1.5}
       \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Xem danh sách đặt chỗ}
+        \label{tab:uc_so_st_05} \\
         \hline
         \textbf{Use case ID} & UC--SO--ST--05 \\
         \hline
@@ -1021,9 +1023,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
         \textbf{Exception} &
         Không có.\\
         \hline
-        \caption{Use Case Xem danh sách đặt chỗ}
-        \label{tab:uc_so_st_05}
-      \end{longtable}
+        \end{longtable}
     \end{center}
 \end{itemize}
 
@@ -1039,6 +1039,8 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
     \begin{center}
       \renewcommand{\arraystretch}{1.5}
       \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Thống kê số lượt sạc}
+        \label{tab:uc_so_rp_01} \\
         \hline
         \textbf{Use case ID} & UC--SO--RP--01 \\
         \hline
@@ -1072,15 +1074,15 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
         \textbf{Exception} &
         4a. Lỗi hệ thống khi xử lý thống kê.\\
         \hline
-        \caption{Use Case Thống kê số lượt sạc}
-        \label{tab:uc_so_rp_01}
-      \end{longtable}
+        \end{longtable}
     \end{center}
 
   \item \textbf{Thống kê doanh thu}
     \begin{center}
       \renewcommand{\arraystretch}{1.5}
       \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Thống kê doanh thu}
+        \label{tab:uc_so_rp_02} \\
         \hline
         \textbf{Use case ID} & UC--SO--RP--02 \\
         \hline
@@ -1116,15 +1118,15 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
         4a. Lỗi hệ thống khi tính toán doanh thu.\\
 
         \hline
-        \caption{Use Case Thống kê doanh thu}
-        \label{tab:uc_so_rp_02}
-      \end{longtable}
+        \end{longtable}
     \end{center}
 
   \item \textbf{Xuất file báo cáo}
     \begin{center}
       \renewcommand{\arraystretch}{1.5}
       \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Xuất file báo cáo}
+        \label{tab:uc_so_rp_03} \\
         \hline
         \textbf{Use case ID} & UC--SO--RP--03 \\
         \hline
@@ -1158,9 +1160,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
         \textbf{Exception} &
         3a. Lỗi tạo file báo cáo.\\
         \hline
-        \caption{Use Case Xuất file báo cáo}
-        \label{tab:uc_so_rp_03}
-      \end{longtable}
+        \end{longtable}
     \end{center}
 \end{itemize}
 
@@ -1176,6 +1176,8 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
     \begin{center}
       \renewcommand{\arraystretch}{1.5}
       \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Xem đánh giá}
+        \label{tab:uc_so_rv_01} \\
         \hline
         \textbf{Use case ID} & UC--SO--RV--01 \\
         \hline
@@ -1209,15 +1211,15 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
         \textbf{Exception} &
         Không có.\\
         \hline
-        \caption{Use Case Xem đánh giá}
-        \label{tab:uc_so_rv_01}
-      \end{longtable}
+        \end{longtable}
     \end{center}
 
   \item \textbf{Phản hồi đánh giá}
     \begin{center}
       \renewcommand{\arraystretch}{1.5}
       \begin{longtable}{|m{0.20\textwidth}|m{0.65\textwidth}|}
+          \caption{Use Case Phản hồi đánh giá}
+        \label{tab:uc_so_rv_02} \\
         \hline
         \textbf{Use case ID} & UC--SO--RV--02 \\
         \hline
@@ -1256,9 +1258,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
           \item 5a. Lỗi hệ thống khi lưu phản hồi.
         \end{itemize}\\
         \hline
-        \caption{Use Case Phản hồi đánh giá}
-        \label{tab:uc_so_rv_02}
-      \end{longtable}
+        \end{longtable}
     \end{center}
 \end{itemize}
 
@@ -1276,6 +1276,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
 \item \textbf{Tìm kiếm và tra cứu trạm sạc}
 
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng/khách tìm kiếm trạm sạc} \\
   \hline
   \textbf{Use case ID} & UC--UG--01 \\
   \hline
@@ -1311,10 +1312,10 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \textbf{Exception} &
   3b. Không có trạm sạc nào phù hợp thì Hệ thống thông báo “Không tìm thấy trạm sạc phù hợp”.\\
   \hline
-  \caption{Use Case Người dùng/khách tìm kiếm trạm sạc}
-\end{longtable}
+  \end{longtable}
 
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng/khách lọc kết quả tìm kiếm} \\
   \hline
   \textbf{Use case ID} & UC--UG--02 \\
   \hline
@@ -1342,10 +1343,10 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \textbf{Exception} &
   4b. Không có trạm sạc nào phù hợp với điều kiện lọc thì hệ thống thông báo “Không tìm thấy trạm sạc phù hợp” và hiển thị tùy chọn xóa lọc.\\
   \hline
-  \caption{Use Case Người dùng/khách lọc kết quả tìm kiếm}
-\end{longtable}
+  \end{longtable}
 
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng/khách xem thông tin trạm sạc} \\
   \hline
   \textbf{Use case ID} & UC--UG--03 \\
   \hline
@@ -1371,10 +1372,10 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \textbf{Exception} &
   3b. Dữ liệu trạm không tồn tại hoặc bị lỗi thì hệ thống thông báo “Không thể tải thông tin trạm sạc”.\\
   \hline
-  \caption{Use Case Người dùng/khách xem thông tin trạm sạc}
-\end{longtable}
+  \end{longtable}
 
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng/khách xem thông tin chi tiết trạm sạc} \\
   \hline
   \textbf{Use case ID} & UC--UG--04 \\
   \hline
@@ -1403,8 +1404,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \hline
   \textbf{Exception} & Không có\\
   \hline
-  \caption{Use Case Người dùng/khách xem thông tin chi tiết trạm sạc}
-\end{longtable}
+  \end{longtable}
 \end{itemize}
 
 \subsubsection{Use Case Diagram -- Người dùng}
@@ -1426,6 +1426,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
 \begin{itemize}
 \item \textbf{Người dùng xem thông tin cá nhân}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng xem thông tin cá nhân} \\
   \hline
   \textbf{Use case ID} & UC--U--01 \\
   \hline
@@ -1456,11 +1457,11 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \hline
   \textbf{Exception} & Không\\
   \hline
-  \caption{Use Case Người dùng xem thông tin cá nhân}
-\end{longtable}
+  \end{longtable}
 
 \item \textbf{Người dùng sửa thông tin cá nhân}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng sửa thông tin cá nhân} \\
   \hline
   \textbf{Use case ID} & UC--U--02 \\
   \hline
@@ -1501,11 +1502,11 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   5b. Có trường dữ liệu không hợp lệ thì hệ thống báo lỗi và yêu cầu nhập lại. \newline
   6a. Lỗi kết nối cơ sở dữ liệu thì hệ thống thông báo “Không thể cập nhật, vui lòng thử lại sau”.\\
   \hline
-  \caption{Use Case Người dùng sửa thông tin cá nhân}
-\end{longtable}
+  \end{longtable}
 
 \item \textbf{Người dùng xem hồ sơ phương tiện của bản thân}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng xem hồ sơ phương tiện của bản thân} \\
   \hline
   \textbf{Use case ID} & UC--U--03 \\
   \hline
@@ -1537,11 +1538,11 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \hline
   \textbf{Exception} & Không\\
   \hline
-  \caption{Use Case Người dùng xem hồ sơ phương tiện của bản thân}
-\end{longtable}
+  \end{longtable}
 
 \item \textbf{Người dùng sửa hồ sơ phương tiện}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng sửa hồ sơ phương tiện} \\
   \hline
   \textbf{Use case ID} & UC--U--04 \\
   \hline
@@ -1582,8 +1583,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   5b. Có trường dữ liệu không hợp lệ thì Hệ thống báo lỗi và yêu cầu nhập lại. \newline
   6a. Lỗi kết nối cơ sở dữ liệu thì Hệ thống thông báo “Không thể cập nhật, vui lòng thử lại sau”.\\
   \hline
-  \caption{Use Case Người dùng sửa hồ sơ phương tiện}
-\end{longtable}
+  \end{longtable}
 \end{itemize}
 
 \paragraph*{b. Đặt chỗ sạc} \mbox{} \\
@@ -1597,6 +1597,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
 \begin{itemize}
 \item \textbf{Người dùng đặt chỗ sạc}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng đặt chỗ sạc} \\
   \hline
   \textbf{Use case ID} & UC--UO--01 \\
   \hline
@@ -1641,11 +1642,11 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \textbf{Exception} &
   8b. Nếu thanh toán thất bại: hệ thống hủy yêu cầu đặt chỗ và thông báo cho Người dùng.\\
   \hline
-  \caption{Use Case Người dùng đặt chỗ sạc}
-\end{longtable}
+  \end{longtable}
 
 \item \textbf{Người dùng xem lịch sử đặt chỗ}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng xem lịch sử đặt chỗ} \\
   \hline
   \textbf{Use case ID} & UC--UO--02 \\
   \hline
@@ -1678,11 +1679,11 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \textbf{Exception} &
   4b. Nếu Người dùng chưa từng có đặt chỗ: hệ thống hiển thị thông báo “Bạn chưa có lịch sử đặt chỗ nào”.\\
   \hline
-  \caption{Use Case Người dùng xem lịch sử đặt chỗ}
-\end{longtable}
+  \end{longtable}
 
 \item \textbf{Người dùng hủy đặt chỗ sạc}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng hủy đặt chỗ sạc} \\
   \hline
   \textbf{Use case ID} & UC--UO--03 \\
   \hline
@@ -1723,8 +1724,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \textbf{Exception} &
   7b. Nếu hoàn tiền thất bại: hệ thống thông báo lỗi, đồng thời đánh dấu đặt chỗ là “Đã hủy” nhưng gắn trạng thái “Hoàn tiền thất bại” để xử lý sau.\\
   \hline
-  \caption{Use Case Người dùng hủy đặt chỗ sạc}
-\end{longtable}
+  \end{longtable}
 \end{itemize}
 
 \paragraph*{c. Quản lý thanh toán và giao dịch} \mbox{} \\
@@ -1738,6 +1738,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
 \begin{itemize}
 \item \textbf{Người dùng liên kết phương thức thanh toán}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng liên kết phương thức thanh toán} \\
   \hline
   \textbf{Use case ID} & UC--UPAY--01 \\
   \hline
@@ -1779,11 +1780,11 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   6a. Nếu ngân hàng/ ví điện tử từ chối xác thực: hệ thống thông báo lỗi và hủy liên kết. \newline
   7a. Nếu lưu dữ liệu liên kết thất bại: hệ thống thông báo lỗi và yêu cầu Người dùng thực hiện lại.\\
   \hline
-  \caption{Use Case Người dùng liên kết phương thức thanh toán}
-\end{longtable}
+  \end{longtable}
 
 \item \textbf{Người dùng thanh toán}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng thanh toán} \\
   \hline
   \textbf{Use case ID} & UC--UPAY--02 \\
   \hline
@@ -1826,11 +1827,11 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   5b. Nếu ngân hàng/ ví điện tử trả về trạng thái thất bại: hệ thống thông báo lỗi, thanh toán bị hủy. \newline
   7b. Nếu lưu dữ liệu giao dịch thất bại: hệ thống thông báo lỗi và thông báo cho Người dùng thử lại.\\
   \hline
-  \caption{Use Case Người dùng thanh toán}
-\end{longtable}
+  \end{longtable}
 
 \item \textbf{Người dùng xem lịch sử thanh toán}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng xem lịch sử thanh toán} \\
   \hline
   \textbf{Use case ID} & UC--UPAY--03 \\
   \hline
@@ -1857,11 +1858,11 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \textbf{Exception} &
   4a. Nếu Người dùng chưa từng có giao dịch: hệ thống hiển thị thông báo “Bạn chưa có lịch sử thanh toán nào”.\\
   \hline
-  \caption{Use Case Người dùng xem lịch sử thanh toán}
-\end{longtable}
+  \end{longtable}
 
 \item \textbf{Người dùng xem chi tiết giao dịch}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng xem chi tiết giao dịch} \\
   \hline
   \textbf{Use case ID} & UC--UPAY--04 \\
   \hline
@@ -1890,8 +1891,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \hline
   \textbf{Exception} & Không có\\
   \hline
-  \caption{Use Case Người dùng xem chi tiết giao dịch}
-\end{longtable}
+  \end{longtable}
 \end{itemize}
 
 \paragraph*{d. Đánh giá và phản ánh} \mbox{} \\
@@ -1905,6 +1905,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
 \begin{itemize}
 \item \textbf{Người dùng đánh giá trạm sạc}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng đánh giá trạm sạc} \\
   \hline
   \textbf{Use case ID} & UC--UR--01 \\
   \hline
@@ -1941,11 +1942,11 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \textbf{Exception} &
   4b. Người dùng chưa từng sử dụng trạm sạc thì Hệ thống từ chối và thông báo “Bạn cần sử dụng dịch vụ trước khi đánh giá”.\\
   \hline
-  \caption{Use Case Người dùng đánh giá trạm sạc}
-\end{longtable}
+  \end{longtable}
 
 \item \textbf{Người dùng chỉnh sửa đánh giá trạm sạc}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng chỉnh sửa đánh giá trạm sạc} \\
   \hline
   \textbf{Use case ID} & UC--UR--02 \\
   \hline
@@ -1977,11 +1978,11 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \hline
   \textbf{Exception} & Không có\\
   \hline
-  \caption{Use Case Người dùng chỉnh sửa đánh giá trạm sạc}
-\end{longtable}
+  \end{longtable}
 
 \item \textbf{Người dùng xóa đánh giá trạm sạc}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng xóa đánh giá trạm sạc} \\
   \hline
   \textbf{Use case ID} & UC--UR--03 \\
   \hline
@@ -2014,11 +2015,11 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \hline
   \textbf{Exception} & Không có\\
   \hline
-  \caption{Use Case Người dùng xóa đánh giá trạm sạc}
-\end{longtable}
+  \end{longtable}
 
 \item \textbf{Người dùng xem danh sách đánh giá trạm sạc}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng xem danh sách đánh giá trạm sạc} \\
   \hline
   \textbf{Use case ID} & UC--UR--04 \\
   \hline
@@ -2048,11 +2049,11 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \hline
   \textbf{Exception} & Không có\\
   \hline
-  \caption{Use Case Người dùng xem danh sách đánh giá trạm sạc}
-\end{longtable}
+  \end{longtable}
 
 \item \textbf{Người dùng gửi phản ánh}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng gửi phản ánh} \\
   \hline
   \textbf{Use case ID} & UC--UR--05 \\
   \hline
@@ -2089,11 +2090,11 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \hline
   \textbf{Exception} & Không có\\
   \hline
-  \caption{Use Case Người dùng gửi phản ánh}
-\end{longtable}
+  \end{longtable}
 
 \item \textbf{Người dùng nhận phản hồi}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng nhận phản hồi} \\
   \hline
   \textbf{Use case ID} & UC--UR--06 \\
   \hline
@@ -2125,8 +2126,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \hline
   \textbf{Exception} & Không có\\
   \hline
-  \caption{Use Case Người dùng nhận phản hồi}
-\end{longtable}
+  \end{longtable}
 \end{itemize}
 
 \paragraph*{e. Giám sát quá trình sạc (mô phỏng)} \mbox{} \\
@@ -2140,6 +2140,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
 \begin{itemize}
 \item \textbf{Người dùng bắt đầu sạc}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng bắt đầu sạc} \\
   \hline
   \textbf{Use case ID} & UC--UGS--01 \\
   \hline
@@ -2175,11 +2176,11 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \hline
   \textbf{Exception} & Không có\\
   \hline
-  \caption{Use Case Người dùng bắt đầu sạc}
-\end{longtable}
+  \end{longtable}
 
 \item \textbf{Người dùng theo dõi quá trình sạc}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng theo dõi quá trình sạc} \\
   \hline
   \textbf{Use case ID} & UC--UGS--02 \\
   \hline
@@ -2213,11 +2214,11 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \hline
   \textbf{Exception} & Không có\\
   \hline
-  \caption{Use Case Người dùng theo dõi quá trình sạc}
-\end{longtable}
+  \end{longtable}
 
 \item \textbf{Người dùng dừng sạc từ xa}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng dừng sạc từ xa} \\
   \hline
   \textbf{Use case ID} & UC--UGS--03 \\
   \hline
@@ -2255,11 +2256,11 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \hline
   \textbf{Exception} & Không có\\
   \hline
-  \caption{Use Case Người dùng dừng sạc từ xa}
-\end{longtable}
+  \end{longtable}
 
 \item \textbf{Người dùng xem lịch sử sạc}
 \begin{longtable}{|m{0.25\textwidth}|m{0.70\textwidth}|}
+          \caption{Use Case Người dùng xem lịch sử sạc} \\
   \hline
   \textbf{Use case ID} & UC--UGS--04 \\
   \hline
@@ -2294,8 +2295,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
   \hline
   \textbf{Exception} & Không có\\
   \hline
-  \caption{Use Case Người dùng xem lịch sử sạc}
-\end{longtable}
+  \end{longtable}
 \end{itemize}
 \subsection{Mô hình hóa quy trình}
 \subsubsection{Activity Diagram -- Người quản trị hệ thống phân chia doanh thu}
