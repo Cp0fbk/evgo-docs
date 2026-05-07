@@ -36,7 +36,7 @@ Hệ thống thiết lập quy tắc giao tiếp một chiều nghiêm ngặt đ
 Dù được chia thành nhiều module logic, hệ thống sử dụng chung một cơ sở dữ liệu PostgreSQL để đảm bảo tính nhất quán của dữ liệu giao dịch (ACID) và đơn giản hóa việc quản lý. Tuy nhiên, việc truy xuất dữ liệu vẫn được phân quyền logic: mã nguồn của module nào chỉ được phép truy vấn các bảng dữ liệu thuộc phạm vi nghiệp vụ của module đó. Bên cạnh đó, Redis được tích hợp để giải quyết bài toán hiệu năng cao cho việc caching dữ liệu và quản lý phiên làm việc.
 Tóm lại, kiến trúc Modular Monolith của hệ thống EV-Go không chỉ đáp ứng tốt các yêu cầu nghiệp vụ hiện tại mà còn tạo dựng một nền tảng vững chắc, sẵn sàng cho việc mở rộng quy mô và nâng cấp công nghệ trong tương lai.
 \subsection{Mô hình dữ liệu}
-Hình ảnh dưới đây mô tả sơ đồ thực thể quan hệ (Entity Relationship Diagram - ERD) của hệ thống EV-Go. Mô hình này được thiết kế nhằm đảm bảo tính toàn vẹn dữ liệu, khả năng mở rộng và hiệu năng truy vấn cho các nghiệp vụ cốt lõi như quản lý trạm sạc, đặt lịch, phiên sạc và thanh toán.
+Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity Relationship Diagram - ERD) của hệ thống EV-Go. Mô hình này được thiết kế nhằm đảm bảo tính toàn vẹn dữ liệu, khả năng mở rộng và hiệu năng truy vấn cho các nghiệp vụ cốt lõi như quản lý trạm sạc, đặt lịch, phiên sạc và thanh toán.
 
 \begin{figure}[H]
   \centering
