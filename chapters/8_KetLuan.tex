@@ -21,12 +21,13 @@ Trải qua quá trình nghiên cứu và thực hiện đồ án tốt nghiệp,
 \end{itemize}
 
 \subsection{Hạn chế}
-Mặc dù đã đạt được những kết quả đáng kể và hoàn thiện được ứng dụng di động chất lượng cao, hệ thống EV-Go vẫn còn một số hạn chế nhất định:
+Mặc dù đã đạt được những kết quả đáng kể, hệ thống EV-Go vẫn còn một số hạn chế và các tính năng chưa hoàn thiện trong phạm vi triển khai hiện tại:
 
 \begin{itemize}
     \item \textbf{Kết nối phần cứng:} Do giới hạn về nguồn lực và rào cản thiết bị, hệ thống chưa được kiểm thử trực tiếp với các trụ sạc vật lý. Các tương tác phần cứng hiện được thực thi thông qua hệ thống giả lập chuẩn OCPP (OCPP ChargePoint Simulator).
-    \item \textbf{Hệ thống Web Admin:} Do chủ đích dồn toàn lực vào kiến trúc Backend và trải nghiệm Ứng dụng Di động, phân hệ Web Admin dành cho chủ trạm và ban quản trị chỉ dừng ở mức cung cấp các chức năng quản lý cơ bản, chưa được đầu tư mạnh về giao diện và các báo cáo phân tích chuyên sâu.
-    \item \textbf{Giới hạn thanh toán thực tế:} Luồng thanh toán qua ZaloPay hiện chỉ hoạt động ở môi trường thử nghiệm (Sandbox). Việc đưa vào vận hành thực tế cần thêm các thủ tục pháp lý để xử lý dòng tiền thật và mở rộng thêm các cổng thanh toán khác. Hệ thống cũng chưa hoàn thiện luồng hoàn trả tiền cho người dùng.
+    \item \textbf{Luồng xử lý ngoại lệ phần cứng (Hardware Exceptions):} Khả năng chịu lỗi của hệ thống khi trạm sạc mất kết nối mạng đột ngột trong lúc đang sạc chưa được hoàn thiện. Cơ chế tự động khôi phục và đồng bộ thông tin sạc khi trạm sạc trực tuyến trở lại vẫn cần sự can thiệp thủ công.
+    \item \textbf{Hệ thống Web Admin và Phân tích Dữ liệu:} Do dồn toàn lực vào kiến trúc Backend và trải nghiệm Ứng dụng Di động, phân hệ Web Admin dành cho chủ trạm chỉ dừng ở mức quản lý dữ liệu và thiết lập các cài đặt cơ bản, chưa có hệ thống thống kê doanh thu và biểu đồ báo cáo tài chính chuyên sâu. Luồng hoạt động cho tính năng báo cáo và phản hồi đánh giá cũng chưa được hoàn thiện.
+    \item \textbf{Tích hợp Thanh toán và Tự động hoàn tiền :} Việc thanh toán qua ZaloPay hiện chỉ hoạt động ở môi trường thử nghiệm (Sandbox). Đặc biệt, nếu người dùng hủy lịch hẹn hợp lệ hoặc trạm sạc gặp lỗi ngắt quãng, hệ thống chưa hoàn thiện quy trình gọi API tự động hoàn trả tiền về ví của người dùng.
 \end{itemize}
 
 \subsection{Hướng phát triển tương lai}
@@ -37,5 +38,5 @@ Mặc dù đã đạt được những kết quả đáng kể và hoàn thiện
     \item \textbf{Nâng cấp giao thức OCPP:} Hỗ trợ song song chuẩn OCPP 2.0.1 nhằm tận dụng các tính năng bảo mật nâng cao và công nghệ thanh toán trơn tru như Plug \& Charge (ISO 15118).
     \item \textbf{Tích hợp Trạm sạc vật lý \& IoT:} Triển khai thử nghiệm hệ thống với các trụ sạc thương mại thực tế. Bổ sung các mạng cảm biến IoT để tự động giám sát nhiệt độ, công suất và cảnh báo an toàn tại điểm sạc.
     \item \textbf{Chuyển đổi sang Microservices:} Tiến hành bóc tách các module chịu tải lớn (đặc biệt là phân hệ WebSocket/SSE xử lý dữ liệu thời gian thực) thành các Microservices độc lập để dễ dàng scaling theo chiều ngang.
-    \item \textbf{Ứng dụng Trí tuệ nhân tạo (AI):} Khai thác dữ liệu lịch sử để áp dụng Machine Learning, qua đó dự đoán nhu cầu sạc theo khu vực, gợi ý thời điểm sạc có giá điện tối ưu, và tự động hóa điều hướng lộ trình trạm sạc cho tài xế.
+    \item \textbf{Ứng dụng Trí tuệ nhân tạo:} Khai thác dữ liệu lịch sử để áp dụng Machine Learning, qua đó dự đoán nhu cầu sạc theo khu vực, gợi ý thời điểm sạc có giá điện tối ưu, và tự động hóa điều hướng lộ trình trạm sạc cho tài xế.
 \end{itemize}
