@@ -106,7 +106,14 @@
  \end{center}
 \end{titlepage}
 
-\pagenumbering{arabic}
+\pagenumbering{roman}
+\input{chapters/0_LoiCamOn}
+\newpage
+\input{chapters/0_LoiCamDoan}
+\newpage
+\input{chapters/0_TomTat}
+\newpage
+
 \tableofcontents
 \newpage
 
@@ -116,6 +123,9 @@
 \listoftables
 \addcontentsline{toc}{section}{Danh sách bảng}
 \newpage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
 
 % ===== Example skeleton sections (edit or replace with \input if you split chapters) =====
 \input{chapters/1_TongQuan}
