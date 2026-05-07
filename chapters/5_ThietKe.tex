@@ -12,8 +12,8 @@ Dựa trên yêu cầu về tính linh hoạt, khả năng bảo trì và mở r
 Khác với kiến trúc Layered Monolith truyền thống (phân chia theo tầng kỹ thuật: Controller, Service, Repository), kiến trúc của EV-Go phân chia hệ thống theo các nghiệp vụ chức năng. Mỗi nghiệp vụ được đóng gói thành một Module độc lập về mặt logic nhưng vẫn cùng tồn tại trong một đơn vị triển khai duy nhất.
 Mô hình này mang lại các ưu điểm vượt trội cho hệ thống:
 \begin{itemize}
-  \item \textbf{Tính đóng gói cao:} Mỗi module ẩn giấu implementation chi tiết và chỉ giao tiếp với bên ngoài thông qua các API công khai (Public API) được định nghĩa rõ ràng.
-  \item \textbf{Giảm thiểu sự phụ thuộc:} Sự phụ thuộc vòng (circular dependency) giữa các module bị ngăn chặn nghiêm ngặt ngay từ giai đoạn biên dịch nhờ cơ chế kiểm soát của Spring Modulith.
+  \item \textbf{Tính đóng gói cao:} Mỗi module ẩn giấu implementation chi tiết và chỉ giao tiếp với bên ngoài thông qua các Public API được định nghĩa rõ ràng.
+  \item \textbf{Giảm thiểu sự phụ thuộc:} Sự phụ thuộc vòng giữa các module bị ngăn chặn nghiêm ngặt ngay từ giai đoạn biên dịch nhờ cơ chế kiểm soát của Spring Modulith.
   \item \textbf{Khả năng tiến hóa:} Khi quy mô hệ thống tăng trưởng, các module độc lập có thể dễ dàng được tách ra thành các Microservices riêng biệt mà không cần thay đổi lớn về cấu trúc mã nguồn.
 \end{itemize}
 \subsubsection{Cấu trúc chi tiết của một Module}
@@ -29,14 +29,14 @@ Một đặc trưng quan trọng trong kiến trúc của hệ thống là sự 
 \subsubsection{Cơ chế giao tiếp liên Module (Inter-module Communication)}
 Hệ thống thiết lập quy tắc giao tiếp một chiều nghiêm ngặt để duy trì tính toàn vẹn của kiến trúc:
 \begin{itemize}
-  \item Các module giao tiếp với nhau \textbf{thông qua Public API}. Ví dụ, khi \textit{Station Module} cần thông tin chủ trạm, nó sẽ gọi \textit{UserService Interface} công khai thay vì truy cập trực tiếp vào bảng \textit{User} trong cơ sở dữ liệu.
+  \item Các module giao tiếp với nhau thông qua Public API. Ví dụ, khi \textit{Station Module} cần thông tin chủ trạm, nó sẽ gọi \textit{UserService Interface} thay vì truy cập trực tiếp vào bảng \textit{User} trong cơ sở dữ liệu.
   \item \textbf{Shared Kernel (Module dùng chung):} Nhằm hạn chế sự lặp lại mã nguồn, hệ thống xây dựng một module đặc biệt là \textit{Shared Kernel}. Module này đóng vai trò là thư viện nội bộ (Open Module), chứa các thành phần dùng chung cho toàn hệ thống như: mã lỗi, các lớp xử lý ngoại lệ toàn cục, và các cấu trúc dữ liệu chuẩn áp dụng cho toàn hệ thống. Tất cả các module nghiệp vụ đều có thể truy cập và sử dụng tài nguyên từ Shared Kernel.
 \end{itemize}
 \subsubsection{Hạ tầng dữ liệu}
-Dù được chia thành nhiều module logic, hệ thống sử dụng chung một cơ sở dữ liệu PostgreSQL để đảm bảo tính nhất quán của dữ liệu giao dịch (ACID) và đơn giản hóa việc quản lý. Tuy nhiên, việc truy xuất dữ liệu vẫn được phân quyền logic: mã nguồn của module nào chỉ được phép truy vấn các bảng dữ liệu thuộc phạm vi nghiệp vụ của module đó. Bên cạnh đó, Redis được tích hợp để giải quyết bài toán hiệu năng cao cho việc caching dữ liệu trạm sạc và quản lý phiên làm việc.
+Dù được chia thành nhiều module logic, hệ thống sử dụng chung một cơ sở dữ liệu PostgreSQL để đảm bảo tính nhất quán của dữ liệu giao dịch (ACID) và đơn giản hóa việc quản lý. Tuy nhiên, việc truy xuất dữ liệu vẫn được phân quyền logic: mã nguồn của module nào chỉ được phép truy vấn các bảng dữ liệu thuộc phạm vi nghiệp vụ của module đó. Bên cạnh đó, Redis được tích hợp để giải quyết bài toán hiệu năng cao cho việc caching dữ liệu và quản lý phiên làm việc.
 Tóm lại, kiến trúc Modular Monolith của hệ thống EV-Go không chỉ đáp ứng tốt các yêu cầu nghiệp vụ hiện tại mà còn tạo dựng một nền tảng vững chắc, sẵn sàng cho việc mở rộng quy mô và nâng cấp công nghệ trong tương lai.
 \subsection{Mô hình dữ liệu}
-Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối quan hệ (Entity Relationship Diagram - ERD) của hệ thống EV-Go. Mô hình này được thiết kế nhằm đảm bảo tính toàn vẹn dữ liệu, khả năng mở rộng và hiệu năng truy vấn cho các nghiệp vụ cốt lõi như quản lý trạm sạc, đặt lịch, phiên sạc và thanh toán.
+Hình ảnh dưới đây mô tả sơ đồ thực thể quan hệ (Entity Relationship Diagram - ERD) của hệ thống EV-Go. Mô hình này được thiết kế nhằm đảm bảo tính toàn vẹn dữ liệu, khả năng mở rộng và hiệu năng truy vấn cho các nghiệp vụ cốt lõi như quản lý trạm sạc, đặt lịch, phiên sạc và thanh toán.
 
 \begin{figure}[H]
   \centering
@@ -48,7 +48,7 @@ Hình \ref{fig:evgo_erd} dưới đây mô tả sơ đồ thực thể mối qua
 \begin{itemize}
   \item \textbf{Nhóm thực thể Người dùng và Quản trị}
     \begin{itemize}
-      \item \textbf{User}: Lưu trữ thông tin định danh và cá nhân của người dùng tham gia hệ thống. Các thuộc tính quan trọng bao gồm \textit{user\_id} (khóa chính), \textit{email}, \textit{password} (mật khẩu đã mã hóa), \textit{full\_name}, \textit{phone\_number}, \textit{birthday}, \textit{gender}, \textit{avatar\_url} và \textit{status} (trạng thái hoạt động). Ngoài ra, hệ thống hỗ trợ xác thực qua bên thứ ba thông qua các trường \textit{auth\_provider} và \textit{provider\_id}.
+      \item \textbf{User}: Lưu trữ thông tin định danh và cá nhân của người dùng tham gia hệ thống. Các thuộc tính quan trọng bao gồm \textit{user\_id}, \textit{email}, \textit{password} (mật khẩu đã mã hóa), \textit{full\_name}, \textit{phone\_number}, \textit{birthday}, \textit{gender}, \textit{avatar\_url} và \textit{status} (trạng thái hoạt động). Ngoài ra, hệ thống hỗ trợ xác thực qua bên thứ ba thông qua các trường \textit{auth\_provider} và \textit{provider\_id}.
       \item \textbf{Role}: Định nghĩa các vai trò trong hệ thống (ví dụ: Admin, Station Owner, Customer). Mối quan hệ giữa \textit{User} và \textit{Role} là quan hệ N-M, cho phép một người dùng có thể đảm nhận nhiều vai trò khác nhau.
       \item \textbf{StationOwnerProfile}: Thực thể mở rộng dành cho người dùng có vai trò chủ trạm, giúp lưu trữ thông tin pháp lý và kinh doanh như \textit{business\_name}, \textit{tax\_code} (mã số thuế), \textit{identity\_number} (CCCD/CMND), \textit{owner\_type}, \textit{contact\_phone}, \textit{contact\_email}, \textit{bank\_account}, \textit{bank\_name} và \textit{pdf\_file\_path} (đường dẫn đến tài liệu đăng ký). Mối quan hệ giữa \textit{User} và \textit{StationOwnerProfile} là 1-1.
       \item \textbf{Vehicle}: Quản lý danh sách phương tiện của người dùng. Mỗi phương tiện được gắn với một người dùng và chứa thông tin về xe như \textit{model\_name}, \textit{brand}, \textit{connector\_type} (loại cổng sạc tương thích) và trạng thái \textit{in\_use}.
