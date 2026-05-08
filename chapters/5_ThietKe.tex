@@ -71,7 +71,7 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
     \item \textbf{Nhóm thực thể Tài chính và Thanh toán}
     \begin{itemize}
         \item \textbf{Invoice}: Hóa đơn tổng hợp chi phí cho các dịch vụ sử dụng (đặt chỗ hoặc sạc). Hóa đơn lưu trữ mã số (\textit{number}), mục đích giao dịch (\textit{purpose}), tổng tiền (\textit{total\_cost}), phương thức thanh toán (\textit{payment\_method}) và trạng thái thanh toán (\textit{status}).
-        \item \textbf{Transaction}: Ghi lại lịch sử giao dịch thanh toán chi tiết qua cổng thanh toán (cụ thể ở đây là ZaloPay). Thực thể này lưu trữ các mã tham chiếu từ cổng thanh toán (\textit{gateway\_transaction\_id}, \textit{zp\_trans\_token}), đường dẫn thanh toán (\textit{order\_url}), số tiền (\textit{amount}), và kết quả giao dịch (\textit{return\_code}) phục vụ cho việc đối soát doanh thu. Mối quan hệ giữa \textit{Invoice} và \textit{Transaction} là một-nhiều (1-N).
+        \item \textbf{Transaction}: Ghi lại lịch sử giao dịch thanh toán chi tiết qua cổng thanh toán (cụ thể ở đây là ZaloPay). Thực thể này lưu trữ các mã tham chiếu từ cổng thanh toán (\textit{gateway\_transaction\_id}, \textit{zp\_trans\_token}), đường dẫn thanh toán (\textit{order\_url}), số tiền (\textit{amount}), và kết quả giao dịch (\textit{return\_code}) phục vụ cho việc đối soát doanh thu. Mối quan hệ giữa \textit{Invoice} và \textit{Transaction} là 1-N.
     \end{itemize}
     \item \textbf{Nhóm thực thể Phản hồi và Hỗ trợ}
     \begin{itemize}

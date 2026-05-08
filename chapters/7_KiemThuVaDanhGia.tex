@@ -1,0 +1,582 @@
+% ============================================================
+%  Chương 7 — Kiểm thử và Đánh giá
+% ============================================================
+\section{Kiểm thử và Đánh giá}
+
+% ------------------------------------------------------------
+\subsection{Chiến lược kiểm thử}
+% ------------------------------------------------------------
+\hspace*{\parindent}
+Đảm bảo chất lượng phần mềm là yếu tố then chốt trong vòng đời phát triển
+hệ thống EVGo. Với đặc thù là nền tảng quản lý trạm sạc xe máy điện có các giao dịch
+thời gian thực, bất kỳ sai sót nào trong luồng đặt chỗ, sạc điện hay thanh toán
+đều có thể gây ra tổn thất nghiêm trọng cho người dùng và đối tác vận hành.
+
+Nhóm áp dụng chiến lược kiểm thử theo ba tầng độc lập nhưng bổ trợ lẫn nhau:
+
+\begin{itemize}
+    \item \textbf{Kiểm thử đơn vị:} Xác thực tính đúng đắn của từng đơn vị logic nghiệp vụ tại tầng dịch vụ (Service) và lắng nghe sự kiện (Event Listener) trong điều kiện cô lập hoàn toàn với cơ sở hạ tầng bên ngoài.
+
+    \item \textbf{Kiểm thử thủ công:} Kiểm tra luồng tích hợp đầu cuối qua giao diện thực tế đã được triển khai, kết hợp với website giả lập phần cứng OCPP ChargePoint Simulator để mô phỏng tương tác với trụ sạc vật lý.
+
+    \item \textbf{Kiểm thử hiệu năng:} Đánh giá khả năng chịu tải thực tế của hệ thống dưới điều kiện truy cập đồng thời quy mô lớn thông qua Apache JMeter~\cite{jmeter}.
+\end{itemize}
+
+% ------------------------------------------------------------
+\subsection{Kiểm thử đơn vị}
+% ------------------------------------------------------------
+
+\subsubsection{Mục tiêu và bộ công cụ}
+
+\hspace*{\parindent}
+Trọng tâm của giai đoạn kiểm thử đơn vị là xây dựng một bộ kịch bản kiểm thử
+toàn diện nhằm bảo vệ an toàn luồng dữ liệu cho các module cốt lõi của Backend.
+Các module được ưu tiên hàng đầu bao gồm: \textit{Station}, \textit{Booking},
+\textit{Charging}, \textit{Payment} và \textit{OCPP}. Nhóm bám sát hai chỉ tiêu
+chất lượng cụ thể:
+
+\begin{itemize}
+    \item \textbf{Độ phủ kịch bản:} Hoàn thành \textbf{100\%} các kịch bản chuẩn và kịch bản sinh lỗi.
+
+    \item \textbf{Độ phủ mã lệnh:} Duy trì tỷ lệ tối thiểu \textbf{80\%} đối với các lớp chứa logic nghiệp vụ.
+\end{itemize}
+
+Để đạt được các chỉ tiêu này, nhóm sử dụng bộ công cụ tiêu chuẩn của hệ sinh thái
+Spring Boot:
+
+\begin{itemize}
+    \item \textbf{JUnit 5}~\cite{junit5}: Đóng vai trò là Test Runner chính.
+          Tên các phương thức kiểm thử được viết theo quy ước thống nhất.
+
+    \item \textbf{Mockito}~\cite{mockito}: Sử dụng \texttt{@Mock} và
+          \texttt{@InjectMocks} để giả lập các thành phần phụ thuộc. Việc này giúp cô lập môi trường kiểm thử khỏi cơ sở hạ tầng thực. Hàm \texttt{verify()} được áp dụng để kiểm chứng tính chính xác của tương tác giữa các thành phần.
+
+    \item \textbf{AssertJ}~\cite{assertj}: Sử dụng Fluent API để các câu lệnh kiểm chứng đọc tự nhiên và dễ gỡ lỗi, đặc biệt khi cần bắt và đối chiếu mã lỗi chuẩn.
+
+    \item \textbf{JaCoCo 0.8.11}~\cite{jacoco}: Tích hợp trực tiếp vào pipeline
+          Maven để đo lường và báo cáo độ phủ mã nguồn sau mỗi lần chạy kiểm thử.
+\end{itemize}
+
+% ------------------------------------------------------------
+\subsubsection{Quy trình phát triển hướng kiểm thử}
+
+\hspace*{\parindent}
+Toàn bộ các tính năng mới đều được phát triển theo vòng lặp
+\textbf{Phát triển Hướng Kiểm thử (TDD)} gồm ba bước cốt lõi:
+
+\begin{enumerate}
+    \item \textbf{Viết kiểm thử trước:} Dựa trên tài liệu thiết kế nghiệp vụ, nhóm chủ động soạn thảo các kịch bản kiểm thử bao phủ cả luồng chuẩn và luồng sinh lỗi. Ở giai đoạn này, toàn bộ kịch bản kiểm thử đều chạy thất bại do logic chưa được cài đặt.
+
+    \item \textbf{Hiện thực logic tối giản:} Nhóm triển khai phần logic cốt lõi với khối lượng mã nguồn gọn nhẹ nhưng đủ để toàn bộ kịch bản kiểm thử chuyển sang trạng thái thành công.
+
+    \item \textbf{Tái cấu trúc và gia cố:} Tối ưu, làm sạch mã nguồn trong khi vẫn duy trì tỷ lệ vượt qua 100\%. Đây cũng là thời điểm nhóm bổ sung các trường hợp ngoại lệ như yêu cầu rỗng, định danh giả mạo, hay xung đột dữ liệu đồng thời.
+\end{enumerate}
+
+Mỗi kịch bản kiểm thử đều được cấu trúc theo mẫu \textbf{Given -- When -- Then},
+phân tách thành ba khối rõ ràng nhằm tăng khả năng đọc hiểu và bảo trì:
+
+\begin{itemize}
+    \item \textbf{Given:} Thiết lập ngữ cảnh, chuẩn bị dữ liệu giả lập và các điều kiện đầu vào.
+    \item \textbf{When:} Gọi thực thi phương thức cần kiểm thử.
+    \item \textbf{Then:} Kiểm định đầu ra, đối chiếu kết quả thực tế với kỳ vọng thiết kế.
+\end{itemize}
+
+% ------------------------------------------------------------
+\subsubsection{Kết quả kiểm thử đơn vị}
+
+\hspace*{\parindent}
+Bộ kiểm thử của hệ thống EVGo bao gồm tổng cộng \textbf{37 lớp kiểm thử}
+phân bổ trên 8 module chức năng, với \textbf{334 kịch bản kiểm thử} được thực thi.
+Kết quả cho thấy toàn bộ kịch bản đều vượt qua thành công mà không ghi nhận bất kỳ
+lỗi hay ngoại lệ nào.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/test/unitTest.png}
+    \caption{Kết quả chạy toàn bộ bộ kiểm thử đơn vị qua Maven
+             (334 tests run, 0 failures, 0 errors, 0 skipped)}
+    \label{fig:unit_test_result}
+\end{figure}
+
+Bảng~\ref{tab:unit_test_summary} trình bày phân bổ số lượng kịch bản kiểm thử
+theo từng module chức năng:
+
+\begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|>{\raggedright\arraybackslash}m{0.15\textwidth}|>{\raggedright\arraybackslash}m{0.5\textwidth}|c|c|}
+        \caption{Tổng hợp kịch bản kiểm thử đơn vị theo module}
+        \label{tab:unit_test_summary} \\
+        \hline
+        \textbf{Module} & \textbf{Lớp kiểm thử tiêu biểu} & \textbf{Số lớp} & \textbf{Số kịch bản} \\
+        \hline
+        \endfirsthead
+        
+        \hline
+        \textbf{Module} & \textbf{Lớp kiểm thử tiêu biểu} & \textbf{Số lớp} & \textbf{Số kịch bản} \\
+        \hline
+        \endhead
+        
+        Station   & StationServiceTest, StationAdminServiceImplTest, StationPhotoServiceTest, PriceSettingServiceTest & 6 & 87 \\
+        \hline
+        Booking   & BookingServiceTest, BookingEventListenerTest, BookingSchedulerTest & 6 & 43 \\
+        \hline
+        Charging  & ChargingServiceTest, ChargingMonitorServiceTest, OcppChargingEventListenerTest & 3 & 40 \\
+        \hline
+        OCPP      & OcppMessageParserTest, OcppWebSocketHandlerTest, MeterValuesHandlerTest, StatusNotificationHandlerTest & 7 & 53 \\
+        \hline
+        Payment   & InvoiceServiceImplTest, ZaloPayServiceTest, ChargingInvoiceListenerTest, IdleFeeListenerTest & 5 & 36 \\
+        \hline
+        Notification & PushNotificationEventListenerTest, PushTokenServiceTest, SmtpEmailServiceImplTest & 3 & 17 \\
+        \hline
+        Review    & ReviewServiceTest, ReviewDtoConverterTest & 2 & 20 \\
+        \hline
+        Hạ tầng   & ModularityTests, DocumenterTests, EvgoApplicationTests & 3 & 3 \\
+        \hline
+        \multicolumn{2}{|r|}{\textbf{Tổng}} & \textbf{37} & \textbf{334} \\
+        \hline
+    \end{longtable}
+\end{center}
+
+% ------------------------------------------------------------
+\subsubsection{Độ phủ mã nguồn}
+
+\hspace*{\parindent}
+Sau khi toàn bộ bộ kiểm thử được thực thi, công cụ JaCoCo~\cite{jacoco} tự động
+tổng hợp và trình bày báo cáo độ phủ mã nguồn theo từng package. Kết quả thu được
+từ hình~\ref{fig:jacoco_overview} chứng minh hệ thống đã đạt và vượt ngưỡng chất
+lượng đề ra:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/test/coverage.png}
+    \caption{Báo cáo độ phủ mã nguồn tổng thể theo JaCoCo 0.8.11}
+    \label{fig:jacoco_overview}
+\end{figure}
+
+\begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|>{\raggedright\arraybackslash}m{0.45\textwidth}|c|c|c|c|}
+        \caption{Độ phủ mã nguồn theo từng package (JaCoCo)}
+        \label{tab:jacoco_coverage} \\
+        \hline
+        \textbf{Package} & \textbf{Instr. Cov.} & \textbf{Branch Cov.} & \textbf{Lines} & \textbf{Methods} \\
+        \hline
+        \endfirsthead
+        
+        \hline
+        \textbf{Package} & \textbf{Instr. Cov.} & \textbf{Branch Cov.} & \textbf{Lines} & \textbf{Methods} \\
+        \hline
+        \endhead
+        
+        com.project.evgo.booking.internal    & 89\% & 75\% & 466 & 88 \\
+        \hline
+        com.project.evgo.station.internal    & 78\% & 79\% & 468 & 165 \\
+        \hline
+        com.project.evgo.payment.internal    & 83\% & 78\% & 336 & 94 \\
+        \hline
+        com.project.evgo.charging.internal   & 77\% & 76\% & 381 & 66 \\
+        \hline
+        com.project.evgo.ocpp.internal       & 84\% & 80\% & 277 & 42 \\
+        \hline
+        com.project.evgo.review.internal     & 85\% & 92\% & 99  & 40 \\
+        \hline
+        com.project.evgo.notification.internal & 73\% & 80\% & 130 & 43 \\
+        \hline
+        com.project.evgo.charger.internal    & 60\% & 33\% & 169 & 84 \\
+        \hline
+        \textbf{Tổng hệ thống (78 classes)} & \textbf{81\%} & \textbf{76\%} & \textbf{2.555} & \textbf{669} \\
+        \hline
+    \end{longtable}
+\end{center}
+
+Phân tích chi tiết các chỉ số cho thấy:
+
+\begin{itemize}
+    \item \textbf{Độ phủ tập lệnh (81\%):} Vượt ngưỡng mục tiêu 80\%, khẳng định phần lớn các tập lệnh trong luồng logic cốt lõi đã được thực thi và kiểm chứng.
+
+    \item \textbf{Độ phủ rẽ nhánh (76\%):} Đảm bảo các luồng rẽ nhánh quan trọng đã được bao phủ, giúp giảm thiểu rủi ro phát sinh lỗi logic tại các tình huống biên.
+
+    \item \textbf{Module booking.internal (89\% / 75\%):} Đạt mức phủ cao nhất về tập lệnh, phản ánh mức độ ưu tiên kiểm thử đối với luồng nghiệp vụ phức tạp nhất của hệ thống, bao gồm cơ chế khoá phân tán trên Redis và phát các sự kiện nội bộ.
+
+    \item \textbf{Module charger.internal (60\% / 33\%):} Ghi nhận mức phủ thấp hơn do phần lớn các lớp trong module này đóng vai trò là các đối tượng giao tiếp và cầu nối dữ liệu, không chứa logic nghiệp vụ phức tạp.
+\end{itemize}
+
+% ------------------------------------------------------------
+\subsection{Kiểm thử thủ công (Manual Testing)}
+% ------------------------------------------------------------
+
+\hspace*{\parindent}
+Đối với các tính năng cần thực hiện giao tiếp với trụ sạc theo đúng chuẩn OCPP 1.6J, nhóm sử dụng công cụ giả lập OCPP ChargePoint Simulator để đóng vai trò làm phần cứng trụ sạc.
+
+\subsubsection{Chuẩn bị môi trường mô phỏng}
+
+\begin{enumerate}
+    \item Mở trang Web giả lập trạm sạc: \url{https://shiv3.github.io/ocpp-cp-simulator/}.
+    \item Tại trường \textbf{Central System URL}, nhập địa chỉ WebSocket của Backend đang chạy, ví dụ: \texttt{ws://localhost:8081/ocpp/}.
+    \item Tại trường \textbf{Charge Point Identity}, nhập ID của trụ sạc có trong cơ sở dữ liệu. Tại trường \textbf{Number of Connectors}, nhập số lượng cổng của trụ. Sau khi cấu hình xong, nhấn lưu lại để tạo bản mô phỏng.
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{figures/test/ocppWeb.png}
+        \caption{Giao diện cấu hình và khởi tạo bản mô phỏng trụ sạc}
+        \label{fig:ocpp_web_setup}
+    \end{figure}
+
+    \item Bấm nút \textbf{Connect}, sau đó quan sát Backend log báo đã nhận được sự kiện \texttt{BootNotification}. Lúc này, quá trình kết nối với trụ sạc đã thành công và hệ thống đã sẵn sàng để thực hiện các luồng kiểm thử liên quan tới phần cứng.
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{figures/test/ocppConnect.png}
+        \caption{Trụ sạc mô phỏng kết nối thành công với Backend qua WebSocket}
+        \label{fig:ocpp_connect}
+    \end{figure}
+\end{enumerate}
+
+Dưới đây là tổng hợp các kịch bản kiểm thử thủ công cho từng nhóm chức năng trọng yếu:
+
+\subsubsection{Nhóm chức năng: Bản đồ trạm sạc}
+
+\begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|c|>{\raggedright\arraybackslash}m{0.25\textwidth}|>{\raggedright\arraybackslash}m{0.3\textwidth}|>{\raggedright\arraybackslash}m{0.3\textwidth}|}
+        \caption{Kịch bản kiểm thử luồng chuẩn - Bản đồ trạm sạc}
+        \label{tab:map_happy} \\
+        \hline
+        \textbf{Bước} & \textbf{Hành động} & \textbf{Kết quả kỳ vọng} & \textbf{Kết quả thực tế} \\
+        \hline
+        \endfirsthead
+        
+        \hline
+        \textbf{Bước} & \textbf{Hành động} & \textbf{Kết quả kỳ vọng} & \textbf{Kết quả thực tế} \\
+        \hline
+        \endhead
+        
+        1 & Mở màn hình bản đồ. & Tự động lấy vị trí hiện tại của người dùng; Hiển thị các biểu tượng trạm sạc xung quanh. & Khớp. Bản đồ tải mượt, các biểu tượng hiển thị đúng vị trí trong cơ sở dữ liệu. \\
+        \hline
+        2 & Sử dụng bộ lọc (Filter) theo loại trụ sạc hoặc trạng thái. & Bản đồ chỉ hiển thị các trạm sạc thỏa mãn điều kiện lọc. & Khớp. API filterStations trả về đúng danh sách. Biểu tượng trạm không phù hợp tự ẩn đi. \\
+        \hline
+        3 & Nhấn vào một biểu tượng trạm sạc trên bản đồ. & Hiển thị thông tin nhanh (Mini card): Tên trạm, khoảng cách, số lượng trụ trống. & Khớp. Hiển thị đúng thông tin trạm sạc đó từ cơ sở dữ liệu. \\
+        \hline
+        4 & Tìm kiếm trạm sạc theo tên địa danh/địa chỉ. & Bản đồ di chuyển đến vị trí tìm kiếm và hiển thị trạm sạc gần đó. & Khớp. Tích hợp Map API tìm kiếm địa điểm chính xác. \\
+        \hline
+    \end{longtable}
+\end{center}
+
+\begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|>{\raggedright\arraybackslash}m{0.2\textwidth}|>{\raggedright\arraybackslash}m{0.25\textwidth}|>{\raggedright\arraybackslash}m{0.25\textwidth}|>{\raggedright\arraybackslash}m{0.2\textwidth}|}
+        \caption{Kịch bản kiểm thử ngoại lệ - Bản đồ trạm sạc}
+        \label{tab:map_negative} \\
+        \hline
+        \textbf{Tình huống} & \textbf{Hành động} & \textbf{Kết quả kỳ vọng} & \textbf{Kết quả thực tế} \\
+        \hline
+        \endfirsthead
+        
+        \hline
+        \textbf{Tình huống} & \textbf{Hành động} & \textbf{Kết quả kỳ vọng} & \textbf{Kết quả thực tế} \\
+        \hline
+        \endhead
+        
+        Quyền vị trí & Người dùng từ chối cấp quyền truy cập vị trí (GPS). & Ứng dụng hiển thị thông báo yêu cầu cấp quyền hoặc cho phép nhập vị trí thủ công. & Đạt. Ứng dụng không bị lỗi, hiển thị một vị trí mặc định tại trung tâm TP.HCM. \\
+        \hline
+        Vùng không có trạm & Di chuyển bản đồ đến một vùng không có trạm sạc nào. & Ứng dụng hiển thị đúng trạng thái không có trạm sạc nào ở khu vực này. & Đạt. Xử lý tốt trường hợp danh sách trả về từ API bị rỗng. \\
+        \hline
+        Dẫn đường (Navigate) & Nhấn nút dẫn đường đến trạm. & Dẫn đường ngay trong ứng dụng, không bị dừng đột ngột. & Đạt. Ứng dụng xử lý luồng mượt mà, vị trí được cập nhật. \\
+        \hline
+    \end{longtable}
+\end{center}
+
+\subsubsection{Nhóm chức năng: Thanh toán}
+
+\begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|c|>{\raggedright\arraybackslash}m{0.25\textwidth}|>{\raggedright\arraybackslash}m{0.3\textwidth}|>{\raggedright\arraybackslash}m{0.3\textwidth}|}
+        \caption{Kịch bản kiểm thử luồng chuẩn - Thanh toán}
+        \label{tab:payment_happy} \\
+        \hline
+        \textbf{Bước} & \textbf{Hành động} & \textbf{Kết quả kỳ vọng} & \textbf{Kết quả thực tế} \\
+        \hline
+        \endfirsthead
+        
+        \hline
+        \textbf{Bước} & \textbf{Hành động} & \textbf{Kết quả kỳ vọng} & \textbf{Kết quả thực tế} \\
+        \hline
+        \endhead
+        
+        1 & Chọn trụ sạc, thời gian và nhấn Thanh toán. & Ứng dụng hiển thị đúng số tiền tính toán. Chuyển sang ví ZaloPay. & Đạt. Ứng dụng hiển thị đúng số tiền tính toán. Chuyển trang sang ZaloPay Sandbox thành công. \\
+        \hline
+        2 & Xác nhận thanh toán trên App ZaloPay. & ZaloPay báo giao dịch thành công. & Đạt. Giao dịch được xác nhận trên môi trường Sandbox. \\
+        \hline
+        3 & Chờ hệ thống xử lý Callback. & Ứng dụng tự động cập nhật trạng thái Thành công. & Đạt. Màn hình tự cập nhật sau khoảng 2 giây. Trạng thái cơ sở dữ liệu chuyển sang PAID. \\
+        \hline
+        4 & Xem lại hóa đơn thanh toán. & Hóa đơn hiển thị đầy đủ thông tin. & Đạt. \\
+        \hline
+    \end{longtable}
+\end{center}
+
+\begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|>{\raggedright\arraybackslash}m{0.2\textwidth}|>{\raggedright\arraybackslash}m{0.25\textwidth}|>{\raggedright\arraybackslash}m{0.25\textwidth}|>{\raggedright\arraybackslash}m{0.2\textwidth}|}
+        \caption{Kịch bản kiểm thử ngoại lệ - Thanh toán}
+        \label{tab:payment_negative} \\
+        \hline
+        \textbf{Tình huống} & \textbf{Hành động} & \textbf{Kết quả kỳ vọng} & \textbf{Kết quả thực tế} \\
+        \hline
+        \endfirsthead
+        
+        \hline
+        \textbf{Tình huống} & \textbf{Hành động} & \textbf{Kết quả kỳ vọng} & \textbf{Kết quả thực tế} \\
+        \hline
+        \endhead
+        
+        Hủy giao dịch & Nhấn hủy trên ví ZaloPay. & Ứng dụng thông báo giao dịch chưa được thực hiện và chờ thử lại. & Đạt. \\
+        \hline
+        Giả mạo dữ liệu & Gửi Callback giả bằng Postman với chữ ký (Signature) sai. & Hệ thống từ chối cập nhật và trả về mã lỗi 400. & Đạt. Hệ thống log lỗi chữ ký không hợp lệ, không có dữ liệu nào bị thay đổi trái phép. \\
+        \hline
+        Thanh toán trùng & Nhấn nút thanh toán nhiều lần liên tiếp. & Chỉ có duy nhất một giao dịch được tạo ra trên ZaloPay. & Đạt. Cơ chế Idempotency xử lý tốt, không tạo trùng đơn hàng trong cơ sở dữ liệu. \\
+        \hline
+    \end{longtable}
+\end{center}
+
+\subsubsection{Nhóm chức năng: Đặt chỗ}
+
+\begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|c|>{\raggedright\arraybackslash}m{0.25\textwidth}|>{\raggedright\arraybackslash}m{0.3\textwidth}|>{\raggedright\arraybackslash}m{0.3\textwidth}|}
+        \caption{Kịch bản kiểm thử luồng chuẩn - Đặt chỗ}
+        \label{tab:booking_happy} \\
+        \hline
+        \textbf{Bước} & \textbf{Hành động} & \textbf{Kết quả kỳ vọng} & \textbf{Kết quả thực tế} \\
+        \hline
+        \endfirsthead
+        
+        \hline
+        \textbf{Bước} & \textbf{Hành động} & \textbf{Kết quả kỳ vọng} & \textbf{Kết quả thực tế} \\
+        \hline
+        \endhead
+        
+        1 & Trên ứng dụng, người dùng chọn một trạm sạc, chọn trụ sạc, chọn cổng sạc và chọn khung giờ bắt đầu và kết thúc. & Hệ thống kiểm tra không có đặt chỗ nào trùng lặp. Hệ thống tạo các khóa phân tán trên Redis (Atomic Lock) để giữ chỗ tạm thời cho người dùng hiện tại. & Khớp. Cổng sạc được giữ chỗ tạm trên Redis cho đúng người dùng hiện tại, người khác không thể chọn trùng khung giờ. \\
+        \hline
+        2 & Người dùng xác nhận thông tin và nhấn Đặt chỗ. & Ứng dụng xác minh lại khóa Redis còn thuộc về người dùng hiện tại, tính phí đặt chỗ dựa trên bảng giá, lưu yêu cầu với trạng thái PENDING và tự động sinh hóa đơn cọc. & Khớp. Yêu cầu được tạo với trạng thái PENDING. Hóa đơn tương ứng được tạo và sẵn sàng thanh toán ZaloPay. \\
+        \hline
+        3 & Người dùng nhấn thanh toán và hoàn tất thanh toán bằng ZaloPay. & Hệ thống nhận sự kiện thanh toán thành công, cập nhật trạng thái sang CONFIRMED, xóa toàn bộ khóa Redis liên quan. Nếu khung giờ sạc gần hiện tại (trong 10 phút), tự động gửi lệnh ReserveNow đến trạm sạc vật lý. & Khớp. Đặt chỗ chuyển sang CONFIRMED, khóa Redis được giải phóng, gửi lệnh giữ chỗ thành công nếu khung giờ sát hiện tại. \\
+        \hline
+        4 & Người dùng mở danh sách lịch chờ sạc (My Bookings). & Trả về danh sách đặt chỗ đang chờ sạc của người dùng. & Khớp. Danh sách hiển thị đúng các đặt chỗ đã được xác nhận, kèm thông tin trạm, cổng, khung giờ, tổng tiền. \\
+        \hline
+        5 & Người dùng hủy một đặt chỗ đã xác nhận trước giờ sạc hơn 2 tiếng. & Hệ thống kiểm tra điều kiện thời gian. Đặt chỗ chuyển sang trạng thái CANCELLED. & Khớp. Hủy thành công, trạng thái cập nhật đúng. \\
+        \hline
+    \end{longtable}
+\end{center}
+
+\begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|>{\raggedright\arraybackslash}m{0.2\textwidth}|>{\raggedright\arraybackslash}m{0.25\textwidth}|>{\raggedright\arraybackslash}m{0.25\textwidth}|>{\raggedright\arraybackslash}m{0.2\textwidth}|}
+        \caption{Kịch bản kiểm thử ngoại lệ - Đặt chỗ}
+        \label{tab:booking_negative} \\
+        \hline
+        \textbf{Tình huống} & \textbf{Hành động} & \textbf{Kết quả kỳ vọng} & \textbf{Kết quả thực tế} \\
+        \hline
+        \endfirsthead
+        
+        \hline
+        \textbf{Tình huống} & \textbf{Hành động} & \textbf{Kết quả kỳ vọng} & \textbf{Kết quả thực tế} \\
+        \hline
+        \endhead
+        
+        Trùng lặp đặt chỗ & Hai người dùng gần như đồng thời gọi API check-availability cho cùng một cổng sạc trong cùng khung giờ. & Lệnh setIfAbsent trên Redis đảm bảo chỉ người gọi trước chiếm được chỗ. Người gọi sau nhận lỗi BOOKING\_\allowbreak SLOT\_\allowbreak UNAVAILABLE. & Khớp. Chỉ duy nhất một người dùng giữ được khóa, không xảy ra tình trạng đặt trùng (double booking). \\
+        \hline
+        Khóa Redis hết hạn & Người dùng gọi check-availability thành công nhưng chờ quá lâu (hơn 8 phút) mới xác nhận đặt chỗ. & Khóa Redis hết hạn TTL. Khi xác nhận, hệ thống phát hiện chỗ không còn giữ và từ chối. & Khớp. Chỗ được trả tự do, người dùng bị buộc phải thực hiện lại từ đầu. \\
+        \hline
+        Chưa thanh toán & Yêu cầu ở trạng thái PENDING quá 12 phút nhưng chưa được thanh toán. & Trình lên lịch (Scheduler) quét định kỳ và tự động chuyển yêu cầu sang trạng thái CANCELLED. & Khớp. Đặt chỗ cũ được dọn dẹp tự động, không chiếm chỗ ảo. \\
+        \hline
+        Thông báo trễ (Delayed IPN) & ZaloPay gửi thông báo thành công trễ cho một yêu cầu đã bị hủy. & Phát hiện yêu cầu đã CANCELLED, không xác nhận mà kích hoạt sự kiện hoàn tiền (Refund). & Khớp. Hệ thống không xác nhận đặt chỗ đã hủy mà kích hoạt quy trình hoàn tiền. \\
+        \hline
+        Hủy không hợp lệ & Cố hủy yêu cầu khi thời gian hiện tại cách giờ sạc dưới 2 tiếng. & Kiểm tra điều kiện và trả về lỗi BOOKING\_\allowbreak CANCELLATION\_\allowbreak NOT\_\allowbreak ALLOWED. & Khớp. Không cho hủy sát giờ sạc nhằm đảm bảo quyền lợi trạm sạc. \\
+        \hline
+    \end{longtable}
+\end{center}
+
+\subsubsection{Nhóm chức năng: Sạc điện}
+
+\begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|c|>{\raggedright\arraybackslash}m{0.25\textwidth}|>{\raggedright\arraybackslash}m{0.3\textwidth}|>{\raggedright\arraybackslash}m{0.3\textwidth}|}
+        \caption{Kịch bản kiểm thử luồng chuẩn - Sạc điện}
+        \label{tab:charging_happy} \\
+        \hline
+        \textbf{Bước} & \textbf{Hành động} & \textbf{Kết quả kỳ vọng} & \textbf{Kết quả thực tế} \\
+        \hline
+        \endfirsthead
+        
+        \hline
+        \textbf{Bước} & \textbf{Hành động} & \textbf{Kết quả kỳ vọng} & \textbf{Kết quả thực tế} \\
+        \hline
+        \endhead
+        
+        1 & Nhấn Bắt đầu sạc với ID cổng sạc hợp lệ (kèm ID đặt chỗ nếu có). & Hệ thống kiểm tra: nợ xấu, trạng thái cổng sạc, quyền đặt chỗ. Tạo phiên sạc trạng thái PREPARING và gửi lệnh RemoteStart đến trụ sạc qua OCPP. & Khớp. Phiên PREPARING được tạo. Bộ mô phỏng nhận lệnh RemoteStart. \\
+        \hline
+        2 & Trụ sạc phản hồi bằng lệnh StartTransaction. & Hệ thống cập nhật trạng thái phiên sang CHARGING, ghi nhận mã giao dịch, chỉ số điện kế ban đầu và thời gian bắt đầu. & Khớp. Phiên chuyển sang CHARGING với đầy đủ thông tin dữ liệu. \\
+        \hline
+        3 & Ứng dụng đăng ký luồng sự kiện thời gian thực (SSE). & Hệ thống phân giải giá sạc một lần và lưu vào cache. Tạo kết nối sự kiện (timeout 30 phút). & Khớp. Kết nối SSE thành công. Giá sạc được cache, không truy vấn lại cơ sở dữ liệu. \\
+        \hline
+        4 & Trụ sạc gửi định kỳ giá trị điện kế (MeterValues). & Hệ thống lưu giá trị vào cache, tính toán số điện tiêu thụ và ước tính chi phí. Đẩy sự kiện SSE về ứng dụng. & Khớp. Ứng dụng cập nhật thời gian thực: số điện, tổng tiền ước tính, thời gian. \\
+        \hline
+        5 & Người dùng nhấn Dừng sạc trên ứng dụng. & Hệ thống xác minh quyền sở hữu phiên, trạng thái hợp lệ và gửi lệnh RemoteStop đến trụ sạc. & Khớp. Lệnh dừng được gửi thành công đến bộ mô phỏng. \\
+        \hline
+        6 & Trụ sạc gửi phản hồi StopTransaction. & Hệ thống chuyển phiên sang FINISHING, tính tổng lượng điện, ghi thời gian kết thúc và sinh hóa đơn. Sự kiện kết thúc gửi về ứng dụng. & Khớp. Hóa đơn sạc được sinh tự động. Ứng dụng nhận sự kiện kết thúc. \\
+        \hline
+        7 & Trụ sạc thông báo đã rút cáp sạc (StatusNotification). & Hệ thống tìm phiên tương ứng, chuyển sang trạng thái COMPLETED và ghi nhận thời gian rút cáp sạc. & Khớp. Phiên sạc chốt trạng thái COMPLETED. \\
+        \hline
+        8 & Xem hóa đơn và thanh toán phí sạc qua ZaloPay. & Ứng dụng hiển thị hóa đơn PENDING với chi tiết lượng điện và đơn giá. Chuyển sang PAID sau khi thanh toán. & Khớp. Thanh toán hoàn tất, hóa đơn cập nhật trạng thái. \\
+        \hline
+    \end{longtable}
+\end{center}
+
+\begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|>{\raggedright\arraybackslash}m{0.2\textwidth}|>{\raggedright\arraybackslash}m{0.25\textwidth}|>{\raggedright\arraybackslash}m{0.25\textwidth}|>{\raggedright\arraybackslash}m{0.2\textwidth}|}
+        \caption{Kịch bản kiểm thử ngoại lệ - Sạc điện}
+        \label{tab:charging_negative} \\
+        \hline
+        \textbf{Tình huống} & \textbf{Hành động} & \textbf{Kết quả kỳ vọng} & \textbf{Kết quả thực tế} \\
+        \hline
+        \endfirsthead
+        
+        \hline
+        \textbf{Tình huống} & \textbf{Hành động} & \textbf{Kết quả kỳ vọng} & \textbf{Kết quả thực tế} \\
+        \hline
+        \endhead
+        
+        Người dùng có nợ xấu & Nhấn Bắt đầu sạc khi đang có hóa đơn chưa thanh toán. & Hệ thống phát hiện nợ, trả về lỗi UNPAID\_\allowbreak INVOICE\_\allowbreak EXISTS. Phiên sạc không được tạo. & Khớp. Ứng dụng hiển thị thông báo yêu cầu thanh toán nợ cũ. \\
+        \hline
+        Cổng sạc bận & Bắt đầu sạc tại cổng đang có phiên sạc hoạt động của người dùng khác. & Hệ thống phát hiện xung đột, trả lỗi SESSION\_\allowbreak ALREADY\_\allowbreak EXISTS. & Khớp. Không cho phép hai phiên hoạt động trên cùng một cổng. \\
+        \hline
+        Dừng sạc trái phép & Cố gửi lệnh dừng phiên sạc của người dùng khác. & Hệ thống kiểm tra quyền sở hữu phiên không khớp, trả lỗi SESSION\_\allowbreak NOT\_\allowbreak OWNED. & Khớp. Chặn truy cập trái phép thành công. \\
+        \hline
+    \end{longtable}
+\end{center}
+
+
+% ------------------------------------------------------------
+\subsection{Kiểm thử hiệu năng}
+% ------------------------------------------------------------
+
+\hspace*{\parindent}
+Sau khi đã đảm bảo tính đúng đắn về mặt logic, nhóm tiến hành đánh giá khả năng
+chịu tải thực tế của hệ thống. Đây là bước kiểm chứng quan trọng để xác nhận EVGo
+có khả năng vận hành ổn định trong môi trường có lượng truy cập đồng thời lớn.
+
+\subsubsection{Kịch bản áp lực 100 CCU}
+\hspace*{\parindent}
+Nhóm thiết lập kịch bản Performance Test với \textbf{100 kết nối đồng thời (CCU)}
+bằng công cụ \textbf{Apache JMeter}~\cite{jmeter}, giả lập hành vi người dùng
+trên 3 API có tần suất gọi cao nhất: \texttt{Get My Bookings},
+\texttt{Search Nearby Stations} và \texttt{Check Availability}.
+Mỗi API thực hiện 1500 request, tổng cộng 4500 mẫu.
+Mức tải 100~CCU được lựa chọn dựa trên ước tính lưu lượng người dùng đồng thời trong giai đoạn thử nghiệm thực tế (pilot), khi hệ thống chưa phải xử lý lưu lượng quy mô lớn. Đây là ngưỡng kiểm thử cơ sở (baseline) nhằm thiết lập nền tảng cho các đợt kiểm thử mở rộng tải sau này.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/test/jmeter-report.png}
+    \caption{Kết quả kiểm thử hiệu năng với công cụ Apache JMeter}
+    \label{fig:jmeter_report}
+\end{figure}
+
+\subsubsection{Phân tích chỉ số kỹ thuật}
+Kết quả thu được (Hình~\ref{fig:jmeter_report}) chứng minh năng lực xử lý vượt
+trội của cấu trúc Modular Monolith:
+
+\begin{itemize}
+    \item \textbf{Tỷ lệ lỗi:} 0.00\%. Với 4500 mẫu, hệ thống không
+          đánh rơi bất kỳ yêu cầu nào, khẳng định độ ổn định tuyệt đối ở tải mục tiêu.
+    \item \textbf{Thời gian phản hồi:} Thời gian phản hồi trung bình
+          đạt \textbf{53ms}. Chỉ số \textbf{99\% Line}
+          chỉ ở mức \textbf{161ms}, nghĩa là 99\% người dùng nhận phản hồi dưới 0.2s.
+    \item \textbf{Thông lượng:} Đạt \textbf{23.9 requests/sec}
+          (có tính đến thời gian suy nghĩ của người dùng). Hệ thống giải quyết tốt rào cản cổ chai.
+\end{itemize}
+
+\subsubsection{Hành trình tối ưu hóa hệ thống}
+\hspace*{\parindent}
+Trong giai đoạn đầu, khi số lượng CCU vượt 50, hệ thống EVGo từng gặp hiện tượng
+nghẽn mạng, latency lên đến 60s và bắt đầu xuất hiện lỗi Timeout.
+Qua phân tích, nhóm đã thực hiện 3 cải tiến then chốt:
+
+\begin{enumerate}
+    \item \textbf{Tối ưu hóa Database Indexing:} Đánh Index bổ sung trên
+          \texttt{status}, \texttt{station\_id}, \texttt{port\_id}, giúp truy vấn
+          chuyển từ quét tuần tự $O(N)$ sang $O(\log N)$.
+    \item \textbf{Cấu hình lại HikariCP Connection Pool:} Tái cấu hình
+          \texttt{maximum-pool-size} và\\
+          \texttt{idle-timeout} để duy trì luồng kết
+          nối database khỏe mạnh thay vì phải tạo mới liên tục.
+    \item \textbf{Khắc phục N+1 Query:} Cập nhật các Entity Graph và cấu hình
+          Hibernate để fetch liên kết dữ liệu trong một câu lệnh JOIN duy nhất,
+          thay vì lặp qua từng phần tử.
+\end{enumerate}
+Những giải pháp này đã giúp hệ thống khôi phục trạng thái hoạt động chớp nhoáng
+với độ trễ dưới 200ms như báo cáo cuối cùng.
+
+% ------------------------------------------------------------
+\subsection{Đánh giá hệ thống}
+% ------------------------------------------------------------
+
+\subsubsection{Đánh giá chức năng}
+\hspace*{\parindent}
+Bảng~\ref{tab:func_eval} đối chiếu từng nhóm yêu cầu chức năng cốt lõi với mức độ
+hoàn thành thực tế của hệ thống EV-Go. Trong tổng số 8 nhóm yêu cầu, hệ thống
+hoàn thành đầy đủ 4 nhóm và hoàn thành một phần 4 nhóm còn lại do các giới hạn
+về nguồn lực và môi trường triển khai.
+
+\begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{longtable}{|>{\raggedright\arraybackslash}m{0.28\textwidth}|>{\centering\arraybackslash}m{0.22\textwidth}|>{\raggedright\arraybackslash}m{0.36\textwidth}|}
+        \caption{Ma trận đánh giá hoàn thành yêu cầu chức năng}
+        \label{tab:func_eval} \\
+        \hline
+        \textbf{Nhóm yêu cầu} & \textbf{Trạng thái} & \textbf{Ghi chú} \\
+        \hline
+        \endfirsthead
+        
+        \hline
+        \textbf{Nhóm yêu cầu} & \textbf{Trạng thái} & \textbf{Ghi chú} \\
+        \hline
+        \endhead
+        
+        Quản lý người dùng \& Xác thực & Hoàn thành một phần & Đăng ký và đăng nhập bằng email hoạt động đầy đủ. Luồng đăng nhập qua Google chưa hoạt động được do gặp vấn đề trong quá trình tích hợp. \\
+        \hline
+        Bản đồ \& Tìm kiếm trạm sạc & Hoàn thành & Tích hợp Map API, bộ lọc theo loại trụ sạc và trạng thái cổng. \\
+        \hline
+        Đặt chỗ (Booking) & Hoàn thành & Redis Distributed Lock, phát hiện xung đột thời gian thực, tự hủy đặt chỗ quá hạn. \\
+        \hline
+        Điều khiển sạc (Charging) & Hoàn thành & Giao tiếp OCPP 1.6J và truyền dữ liệu thời gian thực qua SSE. Đã kiểm thử trên môi trường mô phỏng; chưa kiểm thử với trụ sạc vật lý. \\
+        \hline
+        Thanh toán \& Hóa đơn & Hoàn thành một phần & ZaloPay Deep link và Webhook hoạt động trên Sandbox. Luồng tự động hoàn tiền chưa hoàn thiện. \\
+        \hline
+        Quản trị trạm (Web Admin) & Hoàn thành một phần & Quản lý dữ liệu và cài đặt cơ bản hoàn chỉnh. Biểu đồ doanh thu và báo cáo tài chính chuyên sâu chưa được tích hợp. \\
+        \hline
+        Thông báo đẩy (Push Notification) & Hoàn thành & Thông báo thời gian thực qua Expo Push API được tích hợp hoàn chỉnh. \\
+        \hline
+        Đánh giá \& Phản hồi (Review) & Hoàn thành một phần & Người dùng có thể gửi đánh giá; luồng báo cáo và phản hồi từ chủ trạm chưa hoàn thiện. \\
+        \hline
+    \end{longtable}
+\end{center}
+
+\subsubsection{Đánh giá phi chức năng và kiến trúc}
+\begin{itemize}
+    \item \textbf{Hiệu năng:} Đáp ứng lượng truy cập đồng thời lớn với độ trễ thấp, sẵn sàng cho việc mở rộng tải trọng khi triển khai thực tế. Dù vậy, khả năng chịu lỗi của hệ thống đối với các sự cố phần cứng (điển hình như luồng xử lý ngoại lệ khi trạm sạc mất kết nối mạng đột ngột) vẫn chưa tự động phục hồi hoàn toàn và cần sự can thiệp thủ công.
+    \item \textbf{Bảo mật:} Hệ thống triển khai nhiều lớp bảo vệ độc lập:
+        \begin{itemize}
+            \item \textbf{Xác thực phiên:} Sử dụng JWT (JSON Web Token) với thời gian sống có giới hạn, kết hợp cơ chế Refresh Token để duy trì phiên đăng nhập an toàn.
+            \item \textbf{Phân quyền:} Áp dụng Role-Based Access Control (RBAC), phân tách rõ quyền hạn giữa người dùng cuối, chủ trạm và quản trị viên hệ thống.
+            \item \textbf{Tích hợp thanh toán:} Mọi callback từ ZaloPay đều được xác thực chữ ký HMAC-SHA256 trước khi xử lý, ngăn chặn hiệu quả các yêu cầu giả mạo.
+            \item \textbf{Bảo mật kênh truyền:} Toàn bộ giao tiếp giữa ứng dụng di động và Backend sử dụng HTTPS; kết nối WebSocket với trụ sạc sử dụng WSS khi triển khai trên môi trường production.
+        \end{itemize}
+    \item \textbf{Kiến trúc:} Áp dụng triệt để kiến trúc Modular Monolith với Spring Modulith kết hợp kiến trúc hướng sự kiện, hệ thống duy trì được tính độc lập giữa các module. Việc ngăn chặn phụ thuộc vòng tại thời điểm biên dịch giúp tối ưu hóa quá trình phát triển độc lập và tạo nền tảng vững chắc để chuyển đổi các module tải cao (như phân hệ WebSocket/SSE) thành Microservices trong tương lai.
+\end{itemize}
+
+\subsubsection{Đánh giá giao diện và trải nghiệm người dùng (UI/UX)}
+\begin{itemize}
+    \item \textbf{Tính thẩm mỹ:} Giao diện ứng dụng di động đa nền tảng (React Native Expo) áp dụng phong cách thiết kế hiện đại, sử dụng Tailwind để đồng bộ hệ thống màu sắc. Kết hợp giao diện tối màu giúp tăng tính thẩm mỹ và thân thiện với thị giác người dùng.
+    \item \textbf{Tính khả dụng:} Luồng thao tác của người dùng được sắp xếp logic. Các màn hình chính được bố trí trực quan, sử dụng các hiệu ứng tải trang và hệ thống thông báo theo thời gian thực (Push Notification, SSE) để tăng khả năng phản hồi trực tiếp với người dùng và xử lý mượt mà các trạng thái của dòng dữ liệu.
+\end{itemize}
