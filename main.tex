@@ -71,7 +71,7 @@
 % ===== Title page =====
 \begin{titlepage}
  \begin{center}
-  {\large \textbf{ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH} \\ \textbf{TRƯỜNG ĐẠI HỌC BÁCH KHOA} \\  \textbf{KHOA KHOA HỌC VÀ KĨ THUẬT MÁY TÍNH}}
+  {\large \textbf{ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH} \\ \textbf{TRƯỜNG ĐẠI HỌC BÁCH KHOA} \\  \textbf{KHOA KHOA HỌC VÀ KỸ THUẬT MÁY TÍNH}}
  \end{center}
  \vspace{0.5cm}
  \begin{figure}[h!]
@@ -112,20 +112,22 @@
 \end{titlepage}
 
 \pagenumbering{roman}
-% \input{chapters/0_LoiCamOn}
-% \newpage
-% \input{chapters/0_LoiCamDoan}
-% \newpage
-% \input{chapters/0_TomTat}
-% \newpage
+\input{chapters/0_LoiCamOn}
+\newpage
+\input{chapters/0_LoiCamDoan}
+\newpage
+\input{chapters/0_TomTat}
+\newpage
 
 \tableofcontents
 \newpage
 
+\phantomsection
 \addcontentsline{toc}{section}{Danh sách hình vẽ}
 \listoffigures
 \newpage
 
+\phantomsection
 \addcontentsline{toc}{section}{Danh sách bảng}
 \listoftables
 \newpage
@@ -134,21 +136,21 @@
 \setcounter{page}{1}
 
 % ===== Example skeleton sections (edit or replace with \input if you split chapters) =====
-% \input{chapters/1_TongQuan}
-% \newpage
-% \input{chapters/2_CoSoLyThuyetVaCongNghe}
-% \newpage
-% \input{chapters/3_HeThongLienQuan}
-% \newpage
-% \input{chapters/4_YeuCau}
-% \newpage
+\input{chapters/1_TongQuan}
+\newpage
+\input{chapters/2_CoSoLyThuyetVaCongNghe}
+\newpage
+\input{chapters/3_HeThongLienQuan}
+\newpage
+\input{chapters/4_YeuCau}
+\newpage
 \input{chapters/5_ThietKe}
 \newpage
-% \input{chapters/6_TrienKhai}
-% \newpage
-% \input{chapters/7_KiemThuVaDanhGia}
-% \newpage
-% \input{chapters/8_KetLuan}
+\input{chapters/6_TrienKhai}
+\newpage
+\input{chapters/7_KiemThuVaDanhGia}
+\newpage
+\input{chapters/8_KetLuan}
 % ===== References =====
 \newpage
 \nocite{*}  

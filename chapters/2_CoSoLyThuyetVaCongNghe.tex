@@ -21,7 +21,7 @@ Trong phạm vi đồ án, hệ thống được triển khai dựa trên phiên
 \end{itemize}
 
 \textbf{Các luồng bản tin trọng tâm áp dụng trong hệ thống:}
-Hệ thống EVGO tập trung khai thác các bản tin thuộc \textbf{Core Profile} để quản lý toàn diện vòng đời của một phiên sạc. Các bản tin này được chia thành ba nhóm nghiệp vụ chính:
+Hệ thống EVGo tập trung khai thác các bản tin thuộc \textbf{Core Profile} để quản lý toàn diện vòng đời của một phiên sạc. Các bản tin này được chia thành ba nhóm nghiệp vụ chính:
 
 \begin{enumerate}
     \item Nhóm Khởi tạo và Duy trì kết nối:
@@ -44,7 +44,7 @@ Hệ thống EVGO tập trung khai thác các bản tin thuộc \textbf{Core Pro
 \end{enumerate}
 
 \subsubsection{Mô phỏng tiến trình sạc}
-Do hạn chế về phần cứng vật lý trong quá trình phát triển, việc tích hợp công cụ mô phỏng là giải pháp thiết yếu để kiểm thử logic tính toán và giao tiếp của hệ thống. Đồ án sử dụng \textbf{OCPP ChargePoint Simulator} \cite{ocpp_spec} kết hợp với mô hình toán học về hành vi vật lý của pin để giả lập quá trình sạc một cách tiệm cận điều kiện thực tế.
+Do hạn chế về phần cứng vật lý trong quá trình phát triển, việc tích hợp công cụ mô phỏng là giải pháp thiết yếu để kiểm thử logic tính toán và giao tiếp của hệ thống. Đồ án sử dụng \textbf{OCPP ChargePoint Simulator} kết hợp với mô hình toán học về hành vi vật lý của pin để giả lập quá trình sạc một cách tiệm cận điều kiện thực tế.
 
 \begin{itemize}
     \item \textbf{OCPP ChargePoint Simulator:} Đây là một công cụ mô phỏng chạy trên nền web đóng vai trò như một trạm sạc thực tế (Charge Point). Công cụ này cho phép thiết lập kết nối WebSocket với CSMS và tự động hoặc thủ công gửi/nhận các bản tin OCPP. Việc sử dụng Simulator giúp xác minh tính chính xác của Backend trong việc xử lý các lệnh điều khiển, cũng như khả năng đồng bộ trạng thái sạc theo thời gian thực mà không cần kết nối với phần cứng chuyên dụng.
@@ -141,7 +141,7 @@ Hệ thống EVGo bao gồm nhiều thành phần công nghệ khác nhau (Java,
 Kiến trúc container hỗ trợ mạnh mẽ cho việc triển khai microservices, cho phép mỗi dịch vụ được mở rộng độc lập theo nhu cầu tải. Việc khởi động container nhanh chóng giúp tối ưu hóa thời gian triển khai và phục hồi hệ thống.
 
 \subsubsection{Các dịch vụ tích hợp}
-Hệ thống EVGO kết nối với các dịch vụ bên thứ ba để mở rộng chức năng và nâng cao trải nghiệm người dùng.
+Hệ thống EVGo kết nối với các dịch vụ bên thứ ba để mở rộng chức năng và nâng cao trải nghiệm người dùng.
 
 \begin{itemize}
     \item \textbf{ZaloPay:} Cổng thanh toán điện tử phổ biến tại Việt Nam \cite{zalopay_docs}, được tích hợp qua cơ chế \textit{Deep Link} (chuyển hướng ứng dụng) và \textit{Webhook/IPN} (thông báo trạng thái tự động). Dịch vụ này đảm nhiệm xử lý các giao dịch thanh toán trực tuyến cho chi phí đặt chỗ và chi phí sạc thực tế, hỗ trợ đối soát và kiểm tra công nợ an toàn.
