@@ -115,7 +115,7 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
           \end{itemize}\\
           \hline
           \textbf{Postconditions} &
-          Danh sách tài khoản được hiển thị đúng và đầy đủ.\\
+          Danh sách tài khoản được hiển thị theo tiêu chí tìm kiếm.\\
           \hline
           \textbf{Normal flows} &
           \begin{enumerate}[label=\arabic*.]
@@ -155,7 +155,7 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
           \end{itemize}\\
           \hline
           \textbf{Postconditions} &
-          Danh sách tài khoản được hiển thị đúng và đầy đủ.\\
+          Trạng thái truy cập của tài khoản được cập nhật tương ứng.\\
           \hline
           \textbf{Normal flows} &
           \begin{enumerate}[label=\arabic*.]
@@ -218,7 +218,7 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
           Không có\\
           \hline
           \textbf{Exception} &
-          4a. Lỗi gửi email (SMTP/ESP): Hiển thị lỗi “Gửi thất bại, vui lòng thử lại”; không thay đổi status; vẫn lưu log thất bại.\\
+          4a. Lỗi sự cố khi gửi email: Hiển thị thông báo gửi thất bại; không thay đổi trạng thái hồ sơ.\\
           \hline
           \end{longtable}
       \end{center}
@@ -261,7 +261,7 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
           Không có\\
           \hline
           \textbf{Exception} &
-          5a. Lỗi gửi email (SMTP/ESP): Hiển thị lỗi “Gửi thất bại, vui lòng thử lại”; không thay đổi status; vẫn lưu log thất bại.\\
+          5a. Lỗi sự cố khi gửi email: Hiển thị thông báo gửi thất bại; không thay đổi trạng thái hồ sơ.\\
           \hline
           \end{longtable}
       \end{center}
@@ -382,7 +382,7 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
           \hline
           \textbf{Actor} & Người quản lý hệ thống (Super Admin), Cổng thanh toán \\
           \hline
-          \textbf{Description} & Giúp Super Admin theo dõi mọi giao dịch thanh toán: trạng thái, hoàn/huỷ, phí, mã tham chiếu; hỗ trợ điều tra sai lệch.\\
+          \textbf{Description} & Super Admin theo dõi các giao dịch thanh toán: trạng thái, hoàn/huỷ, phí, mã tham chiếu; hỗ trợ đối soát dữ liệu.\\
           \hline
           \textbf{Preconditions} &
           \begin{itemize}
@@ -1605,42 +1605,38 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
   \hline
   \textbf{Actor} & Người dùng (user) \\
   \hline
-  \textbf{Description} & Người dùng đặt trước chỗ sạc \\
+  \textbf{Description} & Người dùng đặt trước một cổng sạc tại trạm để đảm bảo có chỗ khi đến nơi. \\
   \hline
   \textbf{Preconditions} &
   \begin{itemize}
     \item Người dùng đăng nhập hợp lệ.
-    \item Người dùng chọn được trạm sạc hỗ trợ đặt trước.
+    \item Người dùng chọn được trạm sạc có cổng sạc đang ở trạng thái trống (Available).
   \end{itemize}\\
   \hline
   \textbf{Postconditions} &
   \begin{itemize}
-    \item Người dùng đặt chỗ thành công.
-    \item Cổng sạc được đánh dấu là “đã đặt”.
-    \item Thông tin đặt chỗ hiển thị trong lịch sử đặt chỗ của Người dùng.
+    \item Cổng sạc được giữ chỗ thành công trong thời gian quy định.
+    \item Hóa đơn đặt chỗ được tạo và thanh toán hoàn tất.
   \end{itemize}\\
   \hline
   \textbf{Normal flows} &
   \begin{enumerate}[label=\arabic*.]
-    \item Người dùng chọn một trạm sạc từ bản đồ.
-    \item Hệ thống hiển thị thông tin chi tiết (loại cổng, số lượng cổng trống, giá dịch vụ).
-    \item Người dùng chọn thời gian và cổng cần đặt.
-    \item Hệ thống kiểm tra tình trạng cổng sạc.
-    \item Người dùng xác nhận đặt chỗ.
-    \item Hệ thống hiển thị trang thanh toán cọc.
-    \item Người dùng chọn phương thức thanh toán rồi tiến hành thanh toán.
-    \item Hệ thống xử lý thanh toán thành công.
-    \item Hệ thống lưu thông tin đặt chỗ và gửi thông báo xác nhận cho Người dùng.
-    \item Hệ thống hiển thị trang lịch sử đặt chỗ.
+    \item Người dùng chọn thời gian bắt đầu, thời lượng và cổng sạc cần đặt trên ứng dụng.
+    \item Hệ thống kiểm tra tình trạng cổng sạc và thực hiện cơ chế khóa tạm thời để tránh xung đột đặt chỗ.
+    \item Người dùng xác nhận thông tin đặt chỗ.
+    \item Hệ thống tạo hóa đơn và gọi API tạo URL thanh toán qua cổng thanh toán.
+    \item Người dùng tiến hành thanh toán qua ứng dụng thanh toán.
+    \item Cổng thanh toán gửi Webhook xác nhận giao dịch thành công về hệ thống.
+    \item Hệ thống cập nhật trạng thái đặt chỗ, đánh dấu cổng sạc đã được đặt, và giải phóng khóa tạm thời.
+    \item Hệ thống gửi thông báo xác nhận đặt chỗ cho Người dùng.
   \end{enumerate}\\
   \hline
   \textbf{Alternative flows} &
-  4a. Nếu không còn cổng sạc trống: hệ thống thông báo lỗi, Người dùng quay lại bước 2. \newline
-  5a. Nếu Người dùng hủy thao tác trước khi xác nhận: quá trình đặt chỗ kết thúc, không lưu dữ liệu. \newline
-  7a. Nếu Người dùng hủy thanh toán: quá trình đặt chỗ kết thúc, không lưu dữ liệu.\\
+  4a. Nếu không còn cổng sạc trống hoặc cổng vừa bị người khác đặt: Hệ thống báo lỗi, Người dùng quay lại bước chọn cổng. \newline
+  5a. Nếu Người dùng hủy thanh toán hoặc quá thời gian thanh toán: Khóa tạm thời tự động hết hạn, cổng sạc được giải phóng trở lại trạng thái trống.\\
   \hline
   \textbf{Exception} &
-  8b. Nếu thanh toán thất bại: hệ thống hủy yêu cầu đặt chỗ và thông báo cho Người dùng.\\
+  6a. Nếu thanh toán thất bại từ phía cổng thanh toán: Hệ thống nhận Webhook thất bại, hủy hóa đơn và yêu cầu Người dùng thử lại.\\
   \hline
   \end{longtable}
 
@@ -1788,44 +1784,42 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
   \hline
   \textbf{Use case ID} & UC--UPAY--02 \\
   \hline
-  \textbf{Use case name} & Người dùng thanh toán \\
+  \textbf{Use case name} & Người dùng thanh toán hóa đơn \\
   \hline
   \textbf{Actor} & Người dùng (user) \\
   \hline
-  \textbf{Description} & Cho phép Người dùng thực hiện thanh toán cho việc đặt chỗ sạc (hoặc các dịch vụ khác) một cách an toàn và chính xác. \\
+  \textbf{Description} & Người dùng thực hiện thanh toán cho các hóa đơn dịch vụ (đặt chỗ sạc, phí sạc) thông qua cổng thanh toán. \\
   \hline
   \textbf{Preconditions} &
   \begin{itemize}
     \item Người dùng đăng nhập hợp lệ.
-    \item Người dùng đã chọn dịch vụ cần thanh toán (đặt chỗ sạc).
-    \item Hệ thống có kết nối API với đối tác thanh toán.
+    \item Đã có hóa đơn dịch vụ được tạo ra với trạng thái chờ thanh toán.
+    \item Hệ thống kết nối API bình thường với cổng thanh toán.
   \end{itemize}\\
   \hline
   \textbf{Postconditions} &
   \begin{itemize}
-    \item Giao dịch thanh toán được thực hiện thành công.
-    \item Hệ thống lưu lại thông tin giao dịch (thời gian, số tiền, trạng thái).
-    \item Nếu thanh toán cho đặt chỗ, đặt chỗ được xác nhận.
+    \item Giao dịch thanh toán được ghi nhận thành công trong hệ thống.
+    \item Trạng thái hóa đơn được cập nhật thành đã thanh toán.
   \end{itemize}\\
   \hline
   \textbf{Normal flows} &
   \begin{enumerate}[label=\arabic*.]
-    \item Hệ thống hiển thị các phương thức thanh toán khả dụng.
-    \item Người dùng chọn một phương thức và xác nhận giao dịch.
-    \item Hệ thống gửi yêu cầu đến ngân hàng/ ví điện tử.
-    \item Người dùng xác thực giao dịch (trong app ví điện tử).
-    \item Ngân hàng/ ví điện tử phản hồi kết quả thanh toán thành công.
-    \item Hệ thống cập nhật trạng thái giao dịch thành “Thành công” và lưu vào CSDL.
-    \item Hệ thống gửi thông báo giao dịch thành công đến Người dùng.
+    \item Hệ thống hiển thị thông tin hóa đơn và các phương thức thanh toán khả dụng.
+    \item Người dùng chọn một phương thức thanh toán và xác nhận.
+    \item Hệ thống tạo yêu cầu thanh toán và điều hướng Người dùng sang cổng thanh toán tương ứng.
+    \item Người dùng thực hiện xác thực giao dịch thành công trên cổng thanh toán.
+    \item Cổng thanh toán phản hồi kết quả giao dịch thành công về hệ thống.
+    \item Hệ thống xác thực kết quả, cập nhật trạng thái giao dịch và hóa đơn thành “Thành công”.
+    \item Hệ thống thông báo kết quả thanh toán đến ứng dụng di động của Người dùng.
   \end{enumerate}\\
   \hline
   \textbf{Alternative flows} &
-  2a. Nếu Người dùng chưa có phương thức thanh toán liên kết: hệ thống yêu cầu “Liên kết phương thức thanh toán”.\\
+  4a. Nếu Người dùng hủy bỏ quá trình thanh toán trên cổng thanh toán: Hệ thống đưa Người dùng quay lại ứng dụng và giữ nguyên trạng thái hóa đơn là chờ thanh toán.\\
   \hline
   \textbf{Exception} &
-  4b. Nếu Người dùng xác thực sai hoặc không xác thực kịp thời: giao dịch thất bại, hệ thống thông báo lỗi. \newline
-  5b. Nếu ngân hàng/ ví điện tử trả về trạng thái thất bại: hệ thống thông báo lỗi, thanh toán bị hủy. \newline
-  7b. Nếu lưu dữ liệu giao dịch thất bại: hệ thống thông báo lỗi và thông báo cho Người dùng thử lại.\\
+  3a. Nếu khởi tạo yêu cầu thanh toán thất bại: Hệ thống thông báo lỗi tạm thời không thể thanh toán. \newline
+  6a. Nếu kết quả phản hồi từ cổng thanh toán không hợp lệ hoặc thất bại: Hệ thống từ chối cập nhật hóa đơn và yêu cầu Người dùng thử lại.\\
   \hline
   \end{longtable}
 
@@ -2148,33 +2142,36 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
   \hline
   \textbf{Actor} & Người dùng (user) \\
   \hline
-  \textbf{Description} & Use case này cho phép người dùng bắt đầu quá trình sạc (mô phỏng). \\
+  \textbf{Description} & Use case này cho phép người dùng bắt đầu quá trình sạc tại trụ sạc thực tế (hoặc qua phần mềm mô phỏng OCPP). \\
   \hline
   \textbf{Preconditions} &
   \begin{itemize}
     \item Người dùng đã đăng nhập hệ thống.
-    \item Người dùng đã lựa chọn trạm sạc và cổng sạc cần sử dụng.
+    \item Người dùng đã lựa chọn cổng sạc đang ở trạng thái sẵn sàng.
   \end{itemize}\\
   \hline
   \textbf{Postconditions} &
   \begin{itemize}
-    \item Phiên sạc mô phỏng được tạo và lưu trong hệ thống.
-    \item Hệ thống hiển thị trạng thái sạc ban đầu và bắt đầu mô phỏng quá trình sạc.
+    \item Hệ thống gửi lệnh bắt đầu sạc thành công tới trụ sạc.
+    \item Phiên sạc được tạo và bắt đầu lưu trữ dữ liệu.
   \end{itemize}\\
   \hline
   \textbf{Normal flows} &
   \begin{enumerate}[label=\arabic*.]
-    \item Người dùng chọn chức năng Bắt đầu sạc.
-    \item Hệ thống yêu cầu xác nhận bắt đầu sạc (thông báo chi phí ước tính, thông tin trạm).
+    \item Người dùng chọn chức năng Bắt đầu sạc trên ứng dụng.
+    \item Hệ thống yêu cầu xác nhận (thông báo đơn giá sạc, thông tin trạm).
     \item Người dùng xác nhận bắt đầu.
-    \item Hệ thống khởi tạo một phiên sạc mô phỏng.
-    \item Người dùng nhận thông báo đã bắt đầu sạc.
+    \item Hệ thống gửi lệnh điều khiển qua giao thức OCPP tới trụ sạc.
+    \item Trụ sạc phản hồi chấp nhận và bắt đầu phiên sạc.
+    \item Hệ thống nhận phản hồi, cập nhật trạng thái cổng sạc thành "Đang sạc" và thông báo cho người dùng.
   \end{enumerate}\\
   \hline
   \textbf{Alternative flows} &
-  2a. Nếu Người dùng hủy xác nhận, hệ thống không khởi tạo phiên sạc.\\
+  3a. Nếu Người dùng hủy thao tác xác nhận, hệ thống quay về màn hình trước đó.\\
   \hline
-  \textbf{Exception} & Không có\\
+  \textbf{Exception} &
+  4a. Nếu kết nối đến trụ sạc thất bại: Hệ thống thông báo lỗi kết nối. \newline
+  5a. Nếu trụ sạc từ chối lệnh bắt đầu (do lỗi phần cứng, chưa cắm súng sạc, hoặc lỗi cáp): Hệ thống thông báo lỗi và yêu cầu kiểm tra lại trụ sạc.\\
   \hline
   \end{longtable}
 
@@ -2188,31 +2185,31 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
   \hline
   \textbf{Actor} & Người dùng (user) \\
   \hline
-  \textbf{Description} & Người dùng có thể theo dõi trạng thái và tiến trình sạc mô phỏng trong thời gian thực. \\
+  \textbf{Description} & Người dùng có thể theo dõi trạng thái và tiến trình sạc theo thời gian thực thông qua kết nối luồng sự kiện SSE (Server-Sent Events). \\
   \hline
   \textbf{Preconditions} &
   \begin{itemize}
     \item Người dùng đã đăng nhập hệ thống.
-    \item Phiên sạc đã được khởi tạo.
-    \item Người dùng đã liên kết ngân hàng/ ví điện tử.
+    \item Phiên sạc của người dùng đang diễn ra.
   \end{itemize}\\
   \hline
-  \textbf{Postconditions} & Người dùng nắm được thông tin trạng thái sạc hiện tại. \\
+  \textbf{Postconditions} & Người dùng nắm được các thông số sạc hiện tại được cập nhật liên tục. \\
   \hline
   \textbf{Normal flows} &
   \begin{enumerate}[label=\arabic*.]
-    \item Sau khi Người dùng bắt đầu sạc, hệ thống hiển thị mục chọn theo dõi quá trình sạc.
-    \item Người dùng chọn theo dõi quá trình sạc.
-    \item Hệ thống cập nhật trạng thái sạc theo thời gian (phần trăm pin, thời gian còn lại, chi phí tạm tính).
-    \item Người dùng quan sát tiến trình.
-    \item Khi sạc đạt mức đầy, hệ thống chuyển sang trạng thái hoàn tất và thông báo sạc hoàn tất.
-    \item Hệ thống tiến hành thanh toán tự động.
+    \item Ứng dụng di động thiết lập kết nối SSE với Backend để nhận dữ liệu thời gian thực.
+    \item Trụ sạc gửi các bản tin trạng thái định kỳ (MeterValues) qua giao thức OCPP về cho Backend.
+    \item Hệ thống xử lý thông số đo, tính toán chi phí tạm tính và phát sự kiện qua SSE đến ứng dụng.
+    \item Ứng dụng hiển thị cập nhật liên tục (năng lượng đã sạc, thời gian, chi phí tạm tính).
+    \item Khi sạc đạt mức giới hạn hoặc pin đầy, trụ sạc tự động kết thúc phiên và gửi dữ liệu tổng hợp cuối cùng.
+    \item Hệ thống chốt phiên sạc, tạo hóa đơn và thông báo hoàn tất sạc cho Người dùng.
   \end{enumerate}\\
   \hline
   \textbf{Alternative flows} &
-  3a. Nếu Người dùng hủy thao tác thì hệ thống tiếp tục sạc như bình thường.\\
+  1a. Nếu kết nối SSE bị gián đoạn, ứng dụng có thể fallback sang cơ chế Polling để lấy trạng thái mới nhất.\\
   \hline
-  \textbf{Exception} & Không có\\
+  \textbf{Exception} &
+  2a. Nếu trụ sạc mất mạng và không gửi được bản tin trạng thái: Hệ thống giữ nguyên chỉ số đo cuối cùng cho đến khi có tín hiệu mạng kết nối lại.\\
   \hline
   \end{longtable}
 
@@ -2226,35 +2223,36 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
   \hline
   \textbf{Actor} & Người dùng (user) \\
   \hline
-  \textbf{Description} & User có thể chủ động kết thúc phiên sạc mô phỏng trước khi quá trình sạc hoàn tất. \\
+  \textbf{Description} & Người dùng có thể chủ động gửi lệnh kết thúc phiên sạc từ xa thông qua ứng dụng di động trước khi quá trình sạc hoàn tất. \\
   \hline
   \textbf{Preconditions} &
   \begin{itemize}
-    \item User đã đăng nhập hệ thống.
-    \item Đang có một phiên sạc mô phỏng đang diễn ra.
-    \item User đã liên kết ngân hàng/ ví điện tử.
+    \item Người dùng đã đăng nhập hệ thống.
+    \item Đang có một phiên sạc của người dùng đang diễn ra.
   \end{itemize}\\
   \hline
   \textbf{Postconditions} &
   \begin{itemize}
-    \item Phiên sạc kết thúc ngay lập tức.
-    \item Dữ liệu phiên sạc (thời gian, dung lượng đã sạc, chi phí tạm tính) được lưu vào hệ thống.
+    \item Lệnh dừng sạc được gửi đến trụ sạc và phiên sạc kết thúc.
+    \item Dữ liệu tổng hợp cuối cùng được lưu trữ để tạo hóa đơn.
   \end{itemize}\\
   \hline
   \textbf{Normal flows} &
   \begin{enumerate}[label=\arabic*.]
-    \item User chọn chức năng Dừng sạc từ xa trên giao diện theo dõi sạc.
-    \item Hệ thống hiển thị hộp thoại xác nhận thao tác.
-    \item User xác nhận dừng.
-    \item Hệ thống kết thúc phiên sạc mô phỏng.
-    \item Hệ thống lưu dữ liệu phiên sạc và thông báo “Phiên sạc đã kết thúc”.
-    \item Hệ thống tiến hành thanh toán tự động.
+    \item Người dùng nhấn nút Dừng sạc trên giao diện theo dõi quá trình sạc.
+    \item Hệ thống hiển thị hộp thoại xác nhận thao tác dừng sạc.
+    \item Người dùng xác nhận dừng.
+    \item Hệ thống gửi lệnh dừng qua giao thức OCPP tới trụ sạc.
+    \item Trụ sạc phản hồi chấp nhận lệnh, ngắt nguồn điện sạc và gửi bản tin kết thúc phiên.
+    \item Hệ thống nhận dữ liệu tổng hợp, lưu thông tin phiên sạc và sinh hóa đơn.
+    \item Hệ thống thông báo “Phiên sạc đã kết thúc” trên ứng dụng di động.
   \end{enumerate}\\
   \hline
   \textbf{Alternative flows} &
-  3a. Nếu User hủy thao tác, hệ thống tiếp tục sạc như bình thường.\\
+  3a. Nếu Người dùng hủy thao tác, hệ thống tiếp tục duy trì quá trình sạc như bình thường.\\
   \hline
-  \textbf{Exception} & Không có\\
+  \textbf{Exception} &
+  4a. Nếu mất kết nối mạng với trụ sạc: Lệnh dừng sạc không thể gửi đi, hệ thống báo lỗi thiết bị ngoại tuyến và ghi nhận phiên sạc bị treo để xử lý ngắt sau.\\
   \hline
   \end{longtable}
 
