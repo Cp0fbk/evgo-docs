@@ -7,14 +7,14 @@ Trải qua quá trình nghiên cứu và thực hiện đồ án tốt nghiệp,
     \item \textbf{Về mặt nghiệp vụ và Trải nghiệm người dùng:}
     \begin{itemize}
         \item Hoàn thiện toàn diện chu trình khép kín dành cho người lái xe máy điện trên ứng dụng di động: từ việc tìm kiếm trạm sạc trên bản đồ số, đặt chỗ, cho đến việc quản lý quá trình sạc và thanh toán tự động.
-        \item Triển khai thành công tính năng Đặt chỗ với cơ chế giải quyết xung đột bằng Redis Distributed Lock, đảm bảo tính chính xác tuyệt đối khi nhiều người dùng cùng truy cập vào một cổng sạc.
+        \item Triển khai thành công tính năng Đặt chỗ với cơ chế giải quyết xung đột bằng Redis Distributed Lock, đảm bảo tính chính xác cao khi nhiều người dùng cùng truy cập vào một cổng sạc.
         \item Tích hợp thành công giao thức OCPP 1.6J để giao tiếp với trạm sạc, kết hợp công nghệ Server-Sent Events nhằm truyền tải dữ liệu trạng thái sạc đến ứng dụng di động theo thời gian thực với độ trễ thấp.
         \item Tích hợp tự động hóa luồng thanh toán điện tử thông qua ZaloPay (Deep link và Webhook) cùng hệ thống thông báo đẩy thời gian thực qua Expo Push API.
     \end{itemize}
     
     \item \textbf{Về mặt kỹ thuật và kiến trúc:}
     \begin{itemize}
-        \item Áp dụng triệt để kiến trúc Modular Monolith với Spring Modulith, giúp hệ thống phân tách miền nghiệp vụ rõ ràng, tối ưu hóa quá trình phát triển độc lập và tạo nền tảng vững chắc để chuyển đổi sang Microservices trong tương lai.
+        \item Áp dụng xuyên suốt kiến trúc Modular Monolith với Spring Modulith, giúp hệ thống phân tách miền nghiệp vụ rõ ràng, tối ưu hóa quá trình phát triển độc lập và tạo nền tảng vững chắc để chuyển đổi sang Microservices trong tương lai.
         \item Xây dựng ứng dụng di động đa nền tảng bằng React Native (Expo) với giao diện hiện đại, UX/UI được trau chuốt, xử lý mượt mà các trạng thái của dòng dữ liệu thời gian thực.
         \item Triển khai thành công hệ thống Backend và Cơ sở dữ liệu lên môi trường điện toán đám mây, đảm bảo tính sẵn sàng cao để phục vụ thử nghiệm thực tế.
     \end{itemize}

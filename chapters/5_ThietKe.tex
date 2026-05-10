@@ -1,6 +1,6 @@
 \section{Phân tích và thiết kế hệ thống}
 \subsection{Kiến trúc hệ thống}
-Dựa trên yêu cầu về tính linh hoạt, khả năng bảo trì và mở rộng trong tương lai, hệ thống EV-Go được thiết kế và triển khai theo kiến trúc Modular Monolith. Đây là sự kết hợp giữa tính đơn giản trong vận hành của kiến trúc Monolithic truyền thống và tính tách biệt, lỏng lẻo của kiến trúc Microservices. Để hiện thực hóa kiến trúc này một cách chặt chẽ, dự án sử dụng Spring Modulith làm nền tảng công nghệ chính.
+Dựa trên yêu cầu về tính linh hoạt, khả năng bảo trì và mở rộng trong tương lai, hệ thống EVGo được thiết kế và triển khai theo kiến trúc Modular Monolith. Đây là sự kết hợp giữa tính đơn giản trong vận hành của kiến trúc Monolithic truyền thống và tính tách biệt, lỏng lẻo của kiến trúc Microservices. Để hiện thực hóa kiến trúc này một cách chặt chẽ, dự án sử dụng Spring Modulith làm nền tảng công nghệ chính.
 
 \begin{figure}[H]
   \centering
@@ -9,7 +9,7 @@ Dựa trên yêu cầu về tính linh hoạt, khả năng bảo trì và mở r
   \label{fig:evgo_architecture}
 \end{figure}
 \subsubsection{Tổng quan kiến trúc Modular Monolith}
-Khác với kiến trúc Layered Monolith truyền thống (phân chia theo tầng kỹ thuật: Controller, Service, Repository), kiến trúc của EV-Go phân chia hệ thống theo các nghiệp vụ chức năng. Mỗi nghiệp vụ được đóng gói thành một Module độc lập về mặt logic nhưng vẫn cùng tồn tại trong một đơn vị triển khai duy nhất.
+Khác với kiến trúc Layered Monolith truyền thống (phân chia theo tầng kỹ thuật: Controller, Service, Repository), kiến trúc của EVGo phân chia hệ thống theo các nghiệp vụ chức năng. Mỗi nghiệp vụ được đóng gói thành một Module độc lập về mặt logic nhưng vẫn cùng tồn tại trong một đơn vị triển khai duy nhất.
 Mô hình này mang lại các ưu điểm vượt trội cho hệ thống:
 \begin{itemize}
   \item \textbf{Tính đóng gói cao:} Mỗi module ẩn giấu implementation chi tiết và chỉ giao tiếp với bên ngoài thông qua các Public API được định nghĩa rõ ràng.
@@ -20,9 +20,9 @@ Mô hình này mang lại các ưu điểm vượt trội cho hệ thống:
 Một đặc trưng quan trọng trong kiến trúc của hệ thống là sự chuẩn hóa cấu trúc nội bộ của từng module. Mỗi module nghiệp vụ (như User, Station, Payment,...) đều tuân thủ nghiêm ngặt mô hình phân lớp 3 thành phần nhằm đảm bảo tính bảo mật và nhất quán:
 \begin{enumerate}
   \item \textbf{Public API (Giao diện công khai):}
-    Đây là thành phần duy nhất của module được phép truy cập từ các module khác. Nó bao gồm các \textit{Service Interfaces} và các đối tượng chuyển đổi dữ liệu (\textit{DTOs}). Việc chỉ hiển thị Interface giúp che giấu hoàn toàn logic xử lý nghiệp vụ bên trong, đảm bảo nguyên lý "Information Hiding".
+    Đây là thành phần duy nhất của module được phép truy cập từ các module khác. Nó bao gồm các \textit{Service Interfaces} và các đối tượng chuyển đổi dữ liệu (\textit{DTOs}). Việc chỉ hiển thị Interface giúp đóng gói kín logic xử lý nghiệp vụ bên trong, đảm bảo nguyên lý \quotes{Information Hiding}.
   \item \textbf{Internal Implementation (Lớp hiện thực nội bộ):}
-    Chứa toàn bộ logic nghiệp vụ cốt lõi, các thực thể dữ liệu và lớp truy xuất dữ liệu. Đặc biệt, lớp này được thiết kế để "vô hình" đối với các module khác. Chỉ có module sở hữu mới có quyền khởi tạo và thao tác trực tiếp trên các đối tượng này. Lớp này cũng chịu trách nhiệm giao tiếp trực tiếp với Cơ sở dữ liệu và các dịch vụ hạ tầng khác.
+    Chứa toàn bộ logic nghiệp vụ cốt lõi, các thực thể dữ liệu và lớp truy xuất dữ liệu. Đặc biệt, lớp này được thiết kế để \quotes{vô hình} đối với các module khác. Chỉ có module sở hữu mới có quyền khởi tạo và thao tác trực tiếp trên các đối tượng này. Lớp này cũng chịu trách nhiệm giao tiếp trực tiếp với Cơ sở dữ liệu và các dịch vụ hạ tầng khác.
   \item \textbf{Web Layer (Lớp giao tiếp người dùng):}
     Nằm trong gói \textit{internal}, lớp này chứa các \textit{REST Controllers} chịu trách nhiệm tiếp nhận các yêu cầu HTTP từ phía Client Applications (Mobile App và Web Dashboard). Lớp này đóng vai trò là cổng vào cho các tác vụ từ phía người dùng cuối, chuyển tiếp yêu cầu xuống lớp Implementation để xử lý.
 \end{enumerate}
@@ -30,18 +30,18 @@ Một đặc trưng quan trọng trong kiến trúc của hệ thống là sự 
 Hệ thống thiết lập quy tắc giao tiếp một chiều nghiêm ngặt để duy trì tính toàn vẹn của kiến trúc:
 \begin{itemize}
   \item Các module giao tiếp với nhau thông qua Public API. Ví dụ, khi \textit{Station Module} cần thông tin chủ trạm, nó sẽ gọi \textit{UserService Interface} thay vì truy cập trực tiếp vào bảng \textit{User} trong cơ sở dữ liệu.
-  \item \textbf{Shared Kernel (Module dùng chung):} Nhằm hạn chế sự lặp lại mã nguồn, hệ thống xây dựng một module đặc biệt là \textit{Shared Kernel}. Module này đóng vai trò là thư viện nội bộ (Open Module), chứa các thành phần dùng chung cho toàn hệ thống như: mã lỗi, các lớp xử lý ngoại lệ toàn cục, và các cấu trúc dữ liệu chuẩn áp dụng cho toàn hệ thống. Tất cả các module nghiệp vụ đều có thể truy cập và sử dụng tài nguyên từ Shared Kernel.
+  \item \textbf{Shared Kernel (Module dùng chung):} Nhằm hạn chế sự lặp lại mã nguồn, hệ thống xây dựng một module đặc biệt là \textit{Shared Kernel}. Module này đóng vai trò là thư viện nội bộ (Open Module), chứa các thành phần dùng chung cho toàn hệ thống như: mã lỗi, các lớp xử lý ngoại lệ toàn cục, và các cấu trúc dữ liệu chuẩn áp dụng cho toàn hệ thống. Các module nghiệp vụ đều có thể truy cập và sử dụng tài nguyên từ Shared Kernel.
 \end{itemize}
 \subsubsection{Hạ tầng dữ liệu}
 Dù được chia thành nhiều module logic, hệ thống sử dụng chung một cơ sở dữ liệu PostgreSQL để đảm bảo tính nhất quán của dữ liệu giao dịch (ACID) và đơn giản hóa việc quản lý. Tuy nhiên, việc truy xuất dữ liệu vẫn được phân quyền logic: mã nguồn của module nào chỉ được phép truy vấn các bảng dữ liệu thuộc phạm vi nghiệp vụ của module đó. Bên cạnh đó, Redis được tích hợp để giải quyết bài toán hiệu năng cao cho việc caching dữ liệu và quản lý phiên làm việc.
-Tóm lại, kiến trúc Modular Monolith của hệ thống EV-Go không chỉ đáp ứng tốt các yêu cầu nghiệp vụ hiện tại mà còn tạo dựng một nền tảng vững chắc, sẵn sàng cho việc mở rộng quy mô và nâng cấp công nghệ trong tương lai.
+Tóm lại, kiến trúc Modular Monolith của hệ thống EVGo không chỉ đáp ứng tốt các yêu cầu nghiệp vụ hiện tại mà còn tạo dựng một nền tảng vững chắc, sẵn sàng cho việc mở rộng quy mô và nâng cấp công nghệ trong tương lai.
 \subsection{Mô hình dữ liệu}
-Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity Relationship Diagram - ERD) của hệ thống EV-Go. Mô hình này được thiết kế nhằm đảm bảo tính toàn vẹn dữ liệu, khả năng mở rộng và hiệu năng truy vấn cho các nghiệp vụ cốt lõi như quản lý trạm sạc, đặt lịch, phiên sạc và thanh toán.
+Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity Relationship Diagram - ERD) của hệ thống EVGo. Mô hình này được thiết kế nhằm đảm bảo tính toàn vẹn dữ liệu, khả năng mở rộng và hiệu năng truy vấn cho các nghiệp vụ cốt lõi như quản lý trạm sạc, đặt lịch, phiên sạc và thanh toán.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=1\textwidth, keepaspectratio]{figures/evgo-ERD.png}
-  \caption{Sơ đồ thực thể mối quan hệ (ERD) của hệ thống EV-Go}
+  \caption{Sơ đồ thực thể mối quan hệ (ERD) của hệ thống EVGo}
   \label{fig:evgo_erd}
 \end{figure}Dựa trên sơ đồ, dữ liệu của hệ thống được tổ chức thành các nhóm thực thể chính như sau:
 
@@ -532,7 +532,7 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
           \textbf{Normal flows} &
           \begin{enumerate}[label=\arabic*.]
             \item Super Admin bấm “Xuất file”.
-            \item Hệ thống hiển thị cấu hình: định dạng (CSV/XLSX/PDF), phạm vi dữ liệu (tất cả/ trang hiện tại), cột cần xuất, tên file, ngôn ngữ/định dạng số.
+            \item Hệ thống hiển thị cấu hình: định dạng (CSV/XLSX/PDF), phạm vi dữ liệu (toàn bộ/ trang hiện tại), cột cần xuất, tên file, ngôn ngữ/định dạng số.
             \item Super Admin xác nhận.
             \item Hệ thống tạo file theo bộ lọc và cấu hình.
             \item Hệ thống cung cấp file để tải xuống.
@@ -570,7 +570,7 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
       \hline
       \textbf{Actor} & Người quản lý hệ thống (Super Admin), Nhân viên chăm sóc khách hàng (Customer Service Staff) \\
       \hline
-      \textbf{Description} & Cho phép Super Admin/Customer Service Staff xem danh sách tất cả các khiếu nại do người dùng gửi lên.\\
+      \textbf{Description} & Cho phép Super Admin/Customer Service Staff xem danh sách toàn bộ các khiếu nại do người dùng gửi lên.\\
       \hline
       \textbf{Preconditions} &
       \begin{itemize}
@@ -2042,7 +2042,7 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
     \item Người dùng chọn chức năng “Xem đánh giá” khi đang ở trang thông tin trạm sạc.
     \item Hệ thống truy xuất dữ liệu đánh giá từ cơ sở dữ liệu.
     \item Hệ thống hiển thị danh sách đánh giá gồm: số sao, nội dung nhận xét, ngày đánh giá, người đánh giá.
-    \item Hệ thống hiển thị thêm điểm trung bình dựa trên tất cả đánh giá.
+    \item Hệ thống hiển thị thêm điểm trung bình dựa trên tổng hợp các đánh giá.
   \end{enumerate}\\
   \hline
   \textbf{Alternative flows} & Không có\\
@@ -2323,7 +2323,7 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
     \end{itemize}
   \item Nếu KHÔNG (No) (không xem lịch sử): Quy trình đi thẳng đến bước nhập tỷ lệ phân chia.
 \end{itemize}
-\item Nhập cấu hình mới: (Đây là điểm hợp nhất của luồng "Không xem lịch sử" và "Không rollback").
+\item Nhập cấu hình mới: (Đây là điểm hợp nhất của luồng \quotes{Không xem lịch sử} và \quotes{Không rollback}).
 \begin{itemize}
   \item Super Admin thực hiện nhập tỷ lệ phân chia mới.
   \item Super Admin xác nhận lưu cấu hình.
@@ -2352,14 +2352,14 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
 \begin{enumerate}[font=\bfseries]
 \item Bắt đầu: Chủ trạm (Station Owner) truy cập website dành cho chủ trạm.
 \item Chọn chức năng: Chủ trạm chọn chức năng đăng ký. Hệ thống hiển thị giao diện đăng ký tương ứng.
-\item Quyết định "Đã chuẩn bị hồ sơ?":
+\item Quyết định \quotes{Đã chuẩn bị hồ sơ?}:
 \begin{itemize}
   \item Nếu KHÔNG (No): Chủ trạm tải xuống hồ sơ mẫu. Sau khi hoàn thiện, chủ trạm tải lên hồ sơ.
   \item Nếu CÓ (Yes): Chủ trạm thực hiện tải lên hồ sơ đã hoàn thiện.
 \end{itemize}
 \item Tiếp nhận: Hệ thống tiếp nhận và lưu trữ hồ sơ đăng ký, sau đó gửi thông báo đến Super Admin.
 \item Xét duyệt: Super Admin thực hiện xét duyệt hồ sơ vừa nhận được.
-\item Quyết định "Hồ sơ hợp lệ?":
+\item Quyết định \quotes{Hồ sơ hợp lệ?}:
 \begin{itemize}
   \item Nếu KHÔNG (No): Hệ thống gửi thông báo từ chối. Chủ trạm nhận thông báo từ chối và quy trình kết thúc.
   \item Nếu CÓ (Yes): Hệ thống gửi thông tin kích hoạt tài khoản qua email cho chủ trạm. Quy trình kết thúc.
@@ -2376,23 +2376,23 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
 \item Bắt đầu: Người dùng chọn trạm sạc muốn khiếu nại.
 \item Gửi khiếu nại: Người dùng gửi khiếu nại. Hệ thống tiếp nhận và gửi thông báo có khiếu nại mới cho Super Admin/CS Staff.
 \item Xét duyệt: Super Admin/CS Staff xem và xét duyệt khiếu nại.
-\item Quyết định "Khiếu nại có hợp lệ không?":
+\item Quyết định \quotes{Khiếu nại có hợp lệ không?}:
 \begin{itemize}
   \item Nếu KHÔNG (No):
     \begin{itemize}
       \item Admin/CS Staff ghi chú lý do từ chối (tùy chọn).
-      \item Hệ thống cập nhật trạng thái khiếu nại thành "Đã từ chối".
+      \item Hệ thống cập nhật trạng thái khiếu nại thành \quotes{Đã từ chối}.
     \end{itemize}
   \item Nếu CÓ (Yes):
     \begin{itemize}
       \item Admin/CS Staff nhập nội dung phản hồi và gửi phản hồi.
       \item Hệ thống lưu phản hồi.
-      \item Quyết định "Cần xử lí trạm sạc?":
+      \item Quyết định \quotes{Cần xử lí trạm sạc?}:
         \begin{itemize}
-          \item Nếu CÓ (Yes): Admin/CS Staff khóa tài khoản hoặc trừ uy tín trạm, sau đó đánh dấu "Hoàn tất xử lý".
-          \item Nếu KHÔNG (No): Admin/CS Staff đánh dấu "Hoàn tất xử lý".
+          \item Nếu CÓ (Yes): Admin/CS Staff khóa tài khoản hoặc trừ uy tín trạm, sau đó đánh dấu \quotes{Hoàn tất xử lý}.
+          \item Nếu KHÔNG (No): Admin/CS Staff đánh dấu \quotes{Hoàn tất xử lý}.
         \end{itemize}
-      \item Hệ thống cập nhật trạng thái khiếu nại thành "Đã xử lý".
+      \item Hệ thống cập nhật trạng thái khiếu nại thành \quotes{Đã xử lý}.
     \end{itemize}
 \end{itemize}
 \item Kết thúc: Hệ thống gửi thông báo phản hồi đến người dùng. Người dùng nhận phản hồi từ Admin/CS Staff.
@@ -2410,13 +2410,13 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
 \item Tạo phiên: Hệ thống tạo phiên giao dịch.
 \item Chọn phương thức: Người dùng chọn phương thức thanh toán.
 \item Chuyển hướng: Hệ thống gửi yêu cầu và chuyển hướng người dùng đến Cổng thanh toán.
-\item Quyết định "Xác nhận giao dịch?" (Người dùng):
+\item Quyết định \quotes{Xác nhận giao dịch?} (Người dùng):
 \begin{itemize}
   \item Nếu KHÔNG (No): Người dùng hủy giao dịch.
   \item Nếu CÓ (Yes):
     \begin{itemize}
       \item Cổng thanh toán xử lý yêu cầu thanh toán.
-      \item Quyết định "Giao dịch thành công?" (Cổng thanh toán):
+      \item Quyết định \quotes{Giao dịch thành công?} (Cổng thanh toán):
         \begin{itemize}
           \item Nếu KHÔNG (No): Cổng thanh toán thông báo giao dịch thất bại.
           \item Nếu CÓ (Yes):
@@ -2451,7 +2451,7 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
 \textbf{Các luồng phụ:}
 \begin{enumerate}[font=\bfseries]
 \item Từ chối quyền / GPS tắt: Nếu GPS không cấp quyền hoặc bị lỗi, ứng dụng sẽ yêu cầu người dùng nhập vị trí thủ công.
-\item Không tìm thấy trạm: Nếu máy chủ trả về danh sách rỗng, ứng dụng sẽ hiển thị thông báo "Không tìm thấy trạm".
+\item Không tìm thấy trạm: Nếu máy chủ trả về danh sách rỗng, ứng dụng sẽ hiển thị thông báo \quotes{Không tìm thấy trạm}.
 \item Điều hướng (Tùy chọn): Nếu người dùng nhấn nút chỉ đường, ứng dụng sẽ yêu cầu MapSDK mở một ứng dụng bản đồ bên ngoài.
 \item Lỗi mạng (Tùy chọn): Nếu quá trình gọi máy chủ bị lỗi, ứng dụng sẽ hiển thị thông báo lỗi.
 \end{enumerate}
@@ -2482,7 +2482,7 @@ Hình ảnh \ref{fig:evgo_erd} mô tả sơ đồ thực thể quan hệ (Entity
     \item Nếu thời gian bắt đầu sạc dự kiến cách thời điểm hiện tại dưới 10 phút, Backend lập tức gửi lệnh \texttt{ReserveNow} qua giao thức OCPP tới Trạm sạc để tiến hành giữ chỗ.
     \item Backend phản hồi mã HTTP 200 OK lại cho ZaloPay để xác nhận đã xử lý xong Webhook.
 \end{itemize}
-\item Sau khi thanh toán thành công, màn hình ZaloPay thông báo hoàn tất, người dùng quay trở lại ứng dụng EV-Go và mở mục My Booking.
+\item Sau khi thanh toán thành công, màn hình ZaloPay thông báo hoàn tất, người dùng quay trở lại ứng dụng EVGo và mở mục My Booking.
 \item Ứng dụng gửi yêu cầu lấy danh sách đặt chỗ mới nhất, Backend trả về thông tin Booking ở trạng thái \texttt{CONFIRMED} và ứng dụng cập nhật giao diện hiển thị ``Đã xác nhận''.
 \end{enumerate}
 
