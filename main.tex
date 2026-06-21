@@ -7,13 +7,11 @@
 \setdefaultlanguage{vietnamese}
 \setmainfont{Times New Roman}
 \usepackage{geometry}
-\geometry{left=3.0cm, right=2.0cm, top=2.0cm, bottom=2.0cm}
+\geometry{left=3.0cm, right=2.0cm, top=2.0cm, bottom=2.0cm, headheight=30pt, headsep=9pt, footskip=28pt}
 \usepackage{amsmath,amssymb,mathtools}
 \usepackage{pifont,siunitx}
 \usepackage{graphicx}
 \usepackage{fancyhdr}
-\setlength{\headheight}{44pt} % Fix for fancyhdr header height
-\addtolength{\topmargin}{-32pt} % Reduce top margin as suggested by fancyhdr
 \usepackage{lastpage}
 \usepackage{hyperref}
 \usepackage{tabularx,array,longtable,multirow}
@@ -41,20 +39,16 @@
 \pagestyle{fancy}
 \fancyhf{} % clear all
 \fancyhead[L]{
-  \begin{tabular}{rl}
-    \begin{tabular}{rl}
-      \begin{picture}(25,15)(0,0)
-        \put(0,-8){\includegraphics[width=8mm,height=8mm]{hcmut.png}}
-      \end{picture} &
-      \begin{tabular}{l}
-        \textbf{\ttfamily Trường Đại học Bách Khoa - Đại học Quốc gia TP.HCM}\\
-        \textbf{\ttfamily Khoa Khoa học và Kỹ thuật Máy tính}
-      \end{tabular}
+  \begin{tabular}{@{}l@{\quad}l@{}}
+    \raisebox{-0.25\height}{\includegraphics[width=8mm,height=8mm]{hcmut.png}} &
+    \begin{tabular}{@{}l@{}}
+      \fontsize{9}{11}\selectfont \textbf{\rmfamily Trường Đại học Bách Khoa - Đại học Quốc gia TP.HCM}\\
+      \fontsize{9}{11}\selectfont \textbf{\rmfamily Khoa Khoa học và Kỹ thuật Máy tính}
     \end{tabular}
   \end{tabular}
 }
-\fancyfoot[L]{\scriptsize \ttfamily Báo cáo Đồ án Tốt nghiệp}
-\fancyfoot[R]{\scriptsize \ttfamily Trang \thepage/\pageref{LastPage}}
+\fancyfoot[L]{\scriptsize \rmfamily Báo cáo Đồ án Tốt nghiệp}
+\fancyfoot[R]{\scriptsize \rmfamily Trang \thepage/\pageref{LastPage}}
 
 % ===== Code style =====
 \lstset{
@@ -86,7 +80,7 @@
   \includegraphics[width=4cm]{hcmut.png} \\
   
   \vspace{1.5cm}
-  {\fontsize{15}{18}\selectfont \textbf{BÁO CÁO ĐỒ ÁN TỐT NGHIỆP}} \\
+  {\fontsize{15}{18}\selectfont \textbf{BÁO CÁO} \\ \textbf{ĐỒ ÁN TỐT NGHIỆP}} \\
   
   \vspace{0.8cm}
   \begin{center}
@@ -134,7 +128,7 @@
   \includegraphics[width=4cm]{hcmut.png} \\
   
   \vspace{1.5cm}
-  {\fontsize{15}{18}\selectfont \textbf{BÁO CÁO ĐỒ ÁN TỐT NGHIỆP}} \\
+  {\fontsize{15}{18}\selectfont \textbf{BÁO CÁO} \\ \textbf{ĐỒ ÁN TỐT NGHIỆP}} \\
   
   \vspace{0.8cm}
   \begin{center}
