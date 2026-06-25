@@ -7,15 +7,12 @@
 \setdefaultlanguage{vietnamese}
 \setmainfont{Times New Roman}
 \usepackage{geometry}
-\geometry{margin=2.5cm}
+\geometry{left=3.0cm, right=2.0cm, top=2.0cm, bottom=2.0cm, headheight=30pt, headsep=9pt, footskip=28pt}
 \usepackage{amsmath,amssymb,mathtools}
 \usepackage{pifont,siunitx}
 \usepackage{graphicx}
 \usepackage{fancyhdr}
-\setlength{\headheight}{28.99997pt} % Fix for fancyhdr header height (as suggested by fancyhdr)
-\addtolength{\topmargin}{-16.99997pt} % Reduce top margin as suggested by fancyhdr
 \usepackage{lastpage}
-\usepackage{indentfirst}
 \usepackage{hyperref}
 \usepackage{tabularx,array,longtable,multirow}
 \usepackage{fancybox}
@@ -24,7 +21,11 @@
 \usepackage{pdfpages}
 \usepackage{enumitem}
 \usepackage{float}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{calc}
 
+\newcommand{\quotes}[1]{``#1''}
 
 \graphicspath{{figures/}}
 
@@ -38,20 +39,16 @@
 \pagestyle{fancy}
 \fancyhf{} % clear all
 \fancyhead[L]{
-  \begin{tabular}{rl}
-    \begin{tabular}{rl}
-      \begin{picture}(25,15)(0,0)
-        \put(0,-8){\includegraphics[width=8mm,height=8mm]{hcmut.png}}
-      \end{picture} &
-      \begin{tabular}{l}
-        \textbf{\ttfamily Trường Đại học Bách Khoa - Đại học Quốc gia TP.HCM}\\
-        \textbf{\ttfamily Khoa Khoa học và Kỹ thuật Máy tính}
-      \end{tabular}
+  \begin{tabular}{@{}l@{\quad}l@{}}
+    \raisebox{-0.25\height}{\includegraphics[width=8mm,height=8mm]{hcmut.png}} &
+    \begin{tabular}{@{}l@{}}
+      \fontsize{9}{11}\selectfont \textbf{\rmfamily Trường Đại học Bách Khoa - Đại học Quốc gia TP.HCM}\\
+      \fontsize{9}{11}\selectfont \textbf{\rmfamily Khoa Khoa học và Kỹ thuật Máy tính}
     \end{tabular}
   \end{tabular}
 }
-\fancyfoot[L]{\scriptsize \ttfamily Báo cáo Đồ án chuyên ngành}
-\fancyfoot[R]{\scriptsize \ttfamily Trang \thepage/\pageref{LastPage}}
+\fancyfoot[L]{\scriptsize \rmfamily Báo cáo Đồ án Tốt nghiệp}
+\fancyfoot[R]{\scriptsize \rmfamily Trang \thepage/\pageref{LastPage}}
 
 % ===== Code style =====
 \lstset{
@@ -67,65 +64,178 @@
 
 \begin{document}
 
-% ===== Title page =====
+% ===== Cover Page (Trang Bìa) =====
 \begin{titlepage}
- \begin{center}
-  {\large TRƯỜNG ĐẠI HỌC BÁCH KHOA - ĐẠI HỌC QUỐC GIA TP.HCM \\ KHOA KHOA HỌC VÀ KĨ THUẬT MÁY TÍNH}
- \end{center}
- \vspace{0.5cm}
- \begin{figure}[h!]
+  \thispagestyle{empty}
+  \begin{tikzpicture}[remember picture, overlay]
+    \draw[line width=3pt] ($(current page.north west) + (2.5cm,-1.5cm)$) rectangle ($(current page.south east) + (-1.5cm,1.5cm)$);
+    \draw[line width=1pt] ($(current page.north west) + (2.65cm,-1.65cm)$) rectangle ($(current page.south east) + (-1.65cm,1.65cm)$);
+  \end{tikzpicture}
+  
   \centering
-  \includegraphics[width=5cm]{hcmut.png}
- \end{figure}
- \vspace{0.5cm}
- \begin{center}
-  \begin{tabular}{c}
-   \multicolumn{1}{c}{\textbf{{\Large \MakeUppercase{Báo cáo Đồ án chuyên ngành}}}}\\[6pt]
-   \hline \\[-6pt]
-   \multicolumn{1}{c}{\textbf{{\Large Đề tài}}}\\[6pt]
-   \textbf{\huge Ứng dụng hỗ trợ tìm kiếm}\\
-   \textbf{\huge và quản lý trạm sạc xe máy điện}\\
-   \hline
-  \end{tabular}
- \end{center}
-
- \vspace{0.6cm}
- \begin{table}[h]
-  \hspace{3.5cm}
-  \begin{tabular}{r l}
-   Giảng viên hướng dẫn: & ThS. Lê Đình Thuận \\
-   \\
-   Sinh viên thực hiện: & Nguyễn Ngọc Châu Phúc -- 2212631 \\
-                        & Nguyễn Nhật Khoa -- 2211629 \\
-                        & Hoàng Trung Anh -- 2210055 \\
-  \end{tabular}
- \end{table}
-
- \vspace{0.6cm}
- \begin{center}
-  \footnotesize Thành phố Hồ Chí Minh, \today
- \end{center}
+  \vspace*{0.2cm}
+  {\fontsize{15}{18}\selectfont \textbf{ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH} \\ \textbf{TRƯỜNG ĐẠI HỌC BÁCH KHOA} \\ \textbf{KHOA KHOA HỌC VÀ KỸ THUẬT MÁY TÍNH}} \\
+  
+  \vspace{1.5cm}
+  \includegraphics[width=4cm]{hcmut.png} \\
+  
+  \vspace{1.5cm}
+  {\fontsize{15}{18}\selectfont \textbf{BÁO CÁO} \\ \textbf{ĐỒ ÁN TỐT NGHIỆP}} \\
+  
+  \vspace{0.8cm}
+  \begin{center}
+    \begin{minipage}{0.9\textwidth}
+      \centering
+      {\fontsize{18}{22}\selectfont \textbf{ỨNG DỤNG DI ĐỘNG TÌM KIẾM TRẠM SẠC XE MÁY ĐIỆN VÀ WEBSITE QUẢN LÝ CHO CHỦ TRẠM VÀ QUẢN TRỊ HỆ THỐNG}}
+    \end{minipage}
+  \end{center}
+  
+  \vspace{0.8cm}
+  {\fontsize{15}{18}\selectfont \textbf{Ngành: KHOA HỌC MÁY TÍNH}} \\
+  
+  \vspace{1.2cm}
+  \begin{minipage}{0.85\textwidth}
+    \centering
+    \fontsize{15}{18}\selectfont
+    \begin{tabular}{r l}
+      \textbf{HỘI ĐỒNG:} & Hội đồng 25L Khoa học Máy tính \\[6pt]
+      \textbf{GVHD:}     & ThS. Lê Đình Thuận \\[6pt]
+      \textbf{GVPB:}     & ThS. Phan Trung Hiếu \\[12pt]
+      \multicolumn{2}{c}{---o0o---} \\[12pt]
+      \textbf{SVTH 1:}   & Nguyễn Ngọc Châu Phúc -- 2212631 \\[6pt]
+      \textbf{SVTH 2:}   & Nguyễn Nhật Khoa -- 2211629
+    \end{tabular}
+  \end{minipage}
+  
+  \vfill
+  {\fontsize{15}{18}\selectfont \textbf{THÀNH PHỐ HỒ CHÍ MINH, THÁNG 6 NĂM 2026}}
+  \vspace{0.8cm}
 \end{titlepage}
 
-\pagenumbering{arabic}
+% ===== Title Page (Trang Tên / Tờ lót) =====
+\begin{titlepage}
+  \thispagestyle{empty}
+  \begin{tikzpicture}[remember picture, overlay]
+    \draw[line width=3pt] ($(current page.north west) + (2.5cm,-1.5cm)$) rectangle ($(current page.south east) + (-1.5cm,1.5cm)$);
+    \draw[line width=1pt] ($(current page.north west) + (2.65cm,-1.65cm)$) rectangle ($(current page.south east) + (-1.65cm,1.65cm)$);
+  \end{tikzpicture}
+  
+  \centering
+  \vspace*{0.2cm}
+  {\fontsize{15}{18}\selectfont \textbf{ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH} \\ \textbf{TRƯỜNG ĐẠI HỌC BÁCH KHOA} \\ \textbf{KHOA KHOA HỌC VÀ KỸ THUẬT MÁY TÍNH}} \\
+  
+  \vspace{1.5cm}
+  \includegraphics[width=4cm]{hcmut.png} \\
+  
+  \vspace{1.5cm}
+  {\fontsize{15}{18}\selectfont \textbf{BÁO CÁO} \\ \textbf{ĐỒ ÁN TỐT NGHIỆP}} \\
+  
+  \vspace{0.8cm}
+  \begin{center}
+    \begin{minipage}{0.9\textwidth}
+      \centering
+      {\fontsize{18}{22}\selectfont \textbf{ỨNG DỤNG DI ĐỘNG TÌM KIẾM TRẠM SẠC XE MÁY ĐIỆN VÀ WEBSITE QUẢN LÝ CHO CHỦ TRẠM VÀ QUẢN TRỊ HỆ THỐNG}}
+    \end{minipage}
+  \end{center}
+  
+  \vspace{0.8cm}
+  {\fontsize{15}{18}\selectfont \textbf{Ngành: KHOA HỌC MÁY TÍNH}} \\
+  
+  \vspace{1.2cm}
+  \begin{minipage}{0.85\textwidth}
+    \centering
+    \fontsize{15}{18}\selectfont
+    \begin{tabular}{r l}
+      \textbf{HỘI ĐỒNG:} & Hội đồng 25L Khoa học Máy tính \\[6pt]
+      \textbf{GVHD:}     & ThS. Lê Đình Thuận \\[6pt]
+      \textbf{GVPB:}     & ThS. Phan Trung Hiếu \\[12pt]
+      \multicolumn{2}{c}{---o0o---} \\[12pt]
+      \textbf{SVTH 1:}   & Nguyễn Ngọc Châu Phúc -- 2212631 \\[6pt]
+      \textbf{SVTH 2:}   & Nguyễn Nhật Khoa -- 2211629
+    \end{tabular}
+  \end{minipage}
+  
+  \vfill
+  {\fontsize{15}{18}\selectfont \textbf{THÀNH PHỐ HỒ CHÍ MINH, THÁNG 6 NĂM 2026}}
+  \vspace{0.8cm}
+\end{titlepage}
+
+% ===== Placeholder Pages for Scanned Forms =====
+% 1. Phiếu nhiệm vụ ĐATN
+\thispagestyle{empty}
+\begin{center}
+  \vspace*{5cm}
+  {\Huge \textbf{PHIẾU NHIỆM VỤ ĐỒ ÁN TỐT NGHIỆP}} \\
+  \vspace{1.5cm}
+  {\large (Sinh viên tự chèn bản scan màu có chữ ký tại đây khi xuất bản file PDF hoàn chỉnh)} \\
+  \vspace{2cm}
+  \textit{Gợi ý: Sử dụng lệnh \texttt{\textbackslash includepdf[pages=-\{\}]\{nhiemvu.pdf\}} để chèn tệp scan.}
+\end{center}
+\newpage
+
+% 2. Phiếu chấm điểm hướng dẫn
+\thispagestyle{empty}
+\begin{center}
+  \vspace*{5cm}
+  {\Huge \textbf{PHIẾU CHẤM ĐIỂM HƯỚNG DẪN}} \\
+  \vspace{1.5cm}
+  {\large (Sinh viên tự chèn bản scan màu có chữ ký tại đây khi xuất bản file PDF hoàn chỉnh)} \\
+  \vspace{2cm}
+  \textit{Gợi ý: Sử dụng lệnh \texttt{\textbackslash includepdf[pages=-\{\}]\{cham\_huongdan.pdf\}} để chèn tệp scan.}
+\end{center}
+\newpage
+
+% 3. Phiếu chấm điểm phản biện
+\thispagestyle{empty}
+\begin{center}
+  \vspace*{5cm}
+  {\Huge \textbf{PHIẾU CHẤM ĐIỂM PHẢN BIỆN}} \\
+  \vspace{1.5cm}
+  {\large (Sinh viên tự chèn bản scan màu có chữ ký tại đây khi xuất bản file PDF hoàn chỉnh)} \\
+  \vspace{2cm}
+  \textit{Gợi ý: Sử dụng lệnh \texttt{\textbackslash includepdf[pages=-\{\}]\{cham\_phanbien.pdf\}} để chèn tệp scan.}
+\end{center}
+\newpage
+
+\pagenumbering{roman}
+\input{chapters/0_LoiCamDoan}
+\newpage
+\input{chapters/0_LoiCamOn}
+\newpage
+\input{chapters/0_TomTat}
+\newpage
+
 \tableofcontents
 \newpage
 
-\listoffigures
+\phantomsection
 \addcontentsline{toc}{section}{Danh sách hình vẽ}
+\listoffigures
 \newpage
-\listoftables
+
+\phantomsection
 \addcontentsline{toc}{section}{Danh sách bảng}
+\listoftables
 \newpage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
 
 % ===== Example skeleton sections (edit or replace with \input if you split chapters) =====
 \input{chapters/1_TongQuan}
+\newpage
 \input{chapters/2_CoSoLyThuyetVaCongNghe}
+\newpage
 \input{chapters/3_HeThongLienQuan}
+\newpage
 \input{chapters/4_YeuCau}
+\newpage
 \input{chapters/5_ThietKe}
+\newpage
 \input{chapters/6_TrienKhai}
-\input{chapters/7_DanhGia}
+\newpage
+\input{chapters/7_KiemThuVaDanhGia}
+\newpage
 \input{chapters/8_KetLuan}
 % ===== References =====
 \newpage
