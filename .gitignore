@@ -22,6 +22,7 @@
 *.ps
 *.snm
 *.synctex.gz
+*.synctex(busy)
 *.toc
 *.xml
 

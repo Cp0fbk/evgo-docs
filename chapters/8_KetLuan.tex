@@ -1,36 +1,51 @@
 \section{Kết luận}
 
 \subsection{Kết quả đạt được}
-Sau quá trình nghiên cứu và thực hiện đồ án, nhóm đã xây dựng thành công hệ thống quản lý trạm sạc xe máy điện EVGo với các kết quả cụ thể như sau:
+Trải qua quá trình nghiên cứu và thực hiện đồ án tốt nghiệp, nhóm đã xây dựng và triển khai thành công hệ thống phần mềm quản lý trạm sạc xe máy điện EVGo. Đối chiếu với các mục tiêu và phạm vi được xác lập tại Chương~1, hệ thống đã hoàn thành được phần lớn các yêu cầu chức năng và phi chức năng đề ra, đặc biệt tập trung vào tối ưu hóa trải nghiệm người dùng cuối và đảm bảo tính vững chắc của kiến trúc hệ thống. Các kết quả cụ thể bao gồm:
 
 \begin{itemize}
-    \item \textbf{Về mặt chức năng:}
+    \item \textbf{Về mặt nghiệp vụ và Trải nghiệm người dùng:}
     \begin{itemize}
-        \item Hoàn thiện các luồng nghiệp vụ cơ bản cho ba đối tượng người dùng: Người dùng (User), Quản trị viên (Super Admin) và Chủ trạm (Station Owner).
-        \item Tích hợp thành công tính năng đăng nhập nhanh (SSO) thông qua Google cho các tài khoản thuộc tổ chức \texttt{hcmut.edu.vn}.
-        \item Xây dựng quy trình đăng ký và xét duyệt chủ trạm trực tuyến, bao gồm cơ chế gửi email xác thực tự động.
+        \item Hoàn thiện toàn diện chu trình khép kín dành cho người lái xe máy điện trên ứng dụng di động: từ việc tìm kiếm trạm sạc trên bản đồ số, đặt chỗ, cho đến việc quản lý quá trình sạc và thanh toán tự động.
+        \item Triển khai thành công tính năng Đặt chỗ với cơ chế giải quyết xung đột bằng Redis Distributed Lock, đảm bảo tính chính xác cao khi nhiều người dùng cùng truy cập vào một cổng sạc.
+        \item Tích hợp thành công giao thức OCPP 1.6J để giao tiếp với trạm sạc, kết hợp công nghệ Server-Sent Events nhằm truyền tải dữ liệu trạng thái sạc đến ứng dụng di động theo thời gian thực với độ trễ thấp.
+        \item Tích hợp tự động hóa luồng thanh toán điện tử thông qua ZaloPay (Deep link và Webhook) cùng hệ thống thông báo đẩy thời gian thực qua Expo Push API.
     \end{itemize}
     
-    \item \textbf{Về mặt kỹ thuật và giao diện:}
+    \item \textbf{Về mặt kỹ thuật và kiến trúc:}
     \begin{itemize}
-        \item Áp dụng thành công kiến trúc Modular Monolith, giúp hệ thống dễ dàng bảo trì và mở rộng.
-        \item Giao diện người dùng được thiết kế hiện đại với chế độ Dark Mode mặc định, đảm bảo tính thẩm mỹ và trải nghiệm người dùng tốt.
+        \item Áp dụng xuyên suốt kiến trúc Modular Monolith với Spring Modulith, giúp hệ thống phân tách miền nghiệp vụ rõ ràng, tối ưu hóa quá trình phát triển độc lập và tạo nền tảng vững chắc để chuyển đổi sang Microservices trong tương lai.
+        \item Xây dựng ứng dụng di động đa nền tảng bằng React Native (Expo) với giao diện hiện đại, UX/UI được trau chuốt, xử lý mượt mà các trạng thái của dòng dữ liệu thời gian thực.
+        \item Triển khai thành công hệ thống Backend và Cơ sở dữ liệu lên môi trường điện toán đám mây, đảm bảo tính sẵn sàng cao để phục vụ thử nghiệm thực tế.
     \end{itemize}
 \end{itemize}
 
 \subsection{Hạn chế}
-Bên cạnh những kết quả đạt được, hệ thống vẫn còn tồn tại một số hạn chế nhất định:
+Mặc dù đã đạt được những kết quả đáng kể, hệ thống EVGo vẫn còn một số hạn chế và các tính năng chưa hoàn thiện trong phạm vi triển khai hiện tại:
 
 \begin{itemize}
-    \item \textbf{Phạm vi người dùng:} Tính năng đăng nhập nhanh (SSO) hiện tại chỉ giới hạn cho các email thuộc tổ chức \texttt{hcmut.edu.vn} do các rào cản về chi phí khi mở rộng phạm vi xác thực cho người dùng phổ thông.
-    \item \textbf{Kết nối phần cứng:} Hệ thống chưa được kết nối với các trạm sạc vật lý thực tế. Việc giao tiếp hiện tại hoàn toàn dựa trên cơ chế giả lập thông qua giao thức OCPP, do đó chưa thể đánh giá được toàn diện các vấn đề phát sinh trong môi trường vận hành thực tế với phần cứng.
+    \item \textbf{Kết nối phần cứng:} Do giới hạn về nguồn lực và rào cản thiết bị, hệ thống chưa được kiểm thử trực tiếp với các trụ sạc vật lý. Các tương tác phần cứng hiện được thực thi thông qua hệ thống giả lập chuẩn OCPP (OCPP ChargePoint Simulator).
+    \item \textbf{Luồng xử lý ngoại lệ phần cứng:} Khả năng chịu lỗi của hệ thống khi trạm sạc mất kết nối mạng đột ngột trong lúc đang sạc chưa được hoàn thiện. Cơ chế tự động khôi phục và đồng bộ thông tin sạc khi trạm sạc trực tuyến trở lại vẫn cần sự can thiệp thủ công.
+    \item \textbf{Đăng nhập qua Google (Google Sign-In):} Tính năng đăng nhập bằng tài khoản Google chưa được tích hợp thành công trên ứng dụng di động. Do các hạn chế về cấu hình OAuth 2.0 của Google trên nền tảng Expo/React Native, luồng xác thực qua Google hiện chưa hoạt động ổn định và được tạm thời loại khỏi phạm vi triển khai.
+    \item \textbf{Hệ thống Web Admin và Phân tích Dữ liệu:} Do dồn toàn lực vào kiến trúc Backend và trải nghiệm Ứng dụng Di động, phân hệ Web Admin dành cho chủ trạm chỉ dừng ở mức quản lý dữ liệu và thiết lập các cài đặt cơ bản, chưa có hệ thống thống kê doanh thu và biểu đồ báo cáo tài chính chuyên sâu. Luồng hoạt động cho tính năng báo cáo và phản hồi đánh giá cũng chưa được hoàn thiện.
+    \item \textbf{Tích hợp Thanh toán và Tự động hoàn tiền:} Việc thanh toán qua ZaloPay hiện chỉ hoạt động ở môi trường thử nghiệm (Sandbox). Đặc biệt, nếu người dùng hủy lịch hẹn hợp lệ hoặc trạm sạc gặp lỗi ngắt quãng, hệ thống chưa hoàn thiện quy trình gọi API tự động hoàn trả tiền về ví của người dùng.
 \end{itemize}
 
-\subsection{Kế hoạch phát triển cho giai đoạn 2}
-Trong giai đoạn 2 của dự án (Đồ án tốt nghiệp), nhóm định hướng tập trung vào việc hoàn thiện và đưa sản phẩm đến gần hơn với thực tế triển khai. Các mục tiêu cụ thể bao gồm:
+\subsection{Hướng phát triển tương lai}
+Dựa trên các hạn chế đã được nhận diện, nhóm đề xuất lộ trình phát triển được phân nhóm theo độ ưu tiên và tính khả thi như sau:
 
+\textbf{Ngắn hạn (6--12 tháng):}
 \begin{itemize}
-    \item \textbf{Hoàn thiện toàn diện chức năng:} Tập trung hiện thực hóa đầy đủ tất cả các tính năng đã thiết kế, đảm bảo hệ thống vận hành trơn tru với đầy đủ các nghiệp vụ từ phía người dùng, chủ trạm đến quản trị viên.
-    \item \textbf{Triển khai hạ tầng thực tế (Deployment):} Thay vì chạy trên môi trường cục bộ (Localhost), hệ thống Server sẽ được triển khai lên hạ tầng điện toán đám mây sử dụng máy ảo trên nền tảng Microsoft Azure. Điều này giúp hệ thống có thể truy cập được từ Internet và sẵn sàng cho việc kiểm thử diện rộng.
-    \item \textbf{Phát hành ứng dụng di động:} Nếu điều kiện kinh phí cho phép, nhóm sẽ tiến hành đưa ứng dụng di động lên các kho ứng dụng chính thức là Google Play Store (CH Play) và Apple App Store. Việc này nhằm mục đích giúp người dùng cuối có thể tải về, cài đặt và trải nghiệm thực tế sản phẩm một cách dễ dàng nhất.
+    \item \textbf{Hoàn thiện luồng hoàn tiền tự động:} Tích hợp API hoàn tiền của ZaloPay để đảm bảo quyền lợi người dùng khi hủy lịch hợp lệ hoặc trạm sạc gặp sự cố.
+    \item \textbf{Hoàn thiện đăng nhập Google:} Giải quyết các vấn đề cấu hình OAuth 2.0 trên Expo để tích hợp đầy đủ luồng đăng nhập qua Google cho cả Android và iOS.
+    \item \textbf{Hoàn thiện hệ thống Web Admin:} Thiết kế lại Dashboard quản trị, tích hợp biểu đồ phân tích doanh thu, báo cáo tài chính và luồng phản hồi đánh giá của chủ trạm.
+    \item \textbf{Triển khai thử nghiệm phần cứng thực tế:} Kết nối hệ thống với các trụ sạc thương mại thực tế để kiểm chứng độ chính xác của giao thức OCPP và cơ chế tự phục hồi khi mất kết nối.
+\end{itemize}
+
+\textbf{Dài hạn (trên 12 tháng):}
+\begin{itemize}
+    \item \textbf{Nâng cấp giao thức OCPP:} Hỗ trợ song song chuẩn OCPP 2.0.1 nhằm tận dụng các tính năng bảo mật nâng cao và công nghệ thanh toán trơn tru như Plug~\&~Charge (ISO~15118).
+    \item \textbf{Chuyển đổi sang Microservices:} Bóc tách các module chịu tải lớn (đặc biệt là phân hệ WebSocket/SSE xử lý dữ liệu thời gian thực) thành các Microservices độc lập để dễ dàng scaling theo chiều ngang.
+    \item \textbf{Ứng dụng Trí tuệ nhân tạo:} Khai thác dữ liệu lịch sử để áp dụng Machine Learning, dự đoán nhu cầu sạc theo khu vực, gợi ý thời điểm sạc có giá điện tối ưu và tự động hóa điều hướng lộ trình trạm sạc cho tài xế.
+    \item \textbf{Tích hợp IoT giám sát:} Bổ sung các mạng cảm biến IoT để tự động giám sát nhiệt độ, công suất và cảnh báo an toàn tại điểm sạc.
 \end{itemize}
